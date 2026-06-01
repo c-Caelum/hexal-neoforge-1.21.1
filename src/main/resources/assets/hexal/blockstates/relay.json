@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "facing=up": { "model": "hexal:block/relay" },
+    "facing=down": { "model": "hexal:block/relay" },
+    "facing=north": { "model": "hexal:block/relay" },
+    "facing=south": { "model": "hexal:block/relay" },
+    "facing=east": { "model": "hexal:block/relay" },
+    "facing=west": { "model": "hexal:block/relay" }
+  }
+}
