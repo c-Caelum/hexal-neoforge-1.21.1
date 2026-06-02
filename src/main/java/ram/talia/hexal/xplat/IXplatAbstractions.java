@@ -24,6 +24,8 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ram.talia.hexal.Hexal;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import ram.talia.hexal.api.casting.wisp.WispCastingManager;
+import ram.talia.hexal.common.entities.BaseCastingWisp;
 
 import java.util.List;
 import java.util.ServiceLoader;
@@ -58,16 +60,17 @@ public interface IXplatAbstractions {
 
     boolean isInteractingAllowed(Level level, BlockPos pos, Direction direction, InteractionHand hand, Player player);
 
-    // WispCastingManager getWispCastingManager(ServerPlayer caster);
+    WispCastingManager getWispCastingManager(ServerPlayer caster);
 
     /**
      * Takes in a caster and wisp, and sets that caster's Seon (wisp that costs significantly less to maintain) to the
      * accepted wisp. The old Seon if one exists is unmarked.
      */
-    /*void setSeon(ServerPlayer caster, @Nullable BaseCastingWisp wisp);
+    void setSeon(ServerPlayer caster, @Nullable BaseCastingWisp wisp);
 
     @Nullable
     BaseCastingWisp getSeon(ServerPlayer caster);
+    /*
 
     PlayerLinkstore getLinkstore(ServerPlayer player);
 

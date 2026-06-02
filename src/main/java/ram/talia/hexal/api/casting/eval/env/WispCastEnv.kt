@@ -53,7 +53,7 @@ class WispCastEnv(val wisp: BaseCastingWisp, level: ServerLevel) : CastingEnviro
         val caster = castingEntity as? ServerPlayer
         if (caster != null) {
             val sentinel = HexAPI.instance().getSentinel(caster)
-            if (sentinel != null && sentinel.extendsRange() && caster.level().dimension() === sentinel.dimension() && vec.distanceToSqr(sentinel.position()) <= PlayerBasedCastEnv.SENTINEL_RADIUS * PlayerBasedCastEnv.SENTINEL_RADIUS) {
+            if (sentinel != null && sentinel.extendsRange() && caster.level().dimension() === sentinel.dimension() && vec.distanceToSqr(sentinel.position()) <= PlayerBasedCastEnv.DEFAULT_SENTINEL_RADIUS * PlayerBasedCastEnv.DEFAULT_SENTINEL_RADIUS) {
                 return true
             }
         }

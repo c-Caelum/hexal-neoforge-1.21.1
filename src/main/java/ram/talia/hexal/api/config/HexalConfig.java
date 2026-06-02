@@ -1,5 +1,6 @@
 package ram.talia.hexal.api.config;
 
+import net.neoforged.fml.config.ModConfig;
 import net.neoforged.neoforge.common.ModConfigSpec;
 
 // An example config class. This is not required, but it's a good idea to have one to keep your config organized.
@@ -40,6 +41,35 @@ public class HexalConfig {
                 .comment("The cost of using a mote on a block.")
                 .defineInRange("useItemOnCost", 0.25, 0.0, 100000.0);
 
+        /*
+                    const val DEFAULT_PROJECTILE_WISP_UPKEEP_PER_TICK =  0.325 / 20.0
+            const val DEFAULT_UNTRIGGERED_WISP_UPKEEP_DISCOUNT = 0.77
+            const val DEFAULT_SEON_DISCOUNT_FACTOR = 20.0
+            const val DEFAULT_STORING_PLAYER_COST_SCALE_FACTOR = 20.0
+            const val DEFAULT_MEDIA_FLOW_RATE_OVER_LINK = 0.01
+         */
+
+        public static final ModConfigSpec.DoubleValue TICKING_WISP_UPKEEP = BUILDER
+                .comment("The cost of upkeeping a cylic wisp, in dust per tick.")
+                .defineInRange("cyclicWispUpkeep", 0.65 / 20.0, 0.0, 100000.0);
+        public static final ModConfigSpec.DoubleValue PROJECTILE_WISP_UPKEEP = BUILDER
+                .comment("The cost of upkeeping a projectile wisp, in dust per tick.")
+                .defineInRange("projectileWispUpkeep", 0.325 / 20.0, 0.0, 100000.0);
+        public static final ModConfigSpec.DoubleValue PAUSED_WISP_DISCOUNT = BUILDER
+                .comment("The discount of a paused wisp.")
+                .defineInRange("pausedWispUpkeep", 0.77, 0.0, 100000.0);
+        public static final ModConfigSpec.DoubleValue BOUND_WISP_DISCOUNT_FACTOR = BUILDER
+                .comment("The discount factor (the cost is divided by this) for a bound wisp.")
+                .defineInRange("boundWispUpkeep", 20.0, 0.0, 100000.0);
+        public static final ModConfigSpec.DoubleValue PLAYER_WISP_UPKEEP = BUILDER
+                .comment("The cost multiplier for having a player entity in a wisp somewhere.")
+                .comment("More specifically, cost is calculated as this^numPlayers.")
+                .defineInRange("playerContainingWispUpkeep", 20.0, 0.0, 100000.0);
+
+        public static final ModConfigSpec.DoubleValue SUMMON_TICKING_WISP_COST = BUILDER
+                .comment("")
+                .comment("The cost of summoning a cyclic wisp.")
+                .defineInRange("summonCyclicWispCost", 3.0, 0.0, 100000.0);
 
         public static int getMaxItemsReturned() {
             return MAX_ITEMS_RETURNED.get();

@@ -3,6 +3,8 @@ package ram.talia.hexal.common.entities
 import at.petrak.hexcasting.api.casting.eval.env.PlayerBasedCastEnv
 import at.petrak.hexcasting.api.casting.iota.EntityIota
 import at.petrak.hexcasting.api.casting.iota.Vec3Iota
+import at.petrak.hexcasting.api.pigment.FrozenPigment
+import at.petrak.hexcasting.common.lib.HexAttributes
 import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.EntityType
 import net.minecraft.world.entity.player.Player
@@ -15,14 +17,13 @@ import net.minecraft.world.phys.EntityHitResult
 import net.minecraft.world.phys.HitResult
 import net.minecraft.world.phys.Vec3
 import ram.talia.hexal.api.casting.wisp.WispCastingManager
-import ram.talia.hexal.api.nbt.SerialisedIotaList
 import ram.talia.hexal.api.plus
 import ram.talia.hexal.common.lib.HexalEntities
 
 open class ProjectileWisp : BaseCastingWisp {
 	var isAffectedByGravity = true
 
-	constructor(entityType: EntityType<out BaseCastingWisp>, world: Level) : super(entityType, world)
+	constructor(entityType: EntityType<out BaseCastingWisp>, world: Level) : super(entityType, world, FrozenPigment.DEFAULT.get())
 	constructor(entityType: EntityType<out ProjectileWisp>, world: Level, pos: Vec3, vel: Vec3, caster: Player?, media: Long) : super(entityType, world, pos, caster, media) {
 		deltaMovement = vel
 	}
@@ -42,7 +43,14 @@ open class ProjectileWisp : BaseCastingWisp {
 	}
 
 	// Seon wisps have the same max range as the caster.
-	override fun maxSqrCastingDistance() = if (seon) { PlayerBasedCastEnv.AMBIT_RADIUS * PlayerBasedCastEnv.AMBIT_RADIUS } else { CASTING_RADIUS * CASTING_RADIUS }
+	override fun maxSqrCastingDistance() : Double {
+		if (seon) {
+			val ambitRadius: Double =
+				caster?.getAttributeValue(HexAttributes.AMBIT_RADIUS) ?: PlayerBasedCastEnv.DEFAULT_AMBIT_RADIUS;
+			return ambitRadius * ambitRadius;
+		}
+		return TickingWisp.CASTING_RADIUS * TickingWisp.CASTING_RADIUS
+	}
 
 	fun getHitResult(start: Vec3, end: Vec3): BlockHitResult = level().clip(ClipContext(start, end, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, this))
 
@@ -107,8 +115,8 @@ open class ProjectileWisp : BaseCastingWisp {
 		if (level().isClientSide)
 			playTrailParticles()
 		else {
-			val serStack = SerialisedIotaList(mutableListOf(EntityIota(this), EntityIota(result.entity)))
-			scheduleCast(CASTING_SCHEDULE_PRIORITY, serHex, serStack, serRavenmind.getTag())
+			val serStack = mutableListOf(EntityIota(this), EntityIota(result.entity))
+			scheduleCast(CASTING_SCHEDULE_PRIORITY, serHex, serStack, serRavenmind)
 		}
 	}
 
@@ -117,9 +125,9 @@ open class ProjectileWisp : BaseCastingWisp {
 		if (level().isClientSide)
 			playTrailParticles()
 		else {
-			val serStack = SerialisedIotaList(mutableListOf(EntityIota(this),
-					Vec3Iota(Vec3.atCenterOf(result.blockPos))))
-			scheduleCast(CASTING_SCHEDULE_PRIORITY, serHex, serStack, serRavenmind.getTag())
+			val serStack = mutableListOf(EntityIota(this),
+					Vec3Iota(Vec3.atCenterOf(result.blockPos)))
+			scheduleCast(CASTING_SCHEDULE_PRIORITY, serHex, serStack, serRavenmind)
 		}
 	}
 

@@ -1,21 +1,25 @@
 package ram.talia.hexal;
 
+import at.petrak.hexcasting.api.casting.iota.Iota;
+import at.petrak.hexcasting.api.casting.iota.IotaType;
 import at.petrak.hexcasting.api.misc.MediaConstants;
+import at.petrak.hexcasting.api.pigment.FrozenPigment;
 import at.petrak.hexcasting.common.lib.HexRegistries;
-import kotlin.internal.RequireKotlin;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.nbt.NbtOps;
+import net.minecraft.nbt.Tag;
+import net.minecraft.network.syncher.EntityDataSerializer;
+import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
-import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
+import net.neoforged.neoforge.registries.NeoForgeRegistries;
 import net.neoforged.neoforge.registries.RegisterEvent;
 import org.slf4j.Logger;
 
 import com.mojang.logging.LogUtils;
 
-import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.world.level.block.Blocks;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.Mod;
@@ -27,9 +31,10 @@ import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
 import ram.talia.hexal.api.config.HexalConfig;
 import ram.talia.hexal.client.HexalClient;
-import ram.talia.hexal.client.blocks.BlockEntityMediafiedStorageRenderer;
+import ram.talia.hexal.common.entities.BaseWisp;
 import ram.talia.hexal.common.lib.HexalBlockEntities;
 import ram.talia.hexal.common.lib.HexalBlocks;
+import ram.talia.hexal.common.lib.HexalEntities;
 import ram.talia.hexal.common.lib.hex.HexalActions;
 import ram.talia.hexal.common.lib.hex.HexalArithmetics;
 import ram.talia.hexal.common.lib.hex.HexalIotaTypes;
@@ -44,6 +49,8 @@ public class Hexal {
     public static final String MODID = "hexal";
     // Directly reference a slf4j logger
     public static final Logger LOGGER = LogUtils.getLogger();
+
+    public static final EntityDataSerializer<FrozenPigment> PIGMENT_SERIALIZER = EntityDataSerializer.forValueType(FrozenPigment.STREAM_CODEC);
 
     // The constructor for the mod class is the first code that is run when your mod is loaded.
     // FML will recognize some parameter types like IEventBus or ModContainer and pass them in automatically.
@@ -67,6 +74,13 @@ public class Hexal {
         bind(HexRegistries.IOTA_TYPE, HexalIotaTypes::registerTypes, modEventBus);
         bind(HexRegistries.ACTION, HexalActions::register, modEventBus);
         bind(HexRegistries.ARITHMETIC, HexalArithmetics::register, modEventBus);
+        bind(Registries.ENTITY_TYPE, HexalEntities::registerEntities, modEventBus);
+        modEventBus.addListener((RegisterEvent event) -> {
+            event.register(NeoForgeRegistries.ENTITY_DATA_SERIALIZERS.key(), registryHelper -> {
+                registryHelper.register(modLoc("pigment"), PIGMENT_SERIALIZER);
+            });
+        });
+        HexalPacketHandler.init(modEventBus);
 
         // Register our mod's ModConfigSpec so that FML can create and load the config file for us
         modContainer.registerConfig(ModConfig.Type.SERVER, HexalConfig.Server.SPEC);
@@ -99,6 +113,14 @@ public class Hexal {
         // Do something when the server starts
         LOGGER.info("HELLO from server starting");
     }
+    // disgusting ugly oneliner
+    public static Iota deserializeIota(Tag tag) {
+        return IotaType.TYPED_CODEC.decode(NbtOps.INSTANCE, tag).getOrThrow().getFirst();
+    }
+
+    public static Tag serializeIota(Iota iota) {
+        return IotaType.TYPED_CODEC.encodeStart(NbtOps.INSTANCE, iota).getOrThrow();
+    }
 
     private <T> void bind(ResourceKey<? extends Registry<T>> registry, Consumer<BiConsumer<T, ResourceLocation>> source, IEventBus bus) {
         bus.addListener((RegisterEvent event) -> {
@@ -107,4 +129,5 @@ public class Hexal {
             });
         });
     }
+
 }

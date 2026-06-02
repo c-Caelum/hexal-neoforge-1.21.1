@@ -30,4 +30,8 @@ class WispMishapEnv(wisp: BaseCastingWisp, level: ServerLevel) : MishapEnvironme
     override fun blind(ticks: Int) {
         // TODO
     }
+
+    override fun nauseate(p0: Int) {
+        // TODO
+    }
 }

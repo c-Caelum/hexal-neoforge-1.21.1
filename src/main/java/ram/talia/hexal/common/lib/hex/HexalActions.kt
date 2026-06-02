@@ -19,6 +19,7 @@ import ram.talia.hexal.common.casting.actions.*
 import ram.talia.hexal.common.casting.actions.spells.*
 import ram.talia.hexal.common.casting.actions.spells.motes.*
 import java.util.function.BiConsumer
+import ram.talia.hexal.common.casting.actions.spells.wisps.*
 
 object HexalActions {
 
@@ -89,9 +90,9 @@ object HexalActions {
 
 	// =============================== Wisp Stuff =====================================
 	@JvmField
-	val WISP_SUMMON_PROJECTILE = make("wisp/summon/projectile", HexPattern.fromAngles("aqaeqeeeee", HexDir.NORTH_WEST), OpSummonWisp(false))
+	val WISP_SUMMON_PROJECTILE = make("wisp/summon/projectile", HexPattern.fromAngles("aqaeqeeeee", HexDir.NORTH_WEST), OpSummonWisp(false))*/
 	@JvmField
-	val WISP_SUMMON_TICKING = make("wisp/summon/ticking", HexPattern.fromAngles("aqaweewaqawee", HexDir.NORTH_WEST), OpSummonWisp(true))
+	val WISP_SUMMON_TICKING = make("wisp/summon/ticking", HexPattern.fromAngles("aqaweewaqawee", HexDir.NORTH_WEST), OpSummonWisp(true))/*
 	@JvmField
 	val WISP_SELF = make("wisp/self", HexPattern.fromAngles("dedwqqwdedwqqaw", HexDir.NORTH_EAST), OpWispSelf)
 	@JvmField

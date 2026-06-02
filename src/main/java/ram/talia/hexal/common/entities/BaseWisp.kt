@@ -2,26 +2,30 @@ package ram.talia.hexal.common.entities
 
 import at.petrak.hexcasting.api.misc.MediaConstants
 import at.petrak.hexcasting.api.pigment.FrozenPigment
+import at.petrak.hexcasting.api.utils.asCompound
 import at.petrak.hexcasting.api.utils.putCompound
 import at.petrak.hexcasting.common.particles.ConjureParticleOptions
 import net.minecraft.client.Minecraft
 import net.minecraft.client.ParticleStatus
 import net.minecraft.nbt.CompoundTag
+import net.minecraft.nbt.NbtOps
 import net.minecraft.network.syncher.EntityDataAccessor
+import net.minecraft.network.syncher.EntityDataSerializer
 import net.minecraft.network.syncher.EntityDataSerializers
 import net.minecraft.network.syncher.SynchedEntityData
+import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.EntityDimensions
 import net.minecraft.world.entity.EntityType
 import net.minecraft.world.entity.Pose
 import net.minecraft.world.level.Level
 import net.minecraft.world.phys.AABB
 import net.minecraft.world.phys.Vec3
-import ram.talia.hexal.api.linkable.ILinkable
+import ram.talia.hexal.Hexal
 import ram.talia.hexal.api.minus
 import ram.talia.hexal.api.nextColour
 import kotlin.math.*
 
-abstract class BaseWisp(entityType: EntityType<out BaseWisp>, world: Level)  : LinkableEntity(entityType, world), IMediaEntity<BaseWisp> {
+abstract class BaseWisp(entityType: EntityType<out BaseWisp>, world: Level, pigment : FrozenPigment) : Entity(entityType, world), IMediaEntity<BaseWisp> {
 	@Suppress("LeakingThis")
 	var oldPos: Vec3 = position()
 
@@ -33,9 +37,13 @@ abstract class BaseWisp(entityType: EntityType<out BaseWisp>, world: Level)  : L
 
 	override fun get() = this
 
-	override fun pigment(): FrozenPigment = FrozenPigment.fromNBT(entityData.get(PIGMENT))
+	fun pigment(): FrozenPigment = entityData.get(PIGMENT);
 
-	override fun getEyeHeight(pose: Pose, dim: EntityDimensions) = 0f
+	init {
+		entityData.set(PIGMENT, pigment);
+	}
+
+	fun getEyeHeight(pose: Pose, dim: EntityDimensions) = 0f
 
 	override fun makeBoundingBox(): AABB {
 		return super.makeBoundingBox().move(0.0, -getDimensions(Pose.STANDING).height*0.5, 0.0)
@@ -66,7 +74,7 @@ abstract class BaseWisp(entityType: EntityType<out BaseWisp>, world: Level)  : L
 	}
 
 	fun renderCentre(): Vec3 = position()
-	override fun renderCentre(other: ILinkable.IRenderCentre, recursioning: Boolean): Vec3 = renderCentre()
+	//override fun renderCentre(other: ILinkable.IRenderCentre, recursioning: Boolean): Vec3 = renderCentre()
 
 	fun playTrailParticles() {
 		playTrailParticles(pigment())
@@ -119,14 +127,12 @@ abstract class BaseWisp(entityType: EntityType<out BaseWisp>, world: Level)  : L
 	}
 
 	fun setPigment(pigment: FrozenPigment): FrozenPigment {
-		entityData.set(PIGMENT, pigment.serializeToNBT())
-		return pigment
+		entityData.set(PIGMENT, pigment);
+		return pigment;
 	}
 
 	override fun readAdditionalSaveData(compound: CompoundTag) {
-		super.readAdditionalSaveData(compound)
-
-		entityData.set(PIGMENT, compound.getCompound(TAG_PIGMENT))
+		entityData.set(PIGMENT, FrozenPigment.CODEC.decode(NbtOps.INSTANCE, compound.getCompound(TAG_PIGMENT)).orThrow.first)
 
 		media = compound.getLong(TAG_MEDIA)
 
@@ -134,21 +140,23 @@ abstract class BaseWisp(entityType: EntityType<out BaseWisp>, world: Level)  : L
 	}
 
 	override fun addAdditionalSaveData(compound: CompoundTag) {
-		super.addAdditionalSaveData(compound)
+		val res = FrozenPigment.CODEC.encodeStart(NbtOps.INSTANCE, entityData.get(PIGMENT))
+			.getOrThrow { IllegalArgumentException("Expected a serializable pigment; got none") };
 
-		compound.putCompound(TAG_PIGMENT, entityData.get(PIGMENT))
+		compound.put(TAG_PIGMENT, res.asCompound)
 		compound.putLong(TAG_MEDIA, media)
 	}
 
-	override fun defineSynchedData() {
-		entityData.define(PIGMENT, FrozenPigment.DEFAULT.get().serializeToNBT())
-		entityData.define(MEDIA, 20L * MediaConstants.DUST_UNIT)
+	override fun defineSynchedData(builder: SynchedEntityData.Builder) {
+		builder.define(PIGMENT, FrozenPigment.DEFAULT.get());
+		builder.define(MEDIA, 0);
 	}
 
 	companion object {
+		val stuff : Unit = Hexal.LOGGER.info("media:")
 		@JvmStatic
-		val PIGMENT: EntityDataAccessor<CompoundTag> = SynchedEntityData.defineId(BaseWisp::class.java, EntityDataSerializers.COMPOUND_TAG)
-
+		val PIGMENT: EntityDataAccessor<FrozenPigment> = SynchedEntityData.defineId(BaseWisp::class.java,
+			Hexal.PIGMENT_SERIALIZER)
 		@JvmStatic
 		val MEDIA: EntityDataAccessor<Long> = SynchedEntityData.defineId(BaseWisp::class.java, EntityDataSerializers.LONG)
 

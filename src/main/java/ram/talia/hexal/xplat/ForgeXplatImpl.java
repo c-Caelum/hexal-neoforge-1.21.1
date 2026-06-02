@@ -33,8 +33,11 @@ import net.neoforged.neoforge.event.level.BlockEvent;
 import net.neoforged.neoforge.network.PacketDistributor;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import ram.talia.hexal.api.casting.wisp.WispCastingManager;
+import ram.talia.hexal.common.entities.BaseCastingWisp;
 import ram.talia.hexal.eventhandlers.BoundStorageEventHandler;
 import net.neoforged.fml.loading.FMLLoader;
+import ram.talia.hexal.eventhandlers.WispCastingManagerEventHandler;
 
 import java.util.List;
 import java.util.UUID;
@@ -42,7 +45,6 @@ import java.util.UUID;
 import static at.petrak.hexcasting.xplat.IXplatAbstractions.HEXCASTING;
 
 public class ForgeXplatImpl implements IXplatAbstractions {
-	
 
 	@Override
 	public boolean isPhysicalClient() {
@@ -91,20 +93,22 @@ public class ForgeXplatImpl implements IXplatAbstractions {
 		return !NeoForge.EVENT_BUS.post(new PlayerInteractEvent.RightClickBlock(player, hand, pos, new BlockHitResult(Vec3.atCenterOf(pos), direction, pos, true))).isCanceled();
 	}
 
-	/*@Override
-	public WispCastingManager getWispCastingManager (ServerPlayer caster) {
-		return WispCastingMangerEventHandler.getCastingManager(caster);
+	@Override
+	public WispCastingManager getWispCastingManager(ServerPlayer caster) {
+		return WispCastingManagerEventHandler.getCastingManager(caster);
 	}
 
 	@Override
 	public void setSeon(ServerPlayer caster, @Nullable BaseCastingWisp wisp) {
-		WispCastingMangerEventHandler.setSeon(caster, wisp);
+		WispCastingManagerEventHandler.setSeon(caster, wisp);
 	}
 
 	@Override
 	public @Nullable BaseCastingWisp getSeon(ServerPlayer caster) {
-		return WispCastingMangerEventHandler.getSeon(caster);
+		return WispCastingManagerEventHandler.getSeon(caster);
 	}
+
+	/*
 
 	@Override
 	public PlayerLinkstore getLinkstore (ServerPlayer player) {

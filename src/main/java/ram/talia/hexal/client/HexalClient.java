@@ -12,9 +12,13 @@ import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.gui.ConfigurationScreen;
 import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
 import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
+import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 import ram.talia.hexal.Hexal;
 import ram.talia.hexal.client.blocks.BlockEntityMediafiedStorageRenderer;
+import ram.talia.hexal.client.entity.WispRenderer;
 import ram.talia.hexal.common.lib.HexalBlockEntities;
+import ram.talia.hexal.common.lib.HexalEntities;
 import vazkii.patchouli.neoforge.client.NeoForgeClientInitializer;
 
 // This class will not load on dedicated servers. Accessing client side code from here is safe.
@@ -36,6 +40,7 @@ public class HexalClient {
                 // A function of BlockEntityRendererProvider.Context to BlockEntityRenderer.
                 BlockEntityMediafiedStorageRenderer::new
         );
+        event.registerEntityRenderer(HexalEntities.TICKING_WISP, WispRenderer::new);
     }
 
     @SubscribeEvent

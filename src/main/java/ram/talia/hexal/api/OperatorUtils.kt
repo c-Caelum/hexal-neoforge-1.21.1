@@ -12,6 +12,7 @@ import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.decoration.ItemFrame
 import net.minecraft.world.entity.item.ItemEntity
 import net.minecraft.world.entity.npc.Villager
+import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.BlockItem
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
@@ -154,6 +155,47 @@ fun List<Iota>.getVillager(idx: Int, argc: Int = 0, level : ServerLevel): Villag
     }
     throw MishapInvalidIota.ofType(x, if (argc == 0) idx else argc - (idx + 1), "villager")
 }
+
+fun List<Iota>.getReferencedEntities(level : ServerLevel) : List<Entity> {
+    val list : MutableList<Entity> = mutableListOf();
+    val poolToSearch = ArrayDeque<Iota>()
+    poolToSearch.addAll(this);
+
+    while (poolToSearch.isNotEmpty()) {
+        val datumToCheck = poolToSearch.removeFirst()
+
+        if(datumToCheck is EntityIota) {
+            val ent = datumToCheck.getEntity(level)
+            list.add(ent);
+        }
+
+        val datumSubIotas = datumToCheck.subIotas()
+        if (datumSubIotas != null)
+            poolToSearch.addAll(datumSubIotas)
+    }
+    return list;
+}
+
+fun Iota.getReferencedEntities(level : ServerLevel) : List<Entity> {
+    val list : MutableList<Entity> = mutableListOf();
+    val poolToSearch = ArrayDeque<Iota>()
+    poolToSearch.add(this);
+
+    while (poolToSearch.isNotEmpty()) {
+        val datumToCheck = poolToSearch.removeFirst()
+
+        if(datumToCheck is EntityIota) {
+            val ent = datumToCheck.getEntity(level)
+            list.add(ent);
+        }
+
+        val datumSubIotas = datumToCheck.subIotas()
+        if (datumSubIotas != null)
+            poolToSearch.addAll(datumSubIotas)
+    }
+    return list;
+}
+
 
 /*fun List<Iota>.getBaseWisp(idx: Int, argc: Int = 0): BaseWisp {
     val x = this.getOrElse(idx) { throw MishapNotEnoughArgs(idx + 1, this.size) }

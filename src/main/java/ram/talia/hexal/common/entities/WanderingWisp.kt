@@ -1,6 +1,6 @@
 package ram.talia.hexal.common.entities
 
-import at.petrak.hexcasting.api.misc.MediaConstants
+/*import at.petrak.hexcasting.api.misc.MediaConstants
 import at.petrak.hexcasting.api.casting.iota.Iota
 import at.petrak.hexcasting.api.casting.iota.NullIota
 import at.petrak.hexcasting.api.pigment.FrozenPigment
@@ -156,4 +156,4 @@ class WanderingWisp(entityType: EntityType<out WanderingWisp>, level: Level) : B
 		const val MIN_MEDIA = 2L * MediaConstants.SHARD_UNIT
 		const val MAX_MEDIA = 5L * MediaConstants.SHARD_UNIT
 	}
-}
+}*/
