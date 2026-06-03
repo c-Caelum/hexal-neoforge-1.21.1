@@ -3,7 +3,6 @@
   "package": "ram.talia.hexal.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
-    "SynchedEntityDataMixin"
   ],
   "injectors": {
     "defaultRequire": 1

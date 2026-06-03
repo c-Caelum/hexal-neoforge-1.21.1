@@ -13,7 +13,11 @@ import net.minecraft.network.syncher.EntityDataSerializer;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.player.Player;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
+import net.neoforged.neoforge.event.tick.PlayerTickEvent;
+import net.neoforged.neoforge.event.tick.ServerTickEvent;
 import net.neoforged.neoforge.registries.NeoForgeRegistries;
 import net.neoforged.neoforge.registries.RegisterEvent;
 import org.slf4j.Logger;
@@ -29,6 +33,7 @@ import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
+import ram.talia.hexal.api.casting.wisp.WispCastingManager;
 import ram.talia.hexal.api.config.HexalConfig;
 import ram.talia.hexal.client.HexalClient;
 import ram.talia.hexal.common.entities.BaseWisp;
@@ -38,7 +43,10 @@ import ram.talia.hexal.common.lib.HexalEntities;
 import ram.talia.hexal.common.lib.hex.HexalActions;
 import ram.talia.hexal.common.lib.hex.HexalArithmetics;
 import ram.talia.hexal.common.lib.hex.HexalIotaTypes;
+import ram.talia.hexal.eventhandlers.BoundStorageEventHandler;
+import ram.talia.hexal.eventhandlers.WispCastingManagerEventHandler;
 
+import java.util.List;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
@@ -100,6 +108,25 @@ public class Hexal {
     private void addCreative(BuildCreativeModeTabContentsEvent event) {
     }
 
+
+    /**
+     * Ticks each player's {@link WispCastingManager}, meaning that their wisps casts execute properly.
+     */
+    /*@SubscribeEvent
+    public static void playerTick(PlayerTickEvent event) {
+
+        Player maybeClientPlayer = event.getEntity();
+
+        Hexal.LOGGER.info("hi. {}.", maybeClientPlayer.level().isClientSide);
+
+        if (maybeClientPlayer.level().isClientSide)
+            return;
+
+        ServerPlayer player = (ServerPlayer) maybeClientPlayer;
+
+        WispCastingManagerEventHandler.getCastingManager(player).executeCasts();
+    }*/
+
     public static ResourceLocation modLoc(String str) {
         return ResourceLocation.fromNamespaceAndPath(MODID, str);
     }
@@ -112,6 +139,11 @@ public class Hexal {
     public void onServerStarting(ServerStartingEvent event) {
         // Do something when the server starts
         LOGGER.info("HELLO from server starting");
+        NeoForge.EVENT_BUS.addListener(WispCastingManagerEventHandler::playerLoggedIn);
+        NeoForge.EVENT_BUS.addListener(WispCastingManagerEventHandler::playerLoggedOut);
+        NeoForge.EVENT_BUS.addListener(WispCastingManagerEventHandler::serverTick);
+        NeoForge.EVENT_BUS.addListener(BoundStorageEventHandler::playerLoggedIn);
+        NeoForge.EVENT_BUS.addListener(BoundStorageEventHandler::playerLoggedOut);
     }
     // disgusting ugly oneliner
     public static Iota deserializeIota(Tag tag) {

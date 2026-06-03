@@ -3,22 +3,29 @@ package ram.talia.hexal.eventhandlers;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.bus.EventBus;
+import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
+import net.neoforged.neoforge.event.tick.ServerTickEvent;
 import org.jetbrains.annotations.Nullable;
+import ram.talia.hexal.Hexal;
 import ram.talia.hexal.api.casting.wisp.WispCastingManager;
 import ram.talia.hexal.common.entities.BaseCastingWisp;
 
 import java.lang.ref.WeakReference;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
 /**
- * Manages a Map of player UUIDs to {@link WispCastingManager}s,
+ * Manages a Map of player UUIDs to {@link WispCastingManager}s.
  */
-//@Mod.EventBusSubscriber(modid = "hexal", bus = Mod.EventBusSubscriber.Bus.FORGE, value = Dist.DEDICATED_SERVER)
 public class WispCastingManagerEventHandler {
 	private static final String TAG_CASTING_MANAGER = "hexal:casting_manager";
 	private static final String TAG_SEON = "hexal:seon";
@@ -110,7 +117,6 @@ public class WispCastingManagerEventHandler {
 	/**
 	 * Creates a {@link WispCastingManager} for each player, and loads saved data for said casting manager if saved data exists.
 	 */
-	@SubscribeEvent
 	public static void playerLoggedIn(net.neoforged.neoforge.event.entity.player.PlayerEvent.PlayerLoggedInEvent event) {
 		if (event.getEntity().level().isClientSide())
 			return;
@@ -125,7 +131,6 @@ public class WispCastingManagerEventHandler {
 	 * Save each player's {@link WispCastingManager} so that casts which haven't resolved yet will
 	 * resolve when the player logs back in.
 	 */
-	@SubscribeEvent
 	public static void playerLoggedOut(PlayerEvent.PlayerLoggedOutEvent event) {
 		if (event.getEntity().level().isClientSide())
 			return;
@@ -145,20 +150,13 @@ public class WispCastingManagerEventHandler {
 		seonUUIDs.remove(player.getUUID());
 		seons.remove(player.getUUID());
 	}
-	
-	/**
-	 * Ticks each player's {@link WispCastingManager}, meaning that their wisps casts execute properly.
-	 */
-	@SubscribeEvent
-	public static void playerTick(PlayerTickEvent event) {
 
-		Player maybeClientPlayer = event.getEntity();
-
-		if (maybeClientPlayer.level().isClientSide)
+    public static void serverTick(PlayerTickEvent.Pre event) {
+        Player player = event.getEntity();
+		if (player.level().isClientSide) {
 			return;
-		
-		ServerPlayer player = (ServerPlayer) maybeClientPlayer;
-		
-		getCastingManager(player).executeCasts();
-	}
+		}
+		ServerPlayer serverPlayer = (ServerPlayer) player;
+		getCastingManager(serverPlayer).executeCasts();
+    }
 }

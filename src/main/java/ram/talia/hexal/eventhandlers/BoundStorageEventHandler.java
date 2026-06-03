@@ -29,7 +29,6 @@ public class BoundStorageEventHandler {
     /**
      * Loads the saved bound storage UUID for each player if it exists.
      */
-    @SubscribeEvent
     public static void playerLoggedIn(PlayerEvent.PlayerLoggedInEvent event) {
         ServerPlayer player = (ServerPlayer) event.getEntity();
 
@@ -40,7 +39,6 @@ public class BoundStorageEventHandler {
     /**
      * Save each player's bound storage.
      */
-    @SubscribeEvent
     public static void playerLoggedOut(PlayerEvent.PlayerLoggedOutEvent event) {
         ServerPlayer player = (ServerPlayer) event.getEntity();
 
