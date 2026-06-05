@@ -177,7 +177,6 @@ abstract class BaseCastingWisp(entityType: EntityType<out BaseCastingWisp>, worl
 		}
 		//cost += HexalConfig.server.linkUpkeepPerTick * numLinked()
 
-		Hexal.LOGGER.debug("Num contained players: ${wispNumContainedPlayers()}")
 		cost = (cost * HexalConfig.Server.PLAYER_WISP_UPKEEP.get().pow(wispNumContainedPlayers().toDouble())).toLong()
 
 		if (seon)

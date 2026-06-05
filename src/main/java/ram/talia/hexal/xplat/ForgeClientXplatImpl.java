@@ -1,7 +1,6 @@
 package ram.talia.hexal.xplat;
 
 import at.petrak.hexcasting.api.casting.math.HexPattern;
-import at.petrak.hexcasting.forge.network.ForgePacketHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.ParticleProvider;
 import net.minecraft.client.particle.SpriteSet;
@@ -49,56 +48,58 @@ public class ForgeClientXplatImpl implements IClientXplatAbstractions {
 		ItemProperties.register(item, id, func);
 	}
 	
-	/*@Nullable
 	@Override
-	public CompoundTag getClientEverbookIota (HexPattern key) {
-		if (EverbookEventHandler.localEverbook == null)
+	public @Nullable CompoundTag getClientEverbookIota(HexPattern key) {
+		/*if (EverbookEventHandler.localEverbook == null)
 			return null;
 		
-		return EverbookEventHandler.localEverbook.getClientIota(key);
+		return EverbookEventHandler.localEverbook.getClientIota(key);*/
+		return null;
 	}
 	
 	@Override
-	public void setClientEverbookIota (HexPattern key, CompoundTag iota) {
-		if (EverbookEventHandler.localEverbook == null)
+	public void setClientEverbookIota(HexPattern key, CompoundTag iota) {
+		/*if (EverbookEventHandler.localEverbook == null)
 			return;
 		
-		EverbookEventHandler.localEverbook.setIota(key, iota);
+		EverbookEventHandler.localEverbook.setIota(key, iota);*/
 	}
 	
 	@Override
-	public void removeClientEverbookIota (HexPattern key) {
-		if (EverbookEventHandler.localEverbook == null)
+	public void removeClientEverbookIota(HexPattern key) {
+		/*if (EverbookEventHandler.localEverbook == null)
 			return;
 			
-		EverbookEventHandler.localEverbook.removeIota(key);
+		EverbookEventHandler.localEverbook.removeIota(key);*/
 	}
 	
 	@Override
-	public HexPattern getClientEverbookPattern (int index) {
-		if (EverbookEventHandler.localEverbook == null)
+	public HexPattern getClientEverbookPattern(int index) {
+		/*if (EverbookEventHandler.localEverbook == null)
 			return null;
 		
-		return EverbookEventHandler.localEverbook.getKey(index);
+		return EverbookEventHandler.localEverbook.getKey(index);*/
+		return null;
 	}
 	
 	@Override
-	public void toggleClientEverbookMacro (HexPattern key) {
-		if (EverbookEventHandler.localEverbook == null)
+	public void toggleClientEverbookMacro(HexPattern key) {
+		/*if (EverbookEventHandler.localEverbook == null)
 			return;
 		
-		EverbookEventHandler.localEverbook.toggleMacro(key);
+		EverbookEventHandler.localEverbook.toggleMacro(key);*/
 	}
 	
 	@Override
-	public boolean isClientEverbookMacro (HexPattern key) {
-		return EverbookEventHandler.localEverbook.isMacro(key);
+	public boolean isClientEverbookMacro(HexPattern key) {
+		//return EverbookEventHandler.localEverbook.isMacro(key);
+		return false;
 	}
 
 	@Override
 	public void saveEverbook() {
-		EverbookEventHandler.localEverbook.saveToDisk();
-	}*/
+		//EverbookEventHandler.localEverbook.saveToDisk();
+	}
 
 	@Override
 	public void setFilterSave (AbstractTexture texture, boolean filter, boolean mipmap) {

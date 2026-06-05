@@ -72,7 +72,6 @@ class WispCastingManager(private val casterUUID: UUID, private var cachedServer:
 					}
 				} })
 			return*/
-		Hexal.LOGGER.info("adding {} to queue", hex)
 		queue.add(cast)
 	}
 
@@ -81,17 +80,15 @@ class WispCastingManager(private val casterUUID: UUID, private var cachedServer:
 	 */
 	fun executeCasts() {
 		if (caster == null || caster!!.tickCount <= 1) {
-			Hexal.LOGGER.info("caster is null");
 			return;
 		}
 		if (caster!!.level().isClientSide) {
 			Hexal.LOGGER.error("HOW DID THIS HAPPEN")
 			return
 		}
-		Hexal.LOGGER.info("executing tasks")
 
 		if (queue.size > 0) {
-			Hexal.LOGGER.info("player ${caster!!.uuid} is executing up to $WISP_EVALS_PER_TICK of ${queue.size} on tick ${caster!!.level().gameTime}")
+//			Hexal.LOGGER.info("player ${caster!!.uuid} is executing up to $WISP_EVALS_PER_TICK of ${queue.size} on tick ${caster!!.level().gameTime}")
 		}
 
 		var evalsLeft = WISP_EVALS_PER_TICK

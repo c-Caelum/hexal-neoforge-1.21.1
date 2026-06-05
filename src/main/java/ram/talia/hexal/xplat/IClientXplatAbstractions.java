@@ -32,7 +32,21 @@ public interface IClientXplatAbstractions {
 														  Function<SpriteSet, ParticleProvider<T>> factory);
 	
 	void registerItemProperty(Item item, ResourceLocation id, ItemPropertyFunction func);
-	
+
+    @org.jetbrains.annotations.Nullable CompoundTag getClientEverbookIota(HexPattern key);
+
+	void setClientEverbookIota(HexPattern key, CompoundTag iota);
+
+	void removeClientEverbookIota(HexPattern key);
+
+	HexPattern getClientEverbookPattern(int index);
+
+	void toggleClientEverbookMacro(HexPattern key);
+
+	boolean isClientEverbookMacro(HexPattern key);
+
+	void saveEverbook();
+
 	/**
 	 * Gets the iota at the passed key in the client's Everbook.
 	 */

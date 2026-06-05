@@ -145,7 +145,6 @@ public class Hexal {
         NeoForge.EVENT_BUS.addListener(BoundStorageEventHandler::playerLoggedIn);
         NeoForge.EVENT_BUS.addListener(BoundStorageEventHandler::playerLoggedOut);
     }
-    // disgusting ugly oneliner
     public static Iota deserializeIota(Tag tag) {
         return IotaType.TYPED_CODEC.decode(NbtOps.INSTANCE, tag).getOrThrow().getFirst();
     }

@@ -1,12 +1,14 @@
-
-package ram.talia.hexal.common.casting.actions.spells.wisps
+package ram.talia.hexal.common.casting.actions.spells.wisp
 
 import at.petrak.hexcasting.api.HexAPI
-import at.petrak.hexcasting.api.casting.*
+import at.petrak.hexcasting.api.casting.ParticleSpray
+import at.petrak.hexcasting.api.casting.RenderedSpell
 import at.petrak.hexcasting.api.casting.castables.SpellAction
 import at.petrak.hexcasting.api.casting.eval.CastingEnvironment
+import at.petrak.hexcasting.api.casting.getList
+import at.petrak.hexcasting.api.casting.getPositiveDouble
+import at.petrak.hexcasting.api.casting.getVec3
 import at.petrak.hexcasting.api.casting.iota.Iota
-import at.petrak.hexcasting.api.casting.iota.IotaType
 import at.petrak.hexcasting.api.casting.iota.ListIota
 import at.petrak.hexcasting.api.casting.iota.NullIota
 import at.petrak.hexcasting.api.misc.MediaConstants
@@ -57,17 +59,15 @@ class OpSummonWisp(val ticking: Boolean) : SpellAction {
                 Spell(player, true, pos, hex, ravenmind, (media * MediaConstants.DUST_UNIT).toLong(), env.world)
             }
             false -> {
-                media = 0.0;
-                cost = 0;
-                null
-            }
-            /*false -> {
                 val vel = args.getVec3(2, argc)
                 media = args.getPositiveDouble(3, argc)
-                cost = max((HexalConfig.Server.summonProjectileWispCost * vel.lengthSqr()).toLong(), HexalConfig.server.summonProjectileWispMinCost)
+                cost = max(
+                    (HexalConfig.Server.SUMMON_PROJECTILE_WISP_COST.get() * vel.lengthSqr() * 10000.0).toLong(),
+                    (HexalConfig.Server.SUMMON_PROJECTILE_WISP_COST.get() * 10000.0).toLong()
+                )
                             .addBounded((media * MediaConstants.DUST_UNIT).toLong())
-                Spell(player, false, pos, hex.toList(), ravenmind, (media * MediaConstants.DUST_UNIT).toLong(), vel)
-            }*/
+                Spell(player, false, pos, hex, ravenmind, (media * MediaConstants.DUST_UNIT).toLong(), env.world, vel)
+            }
         }
 
         env.assertVecInRange(pos)
@@ -79,7 +79,8 @@ class OpSummonWisp(val ticking: Boolean) : SpellAction {
         )
     }
 
-    private data class Spell(val player: ServerPlayer, val ticking: Boolean, val pos: Vec3, val hex: ListIota, val ravenmind: Iota?, val media: Long, val level : ServerLevel, val vel: Vec3 = Vec3.ZERO) : RenderedSpell {
+    private data class Spell(val player: ServerPlayer, val ticking: Boolean, val pos: Vec3, val hex: ListIota, val ravenmind: Iota?, val media: Long, val level : ServerLevel, val vel: Vec3 = Vec3.ZERO) :
+        RenderedSpell {
         override fun cast(env: CastingEnvironment) {
             // wisps can only summon one child per cast
             if (env is WispCastEnv)

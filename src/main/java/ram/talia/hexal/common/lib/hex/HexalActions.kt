@@ -14,12 +14,15 @@ import at.petrak.hexcasting.common.casting.actions.selectors.OpGetEntityAt
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.phys.Vec3
 import ram.talia.hexal.Hexal
+import ram.talia.hexal.api.casting.wisp.triggers.WispTriggerTypes
 import ram.talia.hexal.api.plus
+import ram.talia.hexal.common.casting.actions.spells.motes.*
+import ram.talia.hexal.common.casting.actions.spells.wisp.OpSummonWisp
+import java.util.function.BiConsumer
+import ram.talia.hexal.common.casting.actions.spells.wisp.*
 import ram.talia.hexal.common.casting.actions.*
 import ram.talia.hexal.common.casting.actions.spells.*
-import ram.talia.hexal.common.casting.actions.spells.motes.*
-import java.util.function.BiConsumer
-import ram.talia.hexal.common.casting.actions.spells.wisps.*
+import ram.talia.hexal.common.entities.BaseWisp
 
 object HexalActions {
 
@@ -33,7 +36,7 @@ object HexalActions {
 	}
 
 	// ========================== Misc Info Gathering =================================
-	/*@JvmField
+	@JvmField
 	val CURRENT_TICK = make("current_tick", HexPattern.fromAngles("ddwaa", HexDir.NORTH_WEST), OpCurrentTick)
 	@JvmField
 	val BREATH = make("breath", HexPattern.fromAngles("aqawdwaqawd", HexDir.NORTH_WEST), OpGetBreath)
@@ -50,7 +53,8 @@ object HexalActions {
 	@JvmField
 	val FACTORIAL = make("factorial", HexPattern.fromAngles("wawdedwaw", HexDir.SOUTH_EAST), OpFactorial)
 	@JvmField
-	val RUNNING_SUM = make("running/sum", HexPattern.fromAngles("aea", HexDir.WEST), OpRunningOp ({ if (it is Vec3Iota) Vec3Iota(Vec3.ZERO) else DoubleIota(0.0) })
+	val RUNNING_SUM = make("running/sum", HexPattern.fromAngles("aea", HexDir.WEST), OpRunningOp ({ if (it is Vec3Iota) Vec3Iota(
+		Vec3.ZERO) else DoubleIota(0.0) })
 	{ running, iota ->
 		when (running) {
 			is DoubleIota -> DoubleIota(running.double + ((iota as? DoubleIota)?.double ?: throw OpRunningOp.InvalidIotaException("list.double")))
@@ -65,7 +69,7 @@ object HexalActions {
 			throw OpRunningOp.InvalidIotaException("list.double")
 		DoubleIota(running.double * ((iota as? DoubleIota)?.double ?: throw OpRunningOp.InvalidIotaException("list.double")))
 	})
-
+	/*
 	// ================================ Everbook ======================================
 	@JvmField
 	val EVERBOOK_READ = make("everbook/read", HexPattern.fromAngles("eweeewedqdeddw", HexDir.NORTH_EAST), OpEverbookRead)
@@ -75,12 +79,12 @@ object HexalActions {
 	val EVERBOOK_DELETE = make("everbook/delete", HexPattern.fromAngles("qwqqqwqaww", HexDir.SOUTH_EAST), OpEverbookDelete)
 	@JvmField
 	val EVERBOOK_TOGGLE_MACRO = make("everbook/toggle_macro", HexPattern.fromAngles("eweeewedww", HexDir.SOUTH_WEST), OpToggleMacro)
-
+	*/
 	// ============================== Misc Spells =====================================
 	@JvmField
 	val SMELT = make("smelt", HexPattern.fromAngles("wqqqwqqadad", HexDir.EAST), OpSmelt)
-	@JvmField
-	val FREEZE = make("freeze", HexPattern.fromAngles("weeeweedada", HexDir.WEST), OpFreeze)
+	//@JvmField
+	//val FREEZE = make("freeze", HexPattern.fromAngles("weeeweedada", HexDir.WEST), OpFreeze)
 	@JvmField
 	val FALLING_BLOCK = make("falling_block", HexPattern.fromAngles("wqwawqwqwqwqwqw", HexDir.EAST), OpFallingBlock)
 	@JvmField
@@ -90,9 +94,12 @@ object HexalActions {
 
 	// =============================== Wisp Stuff =====================================
 	@JvmField
-	val WISP_SUMMON_PROJECTILE = make("wisp/summon/projectile", HexPattern.fromAngles("aqaeqeeeee", HexDir.NORTH_WEST), OpSummonWisp(false))*/
+	val WISP_SUMMON_PROJECTILE = make("wisp/summon/projectile", HexPattern.fromAngles("aqaeqeeeee", HexDir.NORTH_WEST), OpSummonWisp(false))
 	@JvmField
-	val WISP_SUMMON_TICKING = make("wisp/summon/ticking", HexPattern.fromAngles("aqaweewaqawee", HexDir.NORTH_WEST), OpSummonWisp(true))/*
+	val WISP_SUMMON_TICKING = make("wisp/summon/ticking", HexPattern.fromAngles("aqaweewaqawee", HexDir.NORTH_WEST),
+        OpSummonWisp(true)
+    )
+
 	@JvmField
 	val WISP_SELF = make("wisp/self", HexPattern.fromAngles("dedwqqwdedwqqaw", HexDir.NORTH_EAST), OpWispSelf)
 	@JvmField
@@ -113,6 +120,7 @@ object HexalActions {
 	val WISP_MOVE_SPEED_GET = make("wisp/move/speed/get", HexPattern.fromAngles("eeewdqdee", HexDir.EAST), OpMoveSpeedGet)
 
 	// Allow and Disallow Media Transfer
+	/*
 	@JvmField
 	val WISP_TRANSFER_ALLOW = make("wisp/transfer/allow", HexPattern.fromAngles("qqqqqewwqeeeee", HexDir.NORTH_WEST), OpTransferAllowed(true))
 	@JvmField
@@ -127,16 +135,17 @@ object HexalActions {
 			"wisp/transfer/others/disallow",
 			HexPattern.fromAngles("eeeeeqeaqaawqeeeee", HexDir.SOUTH_WEST),
 			OpTransferAllowedOthers(false))
+			*/
 
 	// Entity purification and Zone distillations
 	@JvmField
 	val GET_ENTITY_WISP = make("get_entity/wisp",
 			HexPattern.fromAngles("qqwdedwqqdaqaaww", HexDir.SOUTH_EAST),
-		 	OpGetEntityAt{ entity -> entity is BaseWisp })
+		OpGetEntityAt{ entity -> entity is BaseWisp })
 	@JvmField
 	val ZONE_ENTITY_WISP = make("zone_entity/wisp",
 			HexPattern.fromAngles("qqwdedwqqwdeddww", HexDir.SOUTH_EAST),
-		  	OpGetEntitiesBy({ entity -> entity is BaseWisp }, false))
+		OpGetEntitiesBy({ entity -> entity is BaseWisp }, false))
 	@JvmField
 	val ZONE_ENTITY_NOT_WISP = make("zone_entity/not_wisp",
 			HexPattern.fromAngles("eewaqaweewaqaaww", HexDir.NORTH_EAST),
@@ -148,10 +157,6 @@ object HexalActions {
 			HexPattern.fromAngles("aqawded", HexDir.NORTH_WEST),
 		    OpWispSetTrigger(WispTriggerTypes.TICK_TRIGGER_TYPE))
 	@JvmField
-	val WISP_TRIGGER_COMM = make("wisp/trigger/comm",
-			HexPattern.fromAngles("aqqqqqwdeddw", HexDir.EAST),
-		    OpWispSetTrigger(WispTriggerTypes.COMM_TRIGGER_TYPE))
-	@JvmField
 	val WISP_TRIGGER_MOVE = make("wisp/trigger/move",
 			HexPattern.fromAngles("eqwawqwaqww", HexDir.EAST),
 		    OpWispSetTrigger(WispTriggerTypes.MOVE_TRIGGER_TYPE))
@@ -159,6 +164,7 @@ object HexalActions {
 	val WISP_SEON_GET = make("wisp/seon/get",
 			HexPattern.fromAngles("daqweewqaeaqweewqaqwwww", HexDir.EAST),
 			OpSeonWispGet)
+	/*
 
 	// =============================== Link Stuff =====================================
 	@JvmField
@@ -187,7 +193,8 @@ object HexalActions {
 	val LINK_COMM_OPEN_TRANSMIT = make("link/comm/open_transmit", HexPattern.fromAngles("qwdedwq", HexDir.WEST), OpOpenTransmit)
 	@JvmField
 	val LINK_COMM_CLOSE_TRANSMIT = make("link/comm/close_transmit", HexPattern.fromAngles("ewaqawe", HexDir.EAST), OpCloseTransmit)
-
+	*/
+	/*
 	// =============================== Gate Stuff =====================================
 	@JvmField
 	val GATE_MARK = make("gate/mark", HexPattern.fromAngles("qaqeede", HexDir.WEST), OpMarkGate)

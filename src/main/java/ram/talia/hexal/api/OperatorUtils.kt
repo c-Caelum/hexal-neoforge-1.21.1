@@ -22,6 +22,8 @@ import ram.talia.hexal.api.mediafieditems.ItemRecord
 import ram.talia.hexal.api.mediafieditems.MediafiedItemManager
 import ram.talia.hexal.api.casting.iota.MoteIota
 import ram.talia.hexal.api.util.Anyone
+import ram.talia.hexal.common.entities.BaseCastingWisp
+import ram.talia.hexal.common.entities.BaseWisp
 import ram.talia.moreiotas.api.casting.iota.ItemStackIota
 import ram.talia.moreiotas.api.casting.iota.ItemTypeIota
 import java.util.UUID
@@ -197,25 +199,25 @@ fun Iota.getReferencedEntities(level : ServerLevel) : List<Entity> {
 }
 
 
-/*fun List<Iota>.getBaseWisp(idx: Int, argc: Int = 0): BaseWisp {
+fun List<Iota>.getBaseWisp(idx: Int, argc: Int = 0, level: ServerLevel): BaseWisp {
     val x = this.getOrElse(idx) { throw MishapNotEnoughArgs(idx + 1, this.size) }
     if (x is EntityIota) {
-        val e = x.entity
+        val e = x.getEntity(level);
         if (e is BaseWisp)
             return e
     }
     throw MishapInvalidIota.ofType(x, if (argc == 0) idx else argc - (idx + 1), "wisp")
 }
 
-fun List<Iota>.getBaseCastingWisp(idx: Int, argc: Int = 0): BaseCastingWisp {
+fun List<Iota>.getBaseCastingWisp(idx: Int, argc: Int = 0, level: ServerLevel): BaseCastingWisp {
     val x = this.getOrElse(idx) { throw MishapNotEnoughArgs(idx + 1, this.size) }
     if (x is EntityIota) {
-        val e = x.entity
+        val e = x.getEntity(level);
         if (e is BaseCastingWisp)
             return e
     }
     throw MishapInvalidIota.ofType(x, if (argc == 0) idx else argc - (idx + 1), "wisp.casting")
-}*/
+}
 
 fun List<Iota>.getVec3OrListVec3(idx: Int, argc: Int = 0): Either<Vec3, List<Vec3>> {
     val x = this.getOrElse(idx) { throw MishapNotEnoughArgs(idx + 1, this.size) }

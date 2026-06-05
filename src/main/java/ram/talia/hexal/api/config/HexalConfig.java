@@ -66,10 +66,40 @@ public class HexalConfig {
                 .comment("More specifically, cost is calculated as this^numPlayers.")
                 .defineInRange("playerContainingWispUpkeep", 20.0, 0.0, 100000.0);
 
-        public static final ModConfigSpec.DoubleValue SUMMON_TICKING_WISP_COST = BUILDER
+        public static final ModConfigSpec.DoubleValue MOVE_SPEED_SET_COST = BUILDER
                 .comment("")
+                .comment("The cost of setting the move speed of a wisp. Not static, based on highest wisp speed set.")
+                .defineInRange("setMoveSpeedCost",1.0, 0.0, 100000.0);
+
+        public static final ModConfigSpec.DoubleValue SUMMON_TICKING_WISP_COST = BUILDER
                 .comment("The cost of summoning a cyclic wisp.")
                 .defineInRange("summonCyclicWispCost", 3.0, 0.0, 100000.0);
+
+        public static final ModConfigSpec.DoubleValue SUMMON_PROJECTILE_WISP_COST = BUILDER
+                .comment("The cost of summoning a cyclic wisp. Minimum is 0.5 dust.")
+                .defineInRange("summonCyclicWispCost", 1.7, 0.5, 100000.0);
+
+        public static final ModConfigSpec.DoubleValue FALLING_BLOCK_COST = BUILDER
+                .comment("The cost for making a block fall.")
+                .defineInRange("fallingBlockCost", 1.5, 0.0, 100000.0);
+
+        public static final ModConfigSpec.DoubleValue FREEZE_COST = BUILDER
+                .comment("The cost for freezing a block.")
+                .defineInRange("freezeCost", 1, 0.0, 100000.0);
+
+        public static final ModConfigSpec.DoubleValue PARTICLES_COST = BUILDER
+                .comment("The cost for summoning a particle.")
+                .defineInRange("particlesCost", 0.002, 0.0, 100000.0);
+
+        public static final ModConfigSpec.DoubleValue PLACE_TYPE_COST = BUILDER
+                .comment("The cost for summoning a particle.")
+                .defineInRange("particlesCost", 0.125, 0.0, 100000.0);
+
+        public static final ModConfigSpec.DoubleValue SMELT_COST = BUILDER
+                .comment("The cost for summoning a particle.")
+                .defineInRange("particlesCost", 0.75, 0.0, 100000.0);
+
+
 
         public static int getMaxItemsReturned() {
             return MAX_ITEMS_RETURNED.get();
