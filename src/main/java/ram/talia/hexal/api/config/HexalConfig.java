@@ -1,7 +1,11 @@
 package ram.talia.hexal.api.config;
 
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.ResourceLocation;
 import net.neoforged.fml.config.ModConfig;
 import net.neoforged.neoforge.common.ModConfigSpec;
+
+import java.util.List;
 
 // An example config class. This is not required, but it's a good idea to have one to keep your config organized.
 // Demonstrates how to use Neo's config APIs
@@ -99,13 +103,61 @@ public class HexalConfig {
                 .comment("The cost for summoning a particle.")
                 .defineInRange("particlesCost", 0.75, 0.0, 100000.0);
 
+        public static final ModConfigSpec.DoubleValue MAKE_GATE_COST = BUILDER
+                .comment("The cost for making a gate.")
+                .defineInRange("makeGateCost", 320.0, 0.0, 100000.0);
+        public static final ModConfigSpec.DoubleValue MARK_GATE_COST = BUILDER
+                .comment("The cost for marking an entity for a gate.")
+                .defineInRange("markEntityCost", 0.05, 0.0, 100000.0);
+        public static final ModConfigSpec.DoubleValue CLOSE_GATE_COST = BUILDER
+                .comment("The cost for closing a gate.")
+                .defineInRange("closeGateCost", 2.5, 0.0, 100000.0);
+        public static final ModConfigSpec.DoubleValue CLOSE_GATE_DISTANCE_COST_SCALE_FACTOR = BUILDER
+                .comment("The scale factor for a drifting gate's distance from the target.")
+                .defineInRange("driftingScaleFactor", 0.1, 0.0, 100000.0);
+        public static final ModConfigSpec.DoubleValue MAX_GATE_OFFSET = BUILDER
+                .comment("The maximum offset that an entity-anchored gate can have.")
+                .defineInRange("particlesCost", 32, 0.0, 100000.0);
 
+        public static final ModConfigSpec.DoubleValue CONSUME_WISP_OWN_WISP = BUILDER
+                .comment("The cost scaling factor for consuming *your own* wisp.")
+                .defineInRange("consumeOwnWispCost", 5.0, 0.0, 100000.0);
+        public static final ModConfigSpec.DoubleValue CONSUME_WISP_OTHERS_COST_PER_MEDIA = BUILDER
+                .comment("The cost scaling factor for consuming someone else's wisp.")
+                .defineInRange("consumeWispScalingFactor", 1.5, 0.0, 100000.0);
+        public static final ModConfigSpec.DoubleValue SEON_WISP_SET_COST = BUILDER
+                .comment("The cost for setting your bound wisp.")
+                .defineInRange("setBoundWispCost", 50.0, 0.0, 100000.0);
+        public static final ModConfigSpec.DoubleValue TICK_CONSTANT_COST = BUILDER
+                .comment("The constant cost for ticking a block.")
+                .defineInRange("tickConstantCost", 0.1, 0.0, 100000.0);
+        public static final ModConfigSpec.DoubleValue TICK_COST_PER_TICKED = BUILDER
+                .comment("The scaling factor for ticking a block.")
+                .defineInRange("tickScalingFactor", 0.001, 0.0, 100000.0);
+
+        public static final ModConfigSpec.IntValue TICK_RANDOM_TICK_I_PROB = BUILDER
+                .comment("A random tick from Accelerate happens one in N times, where N is this number.")
+                .defineInRange("randomTickProbability", 1365, 0, 2100);
+
+        public static final ModConfigSpec.ConfigValue<List<? extends String>> DISALLOWED_BLOCKS_TICK = BUILDER
+                .comment("Disallowed blocks in Accelerate.")
+                .defineListAllowEmpty("accelerateDisallowed", List.of("hexcasting:impetus_look", "create:deployer"),
+                        () -> "", Server::validateBlock);
+
+
+        public static boolean isAccelerateAllowed(ResourceLocation blockID) {
+            return !(DISALLOWED_BLOCKS_TICK.get().contains(blockID.toString()));
+        }
 
         public static int getMaxItemsReturned() {
             return MAX_ITEMS_RETURNED.get();
         }
         public static int getMaxRecordsInMediafiedStorage() {
             return MAX_RECORDS_IN_MEDIAFIED_STORAGE.get();
+        }
+
+        private static boolean validateBlock(Object object) {
+            return object instanceof String itemName && BuiltInRegistries.BLOCK.containsKey(ResourceLocation.parse(itemName));
         }
 
         public static final ModConfigSpec SPEC = BUILDER.build();

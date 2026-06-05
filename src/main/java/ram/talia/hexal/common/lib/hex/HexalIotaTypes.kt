@@ -5,6 +5,7 @@ import at.petrak.hexcasting.api.casting.iota.IotaType
 import net.minecraft.resources.ResourceLocation
 import org.jetbrains.annotations.ApiStatus
 import ram.talia.hexal.Hexal.modLoc
+import ram.talia.hexal.api.casting.iota.GateIota
 import ram.talia.hexal.api.casting.iota.MoteIota
 import java.util.function.BiConsumer
 
@@ -19,8 +20,9 @@ object HexalIotaTypes {
 
     private val TYPES: MutableMap<ResourceLocation, IotaType<*>> = LinkedHashMap()
 
-   //@JvmField
-    //val GATE: IotaType<GateIota> = type("gate", GateIota.TYPE)
+    @JvmField
+    val GATE: IotaType<GateIota> = type("gate", GateIota.TYPE)
+
     @JvmField
     val MOTE: IotaType<MoteIota> = type("item", MoteIota.TYPE)
 

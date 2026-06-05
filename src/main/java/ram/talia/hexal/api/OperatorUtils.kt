@@ -18,6 +18,7 @@ import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.phys.Vec3
+import ram.talia.hexal.api.casting.iota.GateIota
 import ram.talia.hexal.api.mediafieditems.ItemRecord
 import ram.talia.hexal.api.mediafieditems.MediafiedItemManager
 import ram.talia.hexal.api.casting.iota.MoteIota
@@ -291,13 +292,13 @@ fun List<Iota>.getBlockTypeOrBlockItemStackOrBlockMote(idx: Int, argc: Int = 0):
     throw MishapInvalidIota.ofType(x, if (argc == 0) idx else argc - (idx + 1), "type.block")
 }
 
-/*fun List<Iota>.getGate(idx: Int, argc: Int = 0): GateIota {
+fun List<Iota>.getGate(idx: Int, argc: Int = 0): GateIota {
     val x = this.getOrElse(idx) { throw MishapNotEnoughArgs(idx + 1, this.size) }
     if (x is GateIota)
         return x
 
     throw MishapInvalidIota.ofType(x, if (argc == 0) idx else argc - (idx + 1), "gate")
-}*/
+}
 
 fun List<Iota>.getMote(idx: Int, argc: Int = 0): MoteIota? {
     val x = this.getOrElse(idx) { throw MishapNotEnoughArgs(idx + 1, this.size) }
