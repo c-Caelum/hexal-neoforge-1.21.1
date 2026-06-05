@@ -38,17 +38,17 @@ object OpCloseGate : VarargSpellAction {
     override fun execute(args: List<Iota>, argc: Int, env: CastingEnvironment): SpellAction.Result {
         val gate = args.getGate(0, argc)
         val targetPos = (
-            if (gate.isDrifting) {
-                args.getVec3(1, argc)
-            } else if (gate.isLocationAnchored) {
+            if (gate.isLocationAnchored) {
                 gate.getTargetPos(env.world)
                     ?: throw IllegalStateException("Location-anchored gates should always have a target position.")
-            } else { //gate.isEntityAnchored
+            } else if (gate.isEntityAnchored) {
                 gate.getTargetPos(env.world)
-                    ?: when (val entityAnchor = gate.getTarget()?.right()?.getOrNull()) {
+                    ?: when (val entityAnchor = gate.getTarget()!!.b) {
                         null -> throw IllegalStateException("Entity-anchored gates should always have an EntityAnchor.")
                         else -> throw MishapAnchorEntityMissing(gate)
                     }
+            } else {
+                args.getVec3(1, argc);
             }
         )
 

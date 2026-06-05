@@ -7,6 +7,7 @@ import at.petrak.hexcasting.api.pigment.FrozenPigment;
 import at.petrak.hexcasting.common.lib.HexRegistries;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.data.DataGenerator;
 import net.minecraft.nbt.NbtOps;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.syncher.EntityDataSerializer;
@@ -43,6 +44,8 @@ import ram.talia.hexal.common.lib.HexalEntities;
 import ram.talia.hexal.common.lib.hex.HexalActions;
 import ram.talia.hexal.common.lib.hex.HexalArithmetics;
 import ram.talia.hexal.common.lib.hex.HexalIotaTypes;
+import ram.talia.hexal.datagen.HexalActionTagProvider;
+import ram.talia.hexal.datagen.HexalplatRecipes;
 import ram.talia.hexal.eventhandlers.BoundStorageEventHandler;
 import ram.talia.hexal.eventhandlers.WispCastingManagerEventHandler;
 
@@ -132,6 +135,9 @@ public class Hexal {
     }
 
     public void onDatagen(GatherDataEvent event) {
+        final DataGenerator gen = event.getGenerator();
+        gen.addProvider(event.includeServer(), new HexalplatRecipes(gen.getPackOutput(), event.getLookupProvider()));
+        gen.addProvider(event.includeServer(), new HexalActionTagProvider(gen.getPackOutput(), event.getLookupProvider()));
     }
 
     // You can use SubscribeEvent and let the Event Bus discover methods to call

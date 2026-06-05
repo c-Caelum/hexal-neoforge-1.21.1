@@ -157,7 +157,7 @@ public class HexalConfig {
         }
 
         private static boolean validateBlock(Object object) {
-            return object instanceof String itemName && BuiltInRegistries.BLOCK.containsKey(ResourceLocation.parse(itemName));
+            return object instanceof String itemName && ResourceLocation.tryParse(itemName) != null;
         }
 
         public static final ModConfigSpec SPEC = BUILDER.build();

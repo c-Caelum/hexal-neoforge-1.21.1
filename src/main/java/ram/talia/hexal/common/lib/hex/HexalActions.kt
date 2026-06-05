@@ -23,6 +23,8 @@ import ram.talia.hexal.common.casting.actions.spells.wisp.*
 import ram.talia.hexal.common.casting.actions.*
 import ram.talia.hexal.common.casting.actions.spells.*
 import ram.talia.hexal.common.entities.BaseWisp
+import ram.talia.hexal.common.casting.actions.spells.gates.*
+import ram.talia.hexal.common.casting.actions.spells.great.*
 
 object HexalActions {
 
@@ -194,7 +196,6 @@ object HexalActions {
 	@JvmField
 	val LINK_COMM_CLOSE_TRANSMIT = make("link/comm/close_transmit", HexPattern.fromAngles("ewaqawe", HexDir.EAST), OpCloseTransmit)
 	*/
-	/*
 	// =============================== Gate Stuff =====================================
 	@JvmField
 	val GATE_MARK = make("gate/mark", HexPattern.fromAngles("qaqeede", HexDir.WEST), OpMarkGate)
@@ -251,7 +252,7 @@ object HexalActions {
 	@JvmField
 	val MOTE_USE_ON = make("mote/use_on", HexPattern.fromAngles("qqqwqqqqaa", HexDir.EAST), OpUseMoteOn)
 
-	/*// ============================== Great Stuff =====================================
+	// ============================== Great Stuff =====================================
 	@JvmField
 	val CONSUME_WISP = make("wisp/consume",
 			HexPattern.fromAngles("wawqwawwwewwwewwwawqwawwwewwwewdeaweewaqaweewaawwww", HexDir.NORTH_WEST),
@@ -263,7 +264,7 @@ object HexalActions {
 	@JvmField
 	val TICK = make("tick", HexPattern.fromAngles("wwwdwdwwwawqqeqwqqwqeqwqq", HexDir.SOUTH_EAST), OpTick)
 	@JvmField
-	val GATE_MAKE = make("gate/make", HexPattern.fromAngles("qwqwqwqwqwqqeaeaeaeaeae", HexDir.WEST), OpMakeGate)*/
+	val GATE_MAKE = make("gate/make", HexPattern.fromAngles("qwqwqwqwqwqqeaeaeaeaeae", HexDir.WEST), OpMakeGate)
 
 
 
