@@ -41,7 +41,6 @@ import ram.talia.hexal.common.entities.BaseWisp;
 import ram.talia.hexal.common.lib.HexalBlockEntities;
 import ram.talia.hexal.common.lib.HexalBlocks;
 import ram.talia.hexal.common.lib.HexalEntities;
-import ram.talia.hexal.common.lib.HexalFeatures;
 import ram.talia.hexal.common.lib.hex.HexalActions;
 import ram.talia.hexal.common.lib.hex.HexalArithmetics;
 import ram.talia.hexal.common.lib.hex.HexalIotaTypes;
