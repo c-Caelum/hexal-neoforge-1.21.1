@@ -87,7 +87,6 @@ public class Hexal {
         bind(HexRegistries.ACTION, HexalActions::register, modEventBus);
         bind(HexRegistries.ARITHMETIC, HexalArithmetics::register, modEventBus);
         bind(Registries.ENTITY_TYPE, HexalEntities::registerEntities, modEventBus);
-        bind(Registries.FEATURE, HexalFeatures::registerFeatures, modEventBus);
         modEventBus.addListener((RegisterEvent event) -> {
             event.register(NeoForgeRegistries.ENTITY_DATA_SERIALIZERS.key(), registryHelper -> {
                 registryHelper.register(modLoc("pigment"), PIGMENT_SERIALIZER);

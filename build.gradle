@@ -106,6 +106,10 @@ neoForge {
     // These can be tweaked, removed, or duplicated as needed.
     runs {
         client {
+            data()
+
+            programArguments.addAll '--mod', project.mod_id, '--all', '--output', file('src/generated/resources/').getAbsolutePath(), '--existing', file('src/main/resources/').getAbsolutePath()
+
             client()
 
             // Comma-separated list of namespaces to load gametests from. Empty = all namespaces.

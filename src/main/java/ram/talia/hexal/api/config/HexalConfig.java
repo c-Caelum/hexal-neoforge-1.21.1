@@ -20,7 +20,7 @@ public class HexalConfig {
                 .comment("Capped to be a positive integer between 640 and 64000.")
                 .defineInRange("maxItemsReturned", 32000, 64, 64000);
         public static final ModConfigSpec.IntValue MAX_RECORDS_IN_MEDIAFIED_STORAGE = BUILDER
-                .comment("The maximum amount of records allowed in a each Mote Nexus.")
+                .comment("The maximum amount of records allowed in each Mote Nexus.")
                 .comment("Capped to be a positive integer between 128 and 16384.")
                 .defineInRange("maxRecordsForNexus", 1023, 128, 16384);
         public static final ModConfigSpec.DoubleValue BIND_STORAGE_COST = BUILDER
@@ -143,6 +143,11 @@ public class HexalConfig {
                 .comment("Disallowed blocks in Accelerate.")
                 .defineListAllowEmpty("accelerateDisallowed", List.of("hexcasting:impetus_look", "create:deployer"),
                         () -> "", Server::validateBlock);
+
+        public static final ModConfigSpec.DoubleValue SLIPWAY_CHANCE = BUILDER
+                .comment("The chance for a slipway to form is this number.")
+                .comment("Set to 0 for none to spawn.")
+                .defineInRange("slipwayChance", 0.5, 0, 1);
 
 
         public static boolean isAccelerateAllowed(ResourceLocation blockID) {
