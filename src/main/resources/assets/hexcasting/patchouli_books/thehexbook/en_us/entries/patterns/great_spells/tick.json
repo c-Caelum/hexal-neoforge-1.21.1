@@ -1,0 +1,22 @@
+{
+  "name": "hexal.entry.tick",
+  "category": "hexcasting:patterns/great_spells",
+  "icon": "minecraft:clock",
+  "sortnum": 14,
+  "advancement": "hexcasting:root",
+  "read_by_default": true,
+  "pages": [
+    {
+      "type": "hexcasting:pattern",
+      "op_id": "hexal:tick",
+      "anchor": "hexal:tick",
+      "input": "vec",
+      "output": "",
+      "text": "hexal.page.tick.tick.0"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "hexal.page.tick.tick.1"
+    }
+  ]
+}

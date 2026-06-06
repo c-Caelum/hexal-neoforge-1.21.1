@@ -1,0 +1,50 @@
+{
+  "name": "hexal.entry.everbook",
+  "category": "hexcasting:patterns",
+  "icon": "minecraft:end_portal_frame",
+  "sortnum": 16,
+  "advancement": "hexcasting:enlightenment",
+  "entry_color": "54398a",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "hexal.page.everbook.0"
+    },
+    {
+      "type": "hexcasting:pattern",
+      "op_id": "hexal:everbook/read",
+      "anchor": "hexal:everbook/read",
+      "input": "vector, pattern",
+      "output": "",
+      "text": "hexal.page.everbook.everbook/read"
+    },
+    {
+      "type": "hexcasting:pattern",
+      "op_id": "hexal:everbook/write",
+      "anchor": "hexal:everbook/write",
+      "input": "vector, pattern",
+      "output": "",
+      "text": "hexal.page.everbook.everbook/write"
+    },
+    {
+      "type": "hexcasting:pattern",
+      "op_id": "hexal:everbook/delete",
+      "anchor": "hexal:everbook/delete",
+      "input": "pattern",
+      "output": "",
+      "text": "hexal.page.everbook.everbook/delete"
+    },
+    {
+      "type": "hexcasting:pattern",
+      "op_id": "hexal:everbook/toggle_macro",
+      "anchor": "hexal:everbook/toggle_macro",
+      "input": "pattern",
+      "output": "",
+      "text": "hexal.page.everbook.everbook/toggle_macro.0"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "hexal.page.everbook.everbook/toggle_macro.1"
+    }
+  ]
+}

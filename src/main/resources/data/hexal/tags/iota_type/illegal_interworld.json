@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "hexcasting:entity",
+    "hexcasting:continuation",
+    "hexal:gate",
+    "hexal:item"
+  ]
+}

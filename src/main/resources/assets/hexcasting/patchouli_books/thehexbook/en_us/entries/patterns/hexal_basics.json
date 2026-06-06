@@ -1,0 +1,58 @@
+{
+  "name": "hexal.entry.hexal_basics",
+  "category": "hexcasting:patterns",
+  "icon": "minecraft:wooden_shovel",
+  "sortnum": 0,
+  "advancement": "hexcasting:root",
+  "read_by_default": true,
+  "pages": [
+    {
+      "type": "hexcasting:pattern",
+      "op_id": "hexal:current_tick",
+      "anchor": "hexal:current_tick",
+      "input": "",
+      "output": "number",
+      "text": "hexal.page.hexal_basics.current_tick"
+    },
+    {
+      "type": "hexcasting:pattern",
+      "op_id": "hexal:breath",
+      "anchor": "hexal:breath",
+      "input": "entity",
+      "output": "num",
+      "text": "hexal.page.hexal_basics.breath"
+    },
+    {
+      "type": "hexcasting:pattern",
+      "op_id": "hexal:health",
+      "anchor": "hexal:health",
+      "input": "entity",
+      "output": "num",
+      "text": "hexal.page.hexal_basics.health"
+    },
+    {
+      "type": "hexcasting:pattern",
+      "op_id": "hexal:armour",
+      "anchor": "hexal:armour",
+      "input": "entity",
+      "output": "num",
+      "text": "hexal.page.hexal_basics.armour"
+    },
+    {
+      "type": "hexcasting:pattern",
+      "op_id": "hexal:toughness",
+      "anchor": "hexal:toughness",
+      "input": "entity",
+      "output": "num",
+      "text": "hexal.page.hexal_basics.toughness"
+    },
+    {
+      "type": "hexcasting:pattern",
+      "op_id": "hexal:light_level",
+      "anchor": "hexal:light_level",
+      "input": "vec",
+      "output": "num",
+      "text": "hexal.page.hexal_basics.light_level"
+    }
+  ]
+}

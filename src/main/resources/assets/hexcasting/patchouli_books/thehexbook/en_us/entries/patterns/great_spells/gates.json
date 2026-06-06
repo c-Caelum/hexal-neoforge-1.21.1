@@ -1,0 +1,79 @@
+{
+  "name": "hexal.entry.gates",
+  "category": "hexcasting:patterns/great_spells",
+  "icon": "minecraft:end_portal_frame",
+  "sortnum": 16,
+  "advancement": "hexcasting:root",
+  "read_by_default": true,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "hexal.page.gates.0"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "hexal.page.gates.1"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "hexal.page.gates.2"
+    },
+    {
+      "type": "hexcasting:pattern",
+      "op_id": "hexal:gate/make",
+      "anchor": "hexal:gate/make",
+      "input": "null | vec | vec, entity",
+      "output": "gate",
+      "text": "hexal.page.gates.gate/make"
+    },
+    {
+      "type": "hexcasting:pattern",
+      "op_id": "hexal:gate/mark",
+      "anchor": "hexal:gate/mark",
+      "input": "gate, entity",
+      "output": "",
+      "text": "hexal.page.gates.gate/mark"
+    },
+    {
+      "type": "hexcasting:pattern",
+      "op_id": "hexal:gate/unmark",
+      "anchor": "hexal:gate/unmark",
+      "input": "gate, entity",
+      "output": "",
+      "text": "hexal.page.gates.gate/unmark"
+    },
+    {
+      "type": "hexcasting:pattern",
+      "header": "hexcasting.action.hexal:gate/mark/num/get",
+      "op_id": "hexcasting:abs",
+      "anchor": "hexcasting:abs",
+      "input": "gate",
+      "output": "num",
+      "text": "hexal.page.gates.gate/mark/num/get"
+    },
+    {
+      "type": "hexcasting:pattern",
+      "op_id": "hexal:gate/mark/get",
+      "anchor": "hexal:gate/mark/get",
+      "input": "gate, entity",
+      "output": "bool",
+      "text": "hexal.page.gates.gate/mark/get"
+    },
+    {
+      "type": "hexcasting:pattern",
+      "op_id": "hexal:gate/close",
+      "anchor": "hexal:gate/close",
+      "input": "gate | gate, vec",
+      "output": "",
+      "text": "hexal.page.gates.gate/close"
+    },
+    {
+      "type": "hexcasting:pattern",
+      "op_id": "hexal:gate/closeable",
+      "anchor": "hexal:gate/closeable",
+      "input": "gate",
+      "output": "bool",
+      "text": "hexal.page.gates.gate/closeable"
+    }
+  ]
+}
