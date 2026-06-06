@@ -8,6 +8,7 @@ import net.minecraft.world.entity.MobCategory;
 import ram.talia.hexal.Hexal;
 import ram.talia.hexal.common.entities.ProjectileWisp;
 import ram.talia.hexal.common.entities.TickingWisp;
+import ram.talia.hexal.common.entities.WanderingWisp;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -26,13 +27,13 @@ public class HexalEntities {
 	
 	private static final Map<ResourceLocation, EntityType<?>> ENTITIES = new LinkedHashMap<>();
 	
-	/*public static final EntityType<WanderingWisp> WANDERING_WISP  = register(
+	public static final EntityType<WanderingWisp> WANDERING_WISP  = register(
 					"wisp/wandering",
 					EntityType.Builder.of((EntityType.EntityFactory<WanderingWisp>) WanderingWisp::new, MobCategory.MISC)
 														.sized(0.5f, 0.5f)
 														.clientTrackingRange(32)
 														.updateInterval(1)
-														.build(Hexal.MODID + ":wisp/wandering"));*/
+														.build(Hexal.MODID + ":wisp/wandering"));
 	
 	public static final EntityType<ProjectileWisp> PROJECTILE_WISP = register(
 					"wisp/projectile",

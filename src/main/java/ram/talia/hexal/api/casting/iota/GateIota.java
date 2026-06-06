@@ -1,6 +1,7 @@
 package ram.talia.hexal.api.casting.iota;
 
 import at.petrak.hexcasting.api.casting.arithmetic.predicates.IotaPredicate;
+import at.petrak.hexcasting.api.casting.castables.SpellAction;
 import at.petrak.hexcasting.api.casting.iota.Iota;
 import at.petrak.hexcasting.api.casting.iota.IotaType;
 import com.mojang.datafixers.util.Either;
@@ -230,7 +231,6 @@ public class GateIota extends Iota {
 
     @Override
     public Component display() {
-
         if (isDrifting()) {
             return Component.translatable("hexal.spelldata.gate", getGateIndex()).withStyle(ChatFormatting.LIGHT_PURPLE);
         }

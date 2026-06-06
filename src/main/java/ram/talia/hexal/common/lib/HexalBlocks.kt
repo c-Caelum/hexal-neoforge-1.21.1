@@ -14,6 +14,7 @@ import net.minecraft.world.level.material.MapColor
 import net.minecraft.world.level.material.PushReaction
 import ram.talia.hexal.Hexal.modLoc
 import ram.talia.hexal.common.blocks.BlockMediafiedStorage
+import ram.talia.hexal.common.blocks.BlockSlipway
 import java.util.function.BiConsumer
 import java.util.function.Consumer
 
@@ -46,7 +47,7 @@ class HexalBlocks {
 		private val BLOCK_ITEMS: MutableMap<ResourceLocation, Pair<Block, Item.Properties>> = LinkedHashMap()
 		private val BLOCK_TABS: MutableMap<CreativeModeTab, MutableList<Block>> = LinkedHashMap()
 
-		/*@JvmField
+		@JvmField
 		val SLIPWAY = blockNoItem("slipway", BlockSlipway(
 			//Material.Builder.notSolidBlocking is for some unimaginable reason package-private, so we're doing this instead
 			// setting the slipway as blocksMotion even though it doesn't so that fluids can't replace it.
@@ -56,7 +57,7 @@ class HexalBlocks {
 				.strength(-1.0f, 3600000.0f)
 				.noCollission()
 				.noOcclusion()
-		))*/
+		))
 
 		@JvmField
 		val MEDIAFIED_STORAGE = blockItem("mediafied_storage", BlockMediafiedStorage(

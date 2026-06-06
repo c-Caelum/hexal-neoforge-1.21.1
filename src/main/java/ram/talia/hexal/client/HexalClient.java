@@ -41,6 +41,8 @@ public class HexalClient {
                 BlockEntityMediafiedStorageRenderer::new
         );
         event.registerEntityRenderer(HexalEntities.TICKING_WISP, WispRenderer::new);
+        event.registerEntityRenderer(HexalEntities.PROJECTILE_WISP, WispRenderer::new);
+        event.registerEntityRenderer(HexalEntities.WANDERING_WISP, WispRenderer::new);
     }
 
     @SubscribeEvent

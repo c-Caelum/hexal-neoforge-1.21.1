@@ -41,6 +41,7 @@ import ram.talia.hexal.common.entities.BaseWisp;
 import ram.talia.hexal.common.lib.HexalBlockEntities;
 import ram.talia.hexal.common.lib.HexalBlocks;
 import ram.talia.hexal.common.lib.HexalEntities;
+import ram.talia.hexal.common.lib.HexalFeatures;
 import ram.talia.hexal.common.lib.hex.HexalActions;
 import ram.talia.hexal.common.lib.hex.HexalArithmetics;
 import ram.talia.hexal.common.lib.hex.HexalIotaTypes;
@@ -86,6 +87,7 @@ public class Hexal {
         bind(HexRegistries.ACTION, HexalActions::register, modEventBus);
         bind(HexRegistries.ARITHMETIC, HexalArithmetics::register, modEventBus);
         bind(Registries.ENTITY_TYPE, HexalEntities::registerEntities, modEventBus);
+        bind(Registries.FEATURE, HexalFeatures::registerFeatures, modEventBus);
         modEventBus.addListener((RegisterEvent event) -> {
             event.register(NeoForgeRegistries.ENTITY_DATA_SERIALIZERS.key(), registryHelper -> {
                 registryHelper.register(modLoc("pigment"), PIGMENT_SERIALIZER);
@@ -110,25 +112,6 @@ public class Hexal {
     // Add the example block item to the building blocks tab
     private void addCreative(BuildCreativeModeTabContentsEvent event) {
     }
-
-
-    /**
-     * Ticks each player's {@link WispCastingManager}, meaning that their wisps casts execute properly.
-     */
-    /*@SubscribeEvent
-    public static void playerTick(PlayerTickEvent event) {
-
-        Player maybeClientPlayer = event.getEntity();
-
-        Hexal.LOGGER.info("hi. {}.", maybeClientPlayer.level().isClientSide);
-
-        if (maybeClientPlayer.level().isClientSide)
-            return;
-
-        ServerPlayer player = (ServerPlayer) maybeClientPlayer;
-
-        WispCastingManagerEventHandler.getCastingManager(player).executeCasts();
-    }*/
 
     public static ResourceLocation modLoc(String str) {
         return ResourceLocation.fromNamespaceAndPath(MODID, str);

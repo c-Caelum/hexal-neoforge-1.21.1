@@ -1,6 +1,6 @@
 package ram.talia.hexal.common.entities
 
-/*import at.petrak.hexcasting.api.misc.MediaConstants
+import at.petrak.hexcasting.api.misc.MediaConstants
 import at.petrak.hexcasting.api.casting.iota.Iota
 import at.petrak.hexcasting.api.casting.iota.NullIota
 import at.petrak.hexcasting.api.pigment.FrozenPigment
@@ -13,14 +13,15 @@ import net.minecraft.server.level.ServerPlayer
 import net.minecraft.world.entity.EntityType
 import net.minecraft.world.level.Level
 import net.minecraft.world.phys.Vec3
-import ram.talia.hexal.api.linkable.ILinkable
 import ram.talia.hexal.api.plus
 import ram.talia.hexal.common.lib.HexalEntities
 import ram.talia.hexal.api.nextDouble
 import java.util.*
 import kotlin.math.abs
 
-class WanderingWisp(entityType: EntityType<out WanderingWisp>, level: Level) : BaseWisp(entityType, level) {
+class WanderingWisp(entityType: EntityType<out WanderingWisp>, level: Level) : BaseWisp(entityType, level,
+    FrozenPigment.DEFAULT.get()
+) {
 	override var media: Long
         get() = MIN_MEDIA + (MAX_MEDIA - MIN_MEDIA) * tickCount / MAX_TICKS_ALIVE
 		set(_) {}
@@ -35,24 +36,9 @@ class WanderingWisp(entityType: EntityType<out WanderingWisp>, level: Level) : B
 
 	var startTick: Long = 0
 
-	override fun owner(): UUID = uuid
-
-	override fun maxSqrLinkRange() = 16.0
-
-	override fun receiveIota(sender: ILinkable, iota: Iota) { }
-
-	override fun nextReceivedIota() = NullIota()
-
-	override fun numRemainingIota() = 0
-
 	override fun fightConsume(consumer: Either<BaseCastingWisp, ServerPlayer?>) = false
 
-	override fun currentMediaLevel(): Long = -1
-
-	override fun canAcceptMedia(other: ILinkable, otherMediaLevel: Long): Long = 0
-
-	override fun acceptMedia(other: ILinkable, sentMedia: Long) { }
-
+    fun currentMediaLevel(): Long = -1
 
 	constructor(world: Level, pos: Vec3) : this(HexalEntities.WANDERING_WISP, world) {
 		setPos(pos)
@@ -71,10 +57,9 @@ class WanderingWisp(entityType: EntityType<out WanderingWisp>, level: Level) : B
 		move()
 
 		if (level().isClientSide) {
-			val pigment = FrozenPigment.fromNBT(entityData.get(PIGMENT))
+			val pigment = entityData.get(PIGMENT)
 			playWispParticles(pigment)
 			playTrailParticles(pigment)
-			clientLinkableHolder!!.renderLinks()
 		}
 	}
 
@@ -131,12 +116,12 @@ class WanderingWisp(entityType: EntityType<out WanderingWisp>, level: Level) : B
 		compound.putLong(TAG_START_TICK, startTick)
 	}
 
-	override fun defineSynchedData() {
-		super.defineSynchedData()
+	override fun defineSynchedData(builder: SynchedEntityData.Builder) {
+		super.defineSynchedData(builder)
 
-		entityData.define(ACCELERATION_X, 0f)
-		entityData.define(ACCELERATION_Y, 0f)
-		entityData.define(ACCELERATION_Z, 0f)
+		builder.define(ACCELERATION_X, 0f)
+		builder.define(ACCELERATION_Y, 0f)
+		builder.define(ACCELERATION_Z, 0f)
 	}
 
 	companion object {
@@ -156,4 +141,4 @@ class WanderingWisp(entityType: EntityType<out WanderingWisp>, level: Level) : B
 		const val MIN_MEDIA = 2L * MediaConstants.SHARD_UNIT
 		const val MAX_MEDIA = 5L * MediaConstants.SHARD_UNIT
 	}
-}*/
+}
