@@ -22,7 +22,6 @@ public class HexalEntities {
 	}
 	
 	public static void registerEntityDataSerialisers () {
-	
 	}
 	
 	private static final Map<ResourceLocation, EntityType<?>> ENTITIES = new LinkedHashMap<>();
