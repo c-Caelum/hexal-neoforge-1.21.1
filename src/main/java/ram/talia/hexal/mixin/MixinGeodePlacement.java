@@ -38,7 +38,7 @@ public abstract class MixinGeodePlacement extends Feature<GeodeConfiguration> {
 
     @Inject(method="place", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/levelgen/feature/GeodeFeature;safeSetBlock(Lnet/minecraft/world/level/WorldGenLevel;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;Ljava/util/function/Predicate;)V", ordinal = 1, remap = true), remap = true)
     void counts(FeaturePlaceContext<GeodeConfiguration> p_159836_, CallbackInfoReturnable<Boolean> cir,
-                @Local(ordinal = 1, type = BlockPos.class) BlockPos blockpos3,
+                @Local(name = "blockpos3") BlockPos blockpos3,
                 @Share("Hexal$center") LocalRef<Vec3> center, @Share("Hexal$innerCount") LocalIntRef innerCount) {
         center.set(center.get().add(blockpos3.getCenter()));
         innerCount.set(innerCount.get() + 1);
