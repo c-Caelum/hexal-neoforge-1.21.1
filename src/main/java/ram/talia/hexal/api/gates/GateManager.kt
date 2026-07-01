@@ -14,9 +14,11 @@ import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.animal.Cod
 import net.minecraft.world.phys.Vec3
+import ram.talia.hexal.Hexal
 import ram.talia.hexal.api.nbt.toNbtList
 import ram.talia.hexal.api.nbt.toUUIDList
 import ram.talia.hexal.api.casting.iota.GateIota
+import ram.talia.hexal.api.config.HexalConfig
 import java.util.UUID
 
 /**
@@ -24,6 +26,12 @@ import java.util.UUID
  */
 object GateManager {
     private var currentGateNum = 0
+    private var savedData : GateSavedData? = null;
+
+    @JvmStatic
+    fun extraInit(server: MinecraftServer) {
+        savedData = GateSavedData.getServerState(server);
+    }
 
     @JvmField
     var shouldClearOnWrite = false
@@ -39,6 +47,7 @@ object GateManager {
         allMarked.putIfAbsent(gate, mutableSetOf())
 
         allMarked[gate]!!.add(entity)
+        savedData!!.setDirty();
     }
 
     @JvmStatic
@@ -47,11 +56,13 @@ object GateManager {
     @JvmStatic
     fun unmark(gate: Int, entity: UUID) {
         allMarked[gate]?.remove(entity)
+        savedData!!.setDirty();
     }
 
     @JvmStatic
     fun clearMarked(gate: Int) {
         allMarked.remove(gate)
+        savedData!!.setDirty();
     }
 
     /**
@@ -78,13 +89,16 @@ object GateManager {
     private fun makeGate(target: Either<Vec3, Pair<Entity, Vec3>>?): GateIota {
         val gate = GateIota(currentGateNum, target)
         currentGateNum += 1
+        savedData!!.setDirty();
         return gate
     }
 
     @JvmStatic
     fun readFromNbt(tag: CompoundTag) {
-        if (tag.contains(TAG_CURRENT_GATE_NUM))
-            currentGateNum = tag.getInt(TAG_CURRENT_GATE_NUM)
+        currentGateNum = if (tag.contains(TAG_CURRENT_GATE_NUM))
+            tag.getInt(TAG_CURRENT_GATE_NUM)
+        else
+            0;
 
         if (tag.contains(TAG_MARKED)) {
             val markedTag = tag.getCompound(TAG_MARKED)
@@ -92,6 +106,8 @@ object GateManager {
             for (gateStr in markedTag.allKeys) {
                 allMarked[gateStr.toInt()] = markedTag.getList(gateStr, Tag.TAG_INT_ARRAY).toUUIDList().toMutableSet()
             }
+        } else {
+            allMarked.clear();
         }
     }
 

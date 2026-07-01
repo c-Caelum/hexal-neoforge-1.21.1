@@ -36,6 +36,7 @@ import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
 import ram.talia.hexal.api.casting.wisp.WispCastingManager;
 import ram.talia.hexal.api.config.HexalConfig;
+import ram.talia.hexal.api.gates.GateManager;
 import ram.talia.hexal.client.HexalClient;
 import ram.talia.hexal.common.entities.BaseWisp;
 import ram.talia.hexal.common.lib.HexalBlockEntities;
@@ -126,6 +127,7 @@ public class Hexal {
     public void onServerStarting(ServerStartingEvent event) {
         // Do something when the server starts
         LOGGER.info("HELLO from server starting");
+        GateManager.extraInit(event.getServer());
         NeoForge.EVENT_BUS.addListener(WispCastingManagerEventHandler::playerLoggedIn);
         NeoForge.EVENT_BUS.addListener(WispCastingManagerEventHandler::playerLoggedOut);
         NeoForge.EVENT_BUS.addListener(WispCastingManagerEventHandler::serverTick);
