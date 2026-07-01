@@ -81,7 +81,7 @@ public class HexalConfig {
 
         public static final ModConfigSpec.DoubleValue SUMMON_PROJECTILE_WISP_COST = BUILDER
                 .comment("The cost of summoning a cyclic wisp. Minimum is 0.5 dust.")
-                .defineInRange("summonCyclicWispCost", 1.7, 0.5, 100000.0);
+                .defineInRange("summonProjectileWispCost", 1.7, 0.5, 100000.0);
 
         public static final ModConfigSpec.DoubleValue FALLING_BLOCK_COST = BUILDER
                 .comment("The cost for making a block fall.")
@@ -97,11 +97,11 @@ public class HexalConfig {
 
         public static final ModConfigSpec.DoubleValue PLACE_TYPE_COST = BUILDER
                 .comment("The cost for summoning a particle.")
-                .defineInRange("particlesCost", 0.125, 0.0, 100000.0);
+                .defineInRange("placeTypeCost", 0.125, 0.0, 100000.0);
 
         public static final ModConfigSpec.DoubleValue SMELT_COST = BUILDER
-                .comment("The cost for summoning a particle.")
-                .defineInRange("particlesCost", 0.75, 0.0, 100000.0);
+                .comment("The cost for smelting one item/mote/block.")
+                .defineInRange("smeltCost", 0.75, 0.0, 100000.0);
 
         public static final ModConfigSpec.DoubleValue MAKE_GATE_COST = BUILDER
                 .comment("The cost for making a gate.")
@@ -117,7 +117,7 @@ public class HexalConfig {
                 .defineInRange("driftingScaleFactor", 0.1, 0.0, 100000.0);
         public static final ModConfigSpec.DoubleValue MAX_GATE_OFFSET = BUILDER
                 .comment("The maximum offset that an entity-anchored gate can have.")
-                .defineInRange("particlesCost", 32, 0.0, 100000.0);
+                .defineInRange("maxGateOffset", 32, 0.0, 100000.0);
 
         public static final ModConfigSpec.DoubleValue CONSUME_WISP_OWN_WISP = BUILDER
                 .comment("The cost scaling factor for consuming *your own* wisp.")
