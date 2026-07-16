@@ -3,9 +3,11 @@ package ram.talia.hexal.datagen;
 import at.petrak.hexcasting.api.advancements.HexAdvancementTriggers;
 import at.petrak.hexcasting.api.misc.MediaConstants;
 import at.petrak.hexcasting.common.lib.HexStateIngredients;
+import at.petrak.hexcasting.common.recipe.BrainsweepRecipe;
 import at.petrak.hexcasting.common.recipe.ingredient.brainsweep.VillagerIngredient;
 import at.petrak.hexcasting.datagen.HexAdvancements;
 import at.petrak.hexcasting.datagen.recipe.builders.BrainsweepRecipeBuilder;
+import at.petrak.hexcasting.interop.patchouli.BrainsweepProcessor;
 import net.minecraft.advancements.Criterion;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
@@ -67,10 +69,9 @@ public class HexalplatRecipes extends RecipeProvider {
     @ParametersAreNonnullByDefault
     public void buildRecipes(RecipeOutput recipes) {
         new BrainsweepRecipeBuilder(HexStateIngredients.of(Blocks.SHULKER_BOX),
-                new VillagerIngredient(VillagerProfession.CARTOGRAPHER, null, 2),
+                new VillagerIngredient(VillagerProfession.CARTOGRAPHER, null, 4),
                 HexalBlocks.MEDIAFIED_STORAGE.defaultBlockState(), MediaConstants.CRYSTAL_UNIT*10)
                 .unlockedBy("enlightenment", new Criterion<>(HexAdvancementTriggers.OVERCAST_TRIGGER, HexAdvancements.ENLIGHTEN))
                 .save(recipes, modLoc("brainsweep/mediafied_storage"));
-
     }
 }

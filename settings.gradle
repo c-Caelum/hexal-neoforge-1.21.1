@@ -1,6 +1,7 @@
 pluginManagement {
     repositories {
         gradlePluginPortal()
+        maven { url = uri("https://maven.blamejared.com/") }
     }
     plugins {
         id 'org.jetbrains.kotlin.jvm' version '2.3.21'

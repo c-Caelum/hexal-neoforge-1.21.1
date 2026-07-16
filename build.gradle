@@ -4,6 +4,12 @@ plugins {
     id 'net.neoforged.moddev' version '2.0.141'
     id 'idea'
     id 'org.jetbrains.kotlin.jvm'
+    id 'at.petra-k.pkpcpbp.PKJson5Plugin' version "${pkpcpbp_ver}"
+}
+
+pkJson5 {
+    autoProcessJson5 = true
+    autoProcessJson5Flattening = true
 }
 
 tasks.named('wrapper', Wrapper).configure {

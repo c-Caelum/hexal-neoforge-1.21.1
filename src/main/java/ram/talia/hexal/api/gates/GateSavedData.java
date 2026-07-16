@@ -24,7 +24,8 @@ public class GateSavedData extends SavedData {
     public static GateSavedData getServerState(MinecraftServer server) {
         ServerLevel overworld = server.getLevel(ServerLevel.OVERWORLD);
         assert overworld != null;
-        GateSavedData data = overworld.getDataStorage().computeIfAbsent(FACTORY, "hexal:gate_data");
+        // I'm really sorry old players.
+        GateSavedData data = overworld.getDataStorage().computeIfAbsent(FACTORY, "hexal_gate_data");
         data.setDirty();
         return data;
     }
