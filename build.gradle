@@ -60,10 +60,8 @@ repositories {
     maven { url "https://maven.shedaniel.me/" }
     maven { url 'https://maven.su5ed.dev/releases' }
 
-    maven {
-        name = "Terraformers"
-        url = "https://maven.terraformersmc.com/"
-    }
+    // temp change
+    maven { url = "https://maven.gnomecraft.net/releases" }
 
     maven {
         name = 'Ladysnake Mods'
