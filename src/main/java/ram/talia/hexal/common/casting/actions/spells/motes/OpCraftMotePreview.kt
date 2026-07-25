@@ -1,6 +1,5 @@
 package ram.talia.hexal.common.casting.actions.spells.motes
 
-import at.petrak.hexcasting.api.casting.SpellList
 import at.petrak.hexcasting.api.casting.asActionResult
 import at.petrak.hexcasting.api.casting.castables.ConstMediaAction
 import at.petrak.hexcasting.api.casting.eval.CastingEnvironment
@@ -8,6 +7,7 @@ import at.petrak.hexcasting.api.casting.iota.Iota
 import at.petrak.hexcasting.api.casting.iota.ListIota
 import at.petrak.hexcasting.api.casting.iota.NullIota
 import at.petrak.hexcasting.api.casting.mishaps.MishapInvalidIota
+import at.petrak.hexcasting.api.utils.TreeList
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.CraftingInput
 import ram.talia.hexal.api.casting.iota.MoteIota
@@ -37,7 +37,7 @@ object OpCraftMotePreview : ConstMediaAction {
         return remainingIotas.asActionResult
     }
 
-    private fun makeCraftingGrid(input: Anyone<ItemStackIota, MoteIota, SpellList>): Array<ItemStack?> {
+    private fun makeCraftingGrid(input: Anyone<ItemStackIota, MoteIota, TreeList<Iota>>): Array<ItemStack?> {
         val out = Array<ItemStack?>(9) { _ -> null }
 
         for ((idy, iota) in input.flatMap({ listOf(IndexedValue(0, it)) }, { listOf(IndexedValue(0, it)) }, { it.withIndex() })) {

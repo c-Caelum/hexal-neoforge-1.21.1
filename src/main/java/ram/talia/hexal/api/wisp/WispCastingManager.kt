@@ -1,7 +1,6 @@
 package ram.talia.hexal.api.casting.wisp
 
 import at.petrak.hexcasting.api.HexAPI
-import at.petrak.hexcasting.api.casting.SpellList
 import at.petrak.hexcasting.api.casting.eval.ExecutionClientView
 import at.petrak.hexcasting.api.casting.eval.vm.CastingImage
 import at.petrak.hexcasting.api.casting.eval.vm.CastingVM
@@ -10,6 +9,7 @@ import at.petrak.hexcasting.api.casting.iota.IotaType
 import at.petrak.hexcasting.api.casting.iota.IotaType.isTooLargeToSerialize
 import at.petrak.hexcasting.api.casting.iota.ListIota
 import at.petrak.hexcasting.api.casting.iota.NullIota
+import at.petrak.hexcasting.api.utils.TreeList
 import at.petrak.hexcasting.api.utils.asCompound
 import at.petrak.hexcasting.api.utils.putCompound
 import com.mojang.serialization.Codec
@@ -57,7 +57,7 @@ class WispCastingManager(private val casterUUID: UUID, private var cachedServer:
 			wisp: BaseCastingWisp,
 			priority: Int,
 			hex: ListIota,
-			initialStack: List<Iota>,
+			initialStack: TreeList<Iota>,
 			initialRavenmind: Iota?,
 	) {
 		if (caster == null)
@@ -109,7 +109,7 @@ class WispCastingManager(private val casterUUID: UUID, private var cachedServer:
 				continue
 
 			if (wisp.level().dimension() != caster?.level()?.dimension()) {
-				wisp.castCallback(WispCastResult(wisp, false, mutableListOf(), NullIota(), true))
+				wisp.castCallback(WispCastResult(wisp, false, TreeList.empty(), NullIota(), true))
 				continue
 			}
 
@@ -180,7 +180,7 @@ class WispCastingManager(private val casterUUID: UUID, private var cachedServer:
 		val priority: Int,
 		val timeAdded: Long,
 		val hex: Iota,
-		val initialStack: List<Iota>,
+		val initialStack: TreeList<Iota>,
 		val initialRavenmind: Iota,
 	) : Comparable<WispCast> {
 		/**
@@ -193,7 +193,7 @@ class WispCastingManager(private val casterUUID: UUID, private var cachedServer:
 			priority: Int,
 			timeAdded: Long,
 			hex: ListIota,
-			initialStack: List<Iota>,
+			initialStack: TreeList<Iota>,
 			initialRavenmind: Iota?
 		) : this(wisp.uuid, priority, timeAdded, hex, initialStack, initialRavenmind ?: NullIota()) {
 			this.wisp = wisp
@@ -212,7 +212,7 @@ class WispCastingManager(private val casterUUID: UUID, private var cachedServer:
 					Codec.INT.fieldOf(TAG_PRIORITY).forGetter(WispCast::priority),
 					Codec.LONG.fieldOf(TAG_TIME_ADDED).forGetter(WispCast::timeAdded),
 					IotaType.TYPED_CODEC.fieldOf(TAG_HEX).forGetter(WispCast::hex),
-					IotaType.TYPED_CODEC.listOf().fieldOf(TAG_INITIAL_STACK).forGetter(WispCast::initialStack),
+				TreeList.codecOf(IotaType.TYPED_CODEC).fieldOf(TAG_INITIAL_STACK).forGetter(WispCast::initialStack),
 					IotaType.TYPED_CODEC.fieldOf(TAG_INITIAL_RAVENMIND).forGetter(WispCast::initialRavenmind)
 				).apply(it, ::WispCast)
 			}
@@ -228,7 +228,7 @@ class WispCastingManager(private val casterUUID: UUID, private var cachedServer:
 	/**
 	 * the result passed back to the Wisp after its cast is successfully executed.
 	 */
-	data class WispCastResult(val wisp: BaseCastingWisp, val succeeded: Boolean, val endStack: List<Iota>, val endRavenmind: Iota, val cancelled: Boolean = false) {
+	data class WispCastResult(val wisp: BaseCastingWisp, val succeeded: Boolean, val endStack: TreeList<Iota>, val endRavenmind: Iota, val cancelled: Boolean = false) {
 		constructor(
 			wisp: BaseCastingWisp,
 			succeeded: Boolean,
@@ -239,7 +239,7 @@ class WispCastingManager(private val casterUUID: UUID, private var cachedServer:
 			succeeded = succeeded,
 			// TODO: Make this a mishap
 			// Clear stack if it gets too large
-			endStack = if (isTooLargeToSerialize(image.stack)) mutableListOf() else image.stack,
+			endStack = if (isTooLargeToSerialize(image.stack)) TreeList.empty() else image.stack,
 			endRavenmind = Hexal.deserializeIota(image.userData.getCompound(HexAPI.RAVENMIND_USERDATA)),
 			cancelled = cancelled,
 		)

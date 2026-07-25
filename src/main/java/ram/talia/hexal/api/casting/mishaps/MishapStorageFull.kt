@@ -4,6 +4,7 @@ import at.petrak.hexcasting.api.casting.eval.CastingEnvironment
 import at.petrak.hexcasting.api.casting.iota.Iota
 import at.petrak.hexcasting.api.casting.mishaps.Mishap
 import at.petrak.hexcasting.api.pigment.FrozenPigment
+import at.petrak.hexcasting.api.utils.TreeList
 import net.minecraft.core.BlockPos
 import net.minecraft.core.component.DataComponents
 import net.minecraft.network.chat.Component
@@ -20,10 +21,10 @@ class MishapStorageFull(val storage: UUID) : Mishap() {
 
     override fun errorMessage(ctx: CastingEnvironment, errorCtx: Context): Component = error("full_storage")
 
-    override fun execute(ctx: CastingEnvironment, errorCtx: Context, stack: MutableList<Iota>) {
+    override fun execute(ctx: CastingEnvironment, errorCtx: Context, stack: TreeList<Iota>): TreeList<Iota> {
         // get a random record from in the storage
-        val allRecords = MediafiedItemManager.getAllRecords(storage) ?: return
-        val index = allRecords.keys.randomOrNull() ?: return
+        val allRecords = MediafiedItemManager.getAllRecords(storage) ?: return stack
+        val index = allRecords.keys.randomOrNull() ?: return stack
         val record = allRecords[index]!!;
         val iota = MoteIota(index)
         DataComponents.MAX_STACK_SIZE
@@ -46,5 +47,6 @@ class MishapStorageFull(val storage: UUID) : Mishap() {
         for (itemStack in toDrop) {
             ctx.world.addFreshEntity(ItemEntity(ctx.world, pos.x, pos.y, pos.z, itemStack))
         }
+        return stack;
     }
 }

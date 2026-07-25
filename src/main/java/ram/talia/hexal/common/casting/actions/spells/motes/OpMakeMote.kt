@@ -84,7 +84,7 @@ object OpMakeMote : VarargSpellAction {
         }
 
         override fun cast(env: CastingEnvironment, image: CastingImage): CastingImage? {
-            val stack = image.stack.toMutableList()
+            val stack = image.stack
 
             if (!itemStack.isEmpty) {
                 if (mote != null) {

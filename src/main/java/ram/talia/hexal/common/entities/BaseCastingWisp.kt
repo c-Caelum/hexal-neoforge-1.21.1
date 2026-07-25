@@ -1,12 +1,12 @@
 package ram.talia.hexal.common.entities
 
-import at.petrak.hexcasting.api.casting.SpellList
 import at.petrak.hexcasting.api.casting.iota.EntityIota
 import at.petrak.hexcasting.api.casting.iota.Iota
 import at.petrak.hexcasting.api.casting.iota.IotaType
 import at.petrak.hexcasting.api.casting.iota.ListIota
 import at.petrak.hexcasting.api.casting.iota.NullIota
 import at.petrak.hexcasting.api.pigment.FrozenPigment
+import at.petrak.hexcasting.api.utils.TreeList
 import at.petrak.hexcasting.api.utils.asCompound
 import at.petrak.hexcasting.api.utils.getList
 import at.petrak.hexcasting.api.utils.hasByte
@@ -105,7 +105,6 @@ abstract class BaseCastingWisp(entityType: EntityType<out BaseCastingWisp>, worl
 
 		hexNumTrueNames = 0
 		hexNumTrueNames = countTrueNamesInIota(iota, caster, level);
-
 	}
 
 	private var scheduledCast: Boolean
@@ -134,7 +133,7 @@ abstract class BaseCastingWisp(entityType: EntityType<out BaseCastingWisp>, worl
 		// clear entities that have been removed from the world at least once per second
 		// to prevent any memory leak type errors
 		if (!level().isClientSide) {
-			serHex = ListIota(validateIotaList(serHex.list.toList(), level() as ServerLevel));
+			serHex = ListIota(validateIotaList(serHex.list, level() as ServerLevel));
 			serRavenmind = validateIota(serRavenmind, level() as ServerLevel);
 		}
 
@@ -315,7 +314,7 @@ abstract class BaseCastingWisp(entityType: EntityType<out BaseCastingWisp>, worl
 	fun scheduleCast(
 		priority: Int,
 		hex: ListIota,
-		initialStack: List<Iota>,
+		initialStack: TreeList<Iota>,
 		initialRavenmind: Iota,
 	): Boolean {
 		if (level().isClientSide || caster == null || !canScheduleCast())

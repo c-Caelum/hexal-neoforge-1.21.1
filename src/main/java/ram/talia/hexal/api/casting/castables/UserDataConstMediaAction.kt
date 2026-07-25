@@ -29,7 +29,7 @@ interface UserDataConstMediaAction : Action {
     }
 
     override fun operate(env: CastingEnvironment, image: CastingImage, continuation: SpellContinuation): OperationResult {
-        val stack = image.stack.toMutableList()
+        val stack = image.stack
 
         if (env.extractMedia(this.mediaCost, true) > 0) {
             throw MishapNotEnoughMedia(this.mediaCost)

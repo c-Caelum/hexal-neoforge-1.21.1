@@ -36,7 +36,7 @@ interface VarargConstMediaAction : Action {
     }
 
     override fun operate(env: CastingEnvironment, image: CastingImage, continuation: SpellContinuation): OperationResult {
-        val stack = image.stack.toMutableList()
+        val stack = image.stack
 
         val argc = this.argc(stack.asReversed())
         if (argc > stack.size)

@@ -5,6 +5,7 @@ import at.petrak.hexcasting.api.casting.iota.EntityIota
 import at.petrak.hexcasting.api.casting.iota.Iota
 import at.petrak.hexcasting.api.casting.iota.IotaType
 import at.petrak.hexcasting.api.pigment.FrozenPigment
+import at.petrak.hexcasting.api.utils.TreeList
 import at.petrak.hexcasting.api.utils.hasByte
 import at.petrak.hexcasting.api.utils.hasFloat
 import at.petrak.hexcasting.api.utils.validateIota
@@ -39,10 +40,10 @@ import java.util.UUID
 class TickingWisp : BaseCastingWisp {
 	override val shouldComplainNotEnoughMedia = false
 
-	private var serStack: MutableList<Iota> = mutableListOf()
+	private var serStack: TreeList<Iota> = TreeList.empty<Iota>();
 
-	fun setStack(iotas: List<Iota>) {
-		serStack = iotas.toMutableList();
+	fun setStack(iotas: TreeList<Iota>) {
+		serStack = iotas;
 
 		stackNumTrueNames = 0
 		for (entity in serStack.getReferencedEntities(level() as ServerLevel)) {
@@ -98,7 +99,7 @@ class TickingWisp : BaseCastingWisp {
 	}
 
 	init {
-		serStack = mutableListOf(EntityIota(this))
+		serStack = TreeList.from(mutableListOf(EntityIota(this)))
 	}
 
 	//region Trueplayer handling stuff
@@ -109,7 +110,7 @@ class TickingWisp : BaseCastingWisp {
 
 	override fun tick() {
 		if (firstTick && !(level().isClientSide)) {
-			serStack = validateIotaList(serStack, level() as ServerLevel).toMutableList();
+			serStack = validateIotaList(serStack, level() as ServerLevel);
 			stackNumTrueNames = 0
 			for (entity in serStack.getReferencedEntities(level() as ServerLevel)) {
 				if ((entity is Player) && (entity != caster)) {
@@ -140,7 +141,7 @@ class TickingWisp : BaseCastingWisp {
 		// clear entities that have been removed from the world at least once per second
 		// to prevent any memory leak type errors
 		if (level().gameTime % 20 == 0L) {
-			serStack = validateIotaList(serStack, level() as ServerLevel).toMutableList();
+			serStack = validateIotaList(serStack, level() as ServerLevel);
 		}
 
 		scheduleCast(CASTING_SCHEDULE_PRIORITY, serHex, serStack, serRavenmind)
@@ -221,9 +222,9 @@ class TickingWisp : BaseCastingWisp {
 		super.readAdditionalSaveData(compound)
 
 		when (val stackTag = compound.get(TAG_STACK)) {
-			null -> serStack = mutableListOf()
+			null -> serStack = TreeList.empty()
 			else -> {
-				val list : MutableList<Iota> = mutableListOf();
+				val list : TreeList<Iota> = TreeList.empty<Iota>();
 				(stackTag as ListTag).forEach { list.add(Hexal.deserializeIota(it)) }
 			}
 		}

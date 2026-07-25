@@ -4,6 +4,7 @@ import at.petrak.hexcasting.api.casting.eval.env.PlayerBasedCastEnv
 import at.petrak.hexcasting.api.casting.iota.EntityIota
 import at.petrak.hexcasting.api.casting.iota.Vec3Iota
 import at.petrak.hexcasting.api.pigment.FrozenPigment
+import at.petrak.hexcasting.api.utils.TreeList
 import at.petrak.hexcasting.common.lib.HexAttributes
 import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.EntityType
@@ -116,7 +117,7 @@ open class ProjectileWisp : BaseCastingWisp {
 			playTrailParticles()
 		else {
 			val serStack = mutableListOf(EntityIota(this), EntityIota(result.entity))
-			scheduleCast(CASTING_SCHEDULE_PRIORITY, serHex, serStack, serRavenmind)
+			scheduleCast(CASTING_SCHEDULE_PRIORITY, serHex, TreeList.from(serStack), serRavenmind)
 		}
 	}
 
@@ -127,7 +128,8 @@ open class ProjectileWisp : BaseCastingWisp {
 		else {
 			val serStack = mutableListOf(EntityIota(this),
 					Vec3Iota(Vec3.atCenterOf(result.blockPos)))
-			scheduleCast(CASTING_SCHEDULE_PRIORITY, serHex, serStack, serRavenmind)
+
+			scheduleCast(CASTING_SCHEDULE_PRIORITY, serHex,  TreeList.from(serStack), serRavenmind)
 		}
 	}
 
