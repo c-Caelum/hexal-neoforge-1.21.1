@@ -18,4 +18,6 @@ fun apply(iota: Iota): Iota {
     return ItemStackIota.createFiltered(stack)
 }
 
+// Talia, what???
+
 object OperatorMoteExtractItem : OperatorUnary(all(ofType(MOTE)), ::apply)

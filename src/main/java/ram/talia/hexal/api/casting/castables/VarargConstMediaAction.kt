@@ -36,7 +36,7 @@ interface VarargConstMediaAction : Action {
     }
 
     override fun operate(env: CastingEnvironment, image: CastingImage, continuation: SpellContinuation): OperationResult {
-        val stack = image.stack
+        var stack = image.stack
 
         val argc = this.argc(stack.asReversed())
         if (argc > stack.size)
@@ -46,17 +46,18 @@ interface VarargConstMediaAction : Action {
             throw MishapNotEnoughMedia(this.mediaCost)
         }
 
-        val args = stack.takeLast(argc)
-        repeat(argc) { stack.removeLast() }
+        val args = stack.takeRight(argc);
+        stack = stack.dropRight(argc);
         val userData = image.userData.copy()
         val newData = this.executeWithOpCount(args, argc, userData, env)
-        stack.addAll(newData.resultStack)
+        stack = stack.appendedAll(newData.resultStack)
+
 
         val sideEffects = mutableListOf<OperatorSideEffect>(
             OperatorSideEffect.ConsumeMedia(this.mediaCost)
         )
 
         val image2 = image.copy(stack = stack, opsConsumed = image.opsConsumed + newData.opCount, userData = userData)
-        return OperationResult(image2, sideEffects, continuation, HexEvalSounds.NORMAL_EXECUTE)
+        return OperationResult(image2, sideEffects, continuation, HexEvalSounds.NORMAL_EXECUTE.get())
     }
 }

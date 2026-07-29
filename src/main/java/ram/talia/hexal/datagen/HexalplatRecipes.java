@@ -71,7 +71,7 @@ public class HexalplatRecipes extends RecipeProvider {
         new BrainsweepRecipeBuilder(HexStateIngredients.of(Blocks.SHULKER_BOX),
                 new VillagerIngredient(VillagerProfession.CARTOGRAPHER, null, 4),
                 HexalBlocks.MEDIAFIED_STORAGE.defaultBlockState(), MediaConstants.CRYSTAL_UNIT*10)
-                .unlockedBy("enlightenment", new Criterion<>(HexAdvancementTriggers.OVERCAST_TRIGGER, HexAdvancements.ENLIGHTEN))
+                .unlockedBy("enlightenment", new Criterion<>(HexAdvancementTriggers.OVERCAST_TRIGGER.get(), HexAdvancements.ENLIGHTEN))
                 .save(recipes, modLoc("brainsweep/mediafied_storage"));
     }
 }

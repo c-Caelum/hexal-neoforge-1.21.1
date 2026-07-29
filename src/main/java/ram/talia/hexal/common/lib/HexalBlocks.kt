@@ -62,7 +62,7 @@ class HexalBlocks {
 		@JvmField
 		val MEDIAFIED_STORAGE = blockItem("mediafied_storage", BlockMediafiedStorage(
 			BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_PURPLE).sound(SoundType.AMETHYST).noOcclusion().strength(30.0f)
-		), HexCreativeTabs.HEX)
+		), HexCreativeTabs.HEX.value())
 
 		/*val RELAY = blockNoItem("relay", BlockRelay(
 			BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_PURPLE).sound(SoundType.AMETHYST).noOcclusion().strength(3.0f)

@@ -1,6 +1,7 @@
 package ram.talia.hexal.api.casting.castables
 
 import at.petrak.hexcasting.api.casting.castables.Action
+import at.petrak.hexcasting.api.casting.castables.ConstMediaAction
 import at.petrak.hexcasting.api.casting.castables.SpellAction
 import at.petrak.hexcasting.api.casting.eval.CastingEnvironment
 import at.petrak.hexcasting.api.casting.eval.OperationResult
@@ -47,8 +48,9 @@ interface VarargSpellAction : Action {
 
         if (argc > stack.size)
             throw MishapNotEnoughArgs(argc, stack.size)
-        val args = stack.takeLast(argc)
-        for (_i in 0 until argc) stack.removeLast()
+        val args = stack.takeRight(argc);
+        // bleh
+        val stackWithoutArgs = stack.dropRight(argc);
 
         // execute!
         val userDataMut = image.userData.copy()
@@ -74,9 +76,9 @@ interface VarargSpellAction : Action {
         for (spray in result.particles)
             sideEffects.add(OperatorSideEffect.Particles(spray))
 
-        val image2 = image.copy(stack = stack, opsConsumed = image.opsConsumed + result.opCount, userData = userDataMut)
+        val image2 = image.copy(stack = stackWithoutArgs, opsConsumed = image.opsConsumed + result.opCount, userData = userDataMut)
 
         val sound = if (this.hasCastingSound(env)) HexEvalSounds.SPELL else HexEvalSounds.MUTE
-        return OperationResult(image2, sideEffects, continuation, sound)
+        return OperationResult(image2, sideEffects, continuation, sound.get())
     }
 }

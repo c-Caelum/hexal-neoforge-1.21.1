@@ -29,22 +29,22 @@ interface UserDataConstMediaAction : Action {
     }
 
     override fun operate(env: CastingEnvironment, image: CastingImage, continuation: SpellContinuation): OperationResult {
-        val stack = image.stack
+        var stack = image.stack
 
         if (env.extractMedia(this.mediaCost, true) > 0) {
             throw MishapNotEnoughMedia(this.mediaCost)
         }
         if (this.argc > stack.size)
             throw MishapNotEnoughArgs(this.argc, stack.size)
-        val args = stack.takeLast(this.argc)
-        repeat(this.argc) { stack.removeLast() }
+        val args = stack.takeRight(argc)
+        stack = stack.dropRight(argc);
         val userData = image.userData.copy()
         val result = executeWithOpCount(args, userData, env)
-        stack.addAll(result.resultStack)
+        stack = stack.appendedAll(result.resultStack)
 
         val sideEffects = mutableListOf<OperatorSideEffect>(OperatorSideEffect.ConsumeMedia(this.mediaCost))
 
         val image2 = image.copy(stack = stack, opsConsumed = image.opsConsumed + result.opCount, userData = userData)
-        return OperationResult(image2, sideEffects, continuation, HexEvalSounds.NORMAL_EXECUTE)
+        return OperationResult(image2, sideEffects, continuation, HexEvalSounds.NORMAL_EXECUTE.get())
     }
 }

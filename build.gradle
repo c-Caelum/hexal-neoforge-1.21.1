@@ -203,7 +203,7 @@ dependencies {
     implementation("vazkii.patchouli:Patchouli:$minecraft_version-$patchouli_version-NEOFORGE")
     implementation("libs:hexcasting-neoforge-$minecraft_version:$hexcasting_version")
     implementation("libs:paucal:$paucal_version+$minecraft_version-neoforge")
-    implementation("libs:moreiotas-${moreiotas_version}-${minecraft_version}-devel")
+    implementation("libs:moreiotas-${moreiotas_version}-${minecraft_version}-devel-pre-${moreiotas_pre_num}")
     implementation("com.samsthenerd.inline:inline-neoforge:$minecraft_version-$inline_version")
     implementation("dev.architectury:architectury-neoforge:$architectury_api_version")
     implementation("io.wispforest:accessories-neoforge:$accessories_version+$minecraft_version")
