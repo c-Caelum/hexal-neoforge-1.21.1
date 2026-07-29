@@ -108,7 +108,7 @@ object OpMakeMote : VarargSpellAction {
                     if (itemIota !is NullIota)
                         iEntityEither.map( { it.discard() }, { it.item = ItemStack.EMPTY } )
 
-                    stack.add(itemIota)
+                    stack.addFirst(itemIota)
                 }
             }
 
