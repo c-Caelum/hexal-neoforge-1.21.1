@@ -5,56 +5,49 @@ import at.petrak.hexcasting.api.casting.iota.IotaType;
 import at.petrak.hexcasting.api.misc.MediaConstants;
 import at.petrak.hexcasting.api.pigment.FrozenPigment;
 import at.petrak.hexcasting.common.lib.HexRegistries;
+import at.petrak.hexcasting.xplat.IXplatTags;
+import com.mojang.logging.LogUtils;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.DataGenerator;
+import net.minecraft.data.loot.LootTableProvider;
 import net.minecraft.nbt.NbtOps;
 import net.minecraft.nbt.Tag;
-import net.minecraft.network.chat.Component;
 import net.minecraft.network.syncher.EntityDataSerializer;
-import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.entity.player.Player;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.ModContainer;
+import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.config.ModConfig;
+import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
-import net.neoforged.neoforge.event.entity.player.PlayerEvent;
-import net.neoforged.neoforge.event.tick.PlayerTickEvent;
-import net.neoforged.neoforge.event.tick.ServerTickEvent;
+import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
+import net.neoforged.neoforge.event.server.ServerStartingEvent;
 import net.neoforged.neoforge.registries.NeoForgeRegistries;
 import net.neoforged.neoforge.registries.RegisterEvent;
 import org.slf4j.Logger;
-
-import com.mojang.logging.LogUtils;
-
-import net.neoforged.bus.api.IEventBus;
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.Mod;
-import net.neoforged.fml.config.ModConfig;
-import net.neoforged.fml.ModContainer;
-import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.neoforged.neoforge.common.NeoForge;
-import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
-import net.neoforged.neoforge.event.server.ServerStartingEvent;
-import ram.talia.hexal.api.casting.wisp.WispCastingManager;
 import ram.talia.hexal.api.config.HexalConfig;
 import ram.talia.hexal.api.gates.GateManager;
 import ram.talia.hexal.client.HexalClient;
-import ram.talia.hexal.common.entities.BaseWisp;
 import ram.talia.hexal.common.lib.HexalBlockEntities;
 import ram.talia.hexal.common.lib.HexalBlocks;
 import ram.talia.hexal.common.lib.HexalEntities;
+import ram.talia.hexal.common.lib.HexalLootTables;
 import ram.talia.hexal.common.lib.hex.HexalActions;
 import ram.talia.hexal.common.lib.hex.HexalArithmetics;
 import ram.talia.hexal.common.lib.hex.HexalIotaTypes;
 import ram.talia.hexal.datagen.HexalActionTagProvider;
+import ram.talia.hexal.datagen.HexalBlockTags;
 import ram.talia.hexal.datagen.HexalplatRecipes;
 import ram.talia.hexal.eventhandlers.BoundStorageEventHandler;
 import ram.talia.hexal.eventhandlers.WispCastingManagerEventHandler;
 
 import java.util.List;
+import java.util.Set;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
@@ -124,6 +117,11 @@ public class Hexal {
         final DataGenerator gen = event.getGenerator();
         gen.addProvider(event.includeServer(), new HexalplatRecipes(gen.getPackOutput(), event.getLookupProvider()));
         gen.addProvider(event.includeServer(), new HexalActionTagProvider(gen.getPackOutput(), event.getLookupProvider()));
+        gen.addProvider(event.includeServer(), new LootTableProvider(
+                gen.getPackOutput(), Set.of(), List.of(new LootTableProvider.SubProviderEntry(HexalLootTables::new, LootContextParamSets.ALL_PARAMS)),
+                event.getLookupProvider()
+        ));
+        gen.addProvider(event.includeServer(), new HexalBlockTags(gen.getPackOutput(), event.getLookupProvider()));
     }
 
     // You can use SubscribeEvent and let the Event Bus discover methods to call

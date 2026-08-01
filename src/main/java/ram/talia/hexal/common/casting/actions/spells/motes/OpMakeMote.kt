@@ -84,7 +84,7 @@ object OpMakeMote : VarargSpellAction {
         }
 
         override fun cast(env: CastingEnvironment, image: CastingImage): CastingImage? {
-            val stack = image.stack
+            var stack = image.stack
 
             if (!itemStack.isEmpty) {
                 if (mote != null) {
@@ -95,7 +95,7 @@ object OpMakeMote : VarargSpellAction {
                         iEntityEither.map( { it.discard() }, { it.item = ItemStack.EMPTY } )
                     else
                         iEntityEither.map( { it.item.count = countRemaining }, { it.item.count = countRemaining } )
-                    stack.add(mote)
+                    stack = stack.appended(mote)
                 } else {
                     val storage = storage ?: return null // FAILSAFE: just. don't do anything, this is better than crashing
                     if (!MediafiedItemManager.isStorageLoaded(storage))
@@ -103,12 +103,13 @@ object OpMakeMote : VarargSpellAction {
                     if (MediafiedItemManager.isStorageFull(storage) != false) // if this is somehow null we should still throw an error here, things have gone pretty wrong
                         return null // FAILSAFE: just. don't do anything, this is better than crashing
 
+                    // uh. what?
                     val itemIota = itemStack.asActionResult(storage)[0]
 
                     if (itemIota !is NullIota)
                         iEntityEither.map( { it.discard() }, { it.item = ItemStack.EMPTY } )
 
-                    stack.addFirst(itemIota)
+                    stack = stack.appended(itemIota);
                 }
             }
 

@@ -50,14 +50,13 @@ interface VarargConstMediaAction : Action {
         stack = stack.dropRight(argc);
         val userData = image.userData.copy()
         val newData = this.executeWithOpCount(args, argc, userData, env)
-        stack = stack.appendedAll(newData.resultStack)
 
 
         val sideEffects = mutableListOf<OperatorSideEffect>(
             OperatorSideEffect.ConsumeMedia(this.mediaCost)
         )
 
-        val image2 = image.copy(stack = stack, opsConsumed = image.opsConsumed + newData.opCount, userData = userData)
+        val image2 = image.copy(stack = stack.appendedAll(newData.resultStack), opsConsumed = image.opsConsumed + newData.opCount, userData = userData)
         return OperationResult(image2, sideEffects, continuation, HexEvalSounds.NORMAL_EXECUTE.get())
     }
 }

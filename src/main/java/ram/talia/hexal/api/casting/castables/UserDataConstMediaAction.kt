@@ -40,11 +40,10 @@ interface UserDataConstMediaAction : Action {
         stack = stack.dropRight(argc);
         val userData = image.userData.copy()
         val result = executeWithOpCount(args, userData, env)
-        stack = stack.appendedAll(result.resultStack)
 
         val sideEffects = mutableListOf<OperatorSideEffect>(OperatorSideEffect.ConsumeMedia(this.mediaCost))
 
-        val image2 = image.copy(stack = stack, opsConsumed = image.opsConsumed + result.opCount, userData = userData)
+        val image2 = image.copy(stack = stack.appendedAll(result.resultStack), opsConsumed = image.opsConsumed + result.opCount, userData = userData)
         return OperationResult(image2, sideEffects, continuation, HexEvalSounds.NORMAL_EXECUTE.get())
     }
 }
