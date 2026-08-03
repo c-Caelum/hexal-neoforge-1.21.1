@@ -4,13 +4,18 @@ import at.petrak.hexcasting.api.casting.arithmetic.predicates.IotaPredicate;
 import at.petrak.hexcasting.api.casting.castables.SpellAction;
 import at.petrak.hexcasting.api.casting.iota.Iota;
 import at.petrak.hexcasting.api.casting.iota.IotaType;
+import at.petrak.hexcasting.xplat.IXplatAbstractions;
 import com.mojang.datafixers.util.Either;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import dev.ryanhcode.sable.Sable;
+import dev.ryanhcode.sable.companion.SableCompanion;
+import dev.ryanhcode.sable.sublevel.ClientSubLevel;
 import kotlin.Pair;
 import net.minecraft.ChatFormatting;
 import net.minecraft.MethodsReturnNonnullByDefault;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
 import net.minecraft.core.UUIDUtil;
 import net.minecraft.network.RegistryFriendlyByteBuf;
@@ -22,6 +27,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import ram.talia.hexal.Hexal;
 import ram.talia.hexal.api.gates.GateManager;
 import ram.talia.hexal.api.util.Anyone;
 import ram.talia.hexal.common.lib.hex.HexalIotaTypes;
@@ -237,7 +243,16 @@ public class GateIota extends Iota {
         // if we get here then getTarget can't be null.
         //noinspection DataFlowIssue
         return getTarget().flatMap(
-                vec3 -> Component.translatable("hexal.spelldata.gate", getGateIndex()).append(String.format(" (%.2f, %.2f, %.2f)", vec3.x, vec3.y, vec3.z)).withStyle(ChatFormatting.LIGHT_PURPLE),
+                vec3 -> {
+                    if (Hexal.isSable && IXplatAbstractions.INSTANCE.isPhysicalClient()) {
+                        ClientSubLevel sublevel = Sable.HELPER.getContainingClient(vec3);
+                        Vec3 center = sublevel.getPlot().getCenterBlock().getCenter();
+                        return Component.translatable("hexal.spelldata.gate", getGateIndex()).append(
+                                String.format("in %s, (%.2f, %.2f, %.2f)", sublevel.getName() == null ? "Sublevel" : sublevel.getName(), center.x - vec3.x, center.y - vec3.y, center.z - vec3.z)
+                        ).withStyle(ChatFormatting.LIGHT_PURPLE);
+                    }
+                    return Component.translatable("hexal.spelldata.gate", getGateIndex()).append(String.format(" (%.2f, %.2f, %.2f)", vec3.x, vec3.y, vec3.z)).withStyle(ChatFormatting.LIGHT_PURPLE);
+                },
                 entityAnchor -> {
                     var offsetStr = String.format("%.2f, %.2f, %.2f", entityAnchor.offset.x, entityAnchor.offset.y, entityAnchor.offset.z);
                     var anchorStr = String.format(" (%s, %s)", entityAnchor.name, offsetStr);

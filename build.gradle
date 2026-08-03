@@ -84,6 +84,20 @@ repositories {
     maven { url = "https://maven.theillusivec4.top/" } // Curios API
 
     maven { url = "https://raw.githubusercontent.com/Fuzss/modresources/main/maven/" }
+
+    exclusiveContent { // Sable
+        forRepository {
+            maven {
+                url = "https://maven.ryanhcode.dev/releases"
+                name = "RyanHCode Maven"
+            }
+        }
+        filter {
+            includeGroup("dev.ryanhcode.sable")
+            includeGroup("dev.ryanhcode.sable-companion")
+        }
+    }
+
     mavenCentral()
 }
 
@@ -211,6 +225,14 @@ dependencies {
     runtimeOnly("com.illusivesoulworks.caelus:caelus-neoforge:$caelus_version+$minecraft_version")
     compileOnly("com.illusivesoulworks.caelus:caelus-neoforge:$caelus_version+$minecraft_version:api")
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
+
+    compileOnly "dev.ryanhcode.sable-companion:sable-companion-common-$minecraft_version:$sable_companion_version"
+    api ("dev.ryanhcode.sable:sable-neoforge-${minecraft_version}:${sable_version}") {
+        exclude group: "foundry.veil"
+    }
+    runtimeOnly ("foundry.veil:veil-neoforge-$minecraft_version:$veil_version") {
+        exclude group: "maven.modrinth"
+    }
 }
 
 // This block of code expands all declared replace properties in the specified resource targets.

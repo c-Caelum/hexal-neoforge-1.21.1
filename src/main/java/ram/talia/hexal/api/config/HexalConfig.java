@@ -171,6 +171,15 @@ public class HexalConfig {
     public static class Client {
        public static final ModConfigSpec.Builder builder = new ModConfigSpec.Builder();
 
-       public static final ModConfigSpec.DoubleValue PARTICLE_CHANCE = builder.
+       public static final ModConfigSpec.DoubleValue SLIPWAY_PARTICLE_CHANCE = builder
+               .comment("The chance for a slipway's particles to be rendered. If it is 1, one particle for every dye pigment will be rendered every tick.")
+               .comment("Halved for Decreased particles, and is ignored in Minimal.")
+               .defineInRange("slipwayParticleChance", 0.0, 0.0, 1.0);
+
+       public static final ModConfigSpec.IntValue WISP_PARTICLE_COUNT = builder
+               .comment("How many wisp particles to render each tick. Halves for Decreased particles, and is ignored in Minimal.")
+               .defineInRange("wispParticleCount", 50, 0, 200);
+
+       public static final ModConfigSpec SPEC = builder.build();
     }
 }

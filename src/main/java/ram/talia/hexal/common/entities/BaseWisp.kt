@@ -7,6 +7,7 @@ import at.petrak.hexcasting.api.utils.putCompound
 import at.petrak.hexcasting.common.particles.ConjureParticleOptions
 import net.minecraft.client.Minecraft
 import net.minecraft.client.ParticleStatus
+import net.minecraft.client.multiplayer.ClientLevel
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.nbt.NbtOps
 import net.minecraft.network.syncher.EntityDataAccessor
@@ -21,6 +22,7 @@ import net.minecraft.world.level.Level
 import net.minecraft.world.phys.AABB
 import net.minecraft.world.phys.Vec3
 import ram.talia.hexal.Hexal
+import ram.talia.hexal.api.config.HexalConfig
 import ram.talia.hexal.api.minus
 import ram.talia.hexal.api.nextColour
 import kotlin.math.*
@@ -83,10 +85,17 @@ abstract class BaseWisp(entityType: EntityType<out BaseWisp>, world: Level, pigm
 	protected open fun playWispParticles(pigment: FrozenPigment) {
 		val radius = (media.toDouble() / MediaConstants.DUST_UNIT).pow(1.0 / 3) / 100
 
+		val level = level();
+
+		var configCount = 50;
+		if (level is ClientLevel) {
+			configCount = HexalConfig.Client.WISP_PARTICLE_COUNT.get();
+		}
+
 		val repeats = when (Minecraft.getInstance().options.particles().get() as ParticleStatus) {
-			ParticleStatus.ALL -> 50
-			ParticleStatus.DECREASED -> 20
-			ParticleStatus.MINIMAL -> 5
+			ParticleStatus.ALL -> configCount
+			ParticleStatus.DECREASED -> (configCount.toDouble()*0.5).toInt()
+			ParticleStatus.MINIMAL -> 0
 		}
 
 		for (i in 0..repeats) {
@@ -108,9 +117,20 @@ abstract class BaseWisp(entityType: EntityType<out BaseWisp>, world: Level, pigm
 		val radius = ceil((media.toDouble() / MediaConstants.DUST_UNIT).pow(1.0 / 3) / 10)
 
 		val delta = oldPos - position()
-		val dist = delta.length() * 12 * radius * radius * radius
 
-		for (i in 0..dist.toInt()) {
+		val coefficient = when (Minecraft.getInstance().options.particles().get() as ParticleStatus) {
+			ParticleStatus.ALL -> HexalConfig.Client.WISP_PARTICLE_COUNT.get().toDouble()*0.25
+			ParticleStatus.DECREASED -> (HexalConfig.Client.WISP_PARTICLE_COUNT.get().toDouble()*0.125)
+			ParticleStatus.MINIMAL -> 0.0
+		}
+
+		val dist = delta.length() * coefficient;
+
+		if (dist == 0.0) {
+			return;
+		}
+
+		for (i in 0..<ceil(dist).toInt()) {
 			val colour: Int = pigment.nextColour(random)
 
 			val coeff = i / dist

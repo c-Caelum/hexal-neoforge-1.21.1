@@ -9,6 +9,8 @@ import at.petrak.hexcasting.api.casting.eval.env.PlayerBasedCastEnv
 import at.petrak.hexcasting.api.casting.getVec3
 import at.petrak.hexcasting.api.casting.iota.Iota
 import at.petrak.hexcasting.api.casting.mishaps.MishapBadLocation
+import dev.ryanhcode.sable.companion.SableCompanion
+import net.minecraft.core.Position
 import net.minecraft.core.component.DataComponents
 import net.minecraft.server.level.ServerPlayer
 import net.minecraft.world.entity.Entity
@@ -37,7 +39,7 @@ object OpCloseGate : VarargSpellAction {
 
     override fun execute(args: List<Iota>, argc: Int, env: CastingEnvironment): SpellAction.Result {
         val gate = args.getGate(0, argc)
-        val targetPos = (
+        var targetPos = (
             if (gate.isLocationAnchored) {
                 gate.getTargetPos(env.world)
                     ?: throw IllegalStateException("Location-anchored gates should always have a target position.")
@@ -51,6 +53,10 @@ object OpCloseGate : VarargSpellAction {
                 args.getVec3(1, argc);
             }
         )
+
+        if (Hexal.isSable) {
+            targetPos = SableCompanion.INSTANCE.projectOutOfSubLevel(env.world, targetPos as Position);
+        }
 
         // only check if in ambit when the gate is drifting.
         if (gate.isDrifting)
@@ -85,6 +91,7 @@ object OpCloseGate : VarargSpellAction {
         // stole all this from the default teleport; sadge that it isn't accessible.
 
         override fun cast(env: CastingEnvironment) {
+
             for (gatee in gatees) {
                 teleport(gatee, gatees, targetPos - gatee.position(), env)
             }

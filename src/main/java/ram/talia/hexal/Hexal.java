@@ -5,6 +5,7 @@ import at.petrak.hexcasting.api.casting.iota.IotaType;
 import at.petrak.hexcasting.api.misc.MediaConstants;
 import at.petrak.hexcasting.api.pigment.FrozenPigment;
 import at.petrak.hexcasting.common.lib.HexRegistries;
+import at.petrak.hexcasting.xplat.IXplatAbstractions;
 import at.petrak.hexcasting.xplat.IXplatTags;
 import com.mojang.logging.LogUtils;
 import net.minecraft.core.Registry;
@@ -58,6 +59,7 @@ public class Hexal {
     public static final String MODID = "hexal";
     // Directly reference a slf4j logger
     public static final Logger LOGGER = LogUtils.getLogger();
+    public static final boolean isSable = IXplatAbstractions.INSTANCE.isModPresent("sable");
 
     public static final EntityDataSerializer<FrozenPigment> PIGMENT_SERIALIZER = EntityDataSerializer.forValueType(FrozenPigment.STREAM_CODEC);
 
@@ -93,6 +95,7 @@ public class Hexal {
 
         // Register our mod's ModConfigSpec so that FML can create and load the config file for us
         modContainer.registerConfig(ModConfig.Type.SERVER, HexalConfig.Server.SPEC);
+        modContainer.registerConfig(ModConfig.Type.CLIENT, HexalConfig.Client.SPEC);
     }
 
 

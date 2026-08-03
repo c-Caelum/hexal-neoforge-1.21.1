@@ -5,6 +5,9 @@ import at.petrak.hexcasting.api.pigment.FrozenPigment
 import at.petrak.hexcasting.common.lib.HexItems
 import at.petrak.hexcasting.common.particles.ConjureParticleOptions
 import net.minecraft.Util
+import net.minecraft.client.Minecraft
+import net.minecraft.client.ParticleStatus
+import net.minecraft.client.multiplayer.ClientLevel
 import net.minecraft.core.BlockPos
 import net.minecraft.core.HolderLookup
 import net.minecraft.nbt.CompoundTag
@@ -15,6 +18,7 @@ import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.phys.AABB
 import net.minecraft.world.phys.Vec3
+import ram.talia.hexal.api.config.HexalConfig
 import ram.talia.hexal.api.nextColour
 import ram.talia.hexal.api.nextGaussian
 import ram.talia.hexal.common.entities.WanderingWisp
@@ -40,9 +44,19 @@ class BlockEntitySlipway(pos: BlockPos, state: BlockState) : HexBlockEntity(Hexa
 	private fun clientTick(level: Level, blockPos: BlockPos) {
 		val vec = Vec3.atCenterOf(blockPos)
 
+		var chance = 1.0;
 
+		//just making sure :p
+		if (level is ClientLevel) {
+			chance = HexalConfig.Client.SLIPWAY_PARTICLE_CHANCE.get();
+			chance = when (Minecraft.getInstance().options.particles().get() as ParticleStatus) {
+				ParticleStatus.ALL -> chance
+				ParticleStatus.DECREASED -> chance*0.5
+				ParticleStatus.MINIMAL -> 0.0
+			}
+		}
 
-		for (colouriser in HexItems.DYE_PIGMENTS.values) {
+		for (colouriser in HexItems.DYE_PIGMENTS.values.filter {a -> random.nextDouble() < chance}) {
 			val colour: Int = colours[random.nextInt(colours.size)]
 
 			level.addParticle(
