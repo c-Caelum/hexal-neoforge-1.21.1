@@ -30,11 +30,11 @@ data class ItemRecord(var item: Item, var components : PatchedDataComponentMap, 
             this(item, PatchedDataComponentMap.fromPatch(item.components(), components), count)
 
     fun typeMatches(other: ItemRecord): Boolean {
-        return item == other.item && components == other.components;
+        return item == other.item && components.equals(other.components);
     }
 
     fun typeMatches(other: ItemStack): Boolean {
-        return item == other.item && components == other.components;
+        return item == other.item && components.equals(PatchedDataComponentMap.fromPatch(other.components, other.componentsPatch));
     }
 
     fun addCount(toAdd: Long) {
@@ -74,7 +74,7 @@ data class ItemRecord(var item: Item, var components : PatchedDataComponentMap, 
     }
 
     fun getDisplayName(): Component {
-        val itemStack = ItemStack(item)
+        //val itemStack = ItemStack(item)
         val custom : Component? = components.get(DataComponents.CUSTOM_NAME)
         val name = components.get(DataComponents.ITEM_NAME);
         return (custom ?: name) ?: item.description;

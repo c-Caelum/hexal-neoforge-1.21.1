@@ -10,6 +10,7 @@ import com.llamalad7.mixinextras.sugar.ref.LocalRef;
 import com.mojang.serialization.Codec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.GeodeFeature;
@@ -51,7 +52,12 @@ public abstract class MixinGeodePlacement extends Feature<GeodeConfiguration> {
         RandomSource source = p_159836_.random();
         if (source.nextFloat() < HexalConfig.Server.SLIPWAY_CHANCE.get()) {
             cent = cent.scale(1.0 / (double)innerCount.get());
-            safeSetBlock(p_159836_.level(), BlockPos.containing(cent), HexalBlocks.SLIPWAY.defaultBlockState(), a -> true);
+            WorldGenLevel level = p_159836_.level();
+            BlockPos containing = BlockPos.containing(cent);
+            if (level.ensureCanWrite(containing) && level.isEmptyBlock(containing)) {
+                setBlock(level, containing, HexalBlocks.SLIPWAY.defaultBlockState());
+            }
+            //safeSetBlock(p_159836_.level(), BlockPos.containing(cent), HexalBlocks.SLIPWAY.defaultBlockState(), a -> true);
             //safeSetBlock(p_159836_.level(), p_159836_.origin(), HexalBlocks.SLIPWAY.defaultBlockState(), a -> true);
         }
     }

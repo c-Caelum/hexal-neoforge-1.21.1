@@ -40,6 +40,8 @@ class BlockEntitySlipway(pos: BlockPos, state: BlockState) : HexBlockEntity(Hexa
 	private fun clientTick(level: Level, blockPos: BlockPos) {
 		val vec = Vec3.atCenterOf(blockPos)
 
+
+
 		for (colouriser in HexItems.DYE_PIGMENTS.values) {
 			val colour: Int = colours[random.nextInt(colours.size)]
 

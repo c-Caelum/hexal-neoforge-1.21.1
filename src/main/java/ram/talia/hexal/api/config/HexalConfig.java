@@ -167,4 +167,10 @@ public class HexalConfig {
 
         public static final ModConfigSpec SPEC = BUILDER.build();
     }
+
+    public static class Client {
+       public static final ModConfigSpec.Builder builder = new ModConfigSpec.Builder();
+
+       public static final ModConfigSpec.DoubleValue PARTICLE_CHANCE = builder.
+    }
 }

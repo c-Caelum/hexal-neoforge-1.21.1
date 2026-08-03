@@ -36,6 +36,9 @@ import java.util.UUID;
  */
 public class MoteIota extends Iota {
     MediafiedItemManager.Index index;
+    Component displayMessage = null;
+    long count = 0;
+
 
     /**
      * Used to get the UUID of the temporarily bound storage from userData, if one exists.
@@ -44,6 +47,12 @@ public class MoteIota extends Iota {
 
     public MoteIota(MediafiedItemManager.Index index) {
         super(() -> HexalIotaTypes.MOTE);
+        WeakReference<ItemRecord> record = MediafiedItemManager.getRecord(index);
+        ItemRecord rec;
+        if (record != null && (rec = record.get()) != null) {
+            displayMessage = rec.getDisplayName();
+            count = rec.getCount();
+        }
         this.index = index;
     }
 
@@ -186,12 +195,11 @@ public class MoteIota extends Iota {
 
     @Override
     public Component display() {
-        WeakReference<ItemRecord> record = MediafiedItemManager.getRecord(index);
-        if (record == null || record.get() == null) {
+        if (displayMessage == null || count == 0) {
             return Component.translatable("hexcasting.iota.hexcasting:null").withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC);
         }
-        ItemRecord item = record.get();
-        return Component.translatable("hexal.spelldata.mote", item.getDisplayName(), item.getCount()).withStyle(ChatFormatting.YELLOW);
+
+        return Component.translatable("hexal.spelldata.mote", displayMessage, count).withStyle(ChatFormatting.YELLOW);
     }
 
     @Override
@@ -211,7 +219,14 @@ public class MoteIota extends Iota {
 
         @Override
         public boolean validate(MoteIota iota, ServerLevel level) {
-            return MediafiedItemManager.getRecord(iota.index) != null;
+            WeakReference<ItemRecord> rec = MediafiedItemManager.getRecord(iota.index);
+            ItemRecord item;
+            if (rec != null && (item = rec.get()) != null) {
+                iota.count = item.getCount();
+                iota.displayMessage = item.getDisplayName();
+            }
+
+            return rec != null && rec.get() != null && rec.get().getCount() != 0;
         }
 
         @Override
