@@ -17,6 +17,7 @@ import ram.talia.hexal.Hexal
 import ram.talia.hexal.api.HexalCodecs
 import ram.talia.hexal.api.addBounded
 import ram.talia.hexal.api.config.HexalConfig
+import java.util.Objects
 import kotlin.math.max
 import kotlin.math.min
 
@@ -30,7 +31,7 @@ data class ItemRecord(var item: Item, var components : PatchedDataComponentMap, 
             this(item, PatchedDataComponentMap.fromPatch(item.components(), components), count)
 
     fun typeMatches(other: ItemRecord): Boolean {
-        return item == other.item && components.equals(other.components);
+        return item == other.item && Objects.equals(components, other.components);
     }
 
     fun typeMatches(other: ItemStack): Boolean {

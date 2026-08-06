@@ -14,6 +14,8 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.ComponentSerialization;
+import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.item.Item;
@@ -54,6 +56,13 @@ public class MoteIota extends Iota {
             count = rec.getCount();
         }
         this.index = index;
+    }
+
+    public MoteIota(MediafiedItemManager.Index index, Component displayMessage, long count) {
+        super(() -> HexalIotaTypes.MOTE);
+        this.index = index;
+        this.displayMessage = displayMessage;
+        this.count = count;
     }
 
     public static @Nullable MoteIota makeIfStorageLoaded(ItemStack stack, UUID storageUUID) {
@@ -135,7 +144,6 @@ public class MoteIota extends Iota {
         var newIndex = MediafiedItemManager.splitOff(index, amount, storage);
         if (newIndex == null)
             return null;
-
         return new MoteIota(newIndex);
     }
 
@@ -214,8 +222,9 @@ public class MoteIota extends Iota {
 
     public static IotaType<MoteIota> TYPE = new IotaType<>() {
         public static final MapCodec<MoteIota> CODEC = HexalCodecs.INDEX_CODEC.xmap(MoteIota::new, MoteIota::getItemIndex).fieldOf("moteIndex");
-        public static final StreamCodec<RegistryFriendlyByteBuf, MoteIota> STREAM_CODEC = HexalCodecs.INDEX_STREAM_CODEC
-                .map(MoteIota::new, MoteIota::getItemIndex).mapStream(a -> a);
+        public static final StreamCodec<RegistryFriendlyByteBuf, MoteIota> STREAM_CODEC = StreamCodec.composite(
+                HexalCodecs.INDEX_STREAM_CODEC, a -> a.index, ComponentSerialization.STREAM_CODEC, a -> a.displayMessage, ByteBufCodecs.VAR_LONG, a -> a.count,
+                MoteIota::new);
 
         @Override
         public boolean validate(MoteIota iota, ServerLevel level) {

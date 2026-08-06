@@ -246,10 +246,12 @@ public class GateIota extends Iota {
                 vec3 -> {
                     if (Hexal.isSable && IXplatAbstractions.INSTANCE.isPhysicalClient()) {
                         ClientSubLevel sublevel = Sable.HELPER.getContainingClient(vec3);
-                        Vec3 center = sublevel.getPlot().getCenterBlock().getCenter();
-                        return Component.translatable("hexal.spelldata.gate", getGateIndex()).append(
-                                String.format("in %s, (%.2f, %.2f, %.2f)", sublevel.getName() == null ? "Sublevel" : sublevel.getName(), center.x - vec3.x, center.y - vec3.y, center.z - vec3.z)
-                        ).withStyle(ChatFormatting.LIGHT_PURPLE);
+                        if (sublevel != null) {
+                            Vec3 center = sublevel.getPlot().getCenterBlock().getCenter();
+                            return Component.translatable("hexal.spelldata.gate", getGateIndex()).append(
+                                    String.format("in %s, (%.2f, %.2f, %.2f)", sublevel.getName() == null ? "Sublevel" : sublevel.getName(), center.x - vec3.x, center.y - vec3.y, center.z - vec3.z)
+                            ).withStyle(ChatFormatting.LIGHT_PURPLE);
+                        }
                     }
                     return Component.translatable("hexal.spelldata.gate", getGateIndex()).append(String.format(" (%.2f, %.2f, %.2f)", vec3.x, vec3.y, vec3.z)).withStyle(ChatFormatting.LIGHT_PURPLE);
                 },
