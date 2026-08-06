@@ -1,8 +1,6 @@
 package ram.talia.hexal.common.entities
 
 import at.petrak.hexcasting.api.misc.MediaConstants
-import at.petrak.hexcasting.api.casting.iota.Iota
-import at.petrak.hexcasting.api.casting.iota.NullIota
 import at.petrak.hexcasting.api.pigment.FrozenPigment
 import com.mojang.datafixers.util.Either
 import net.minecraft.nbt.CompoundTag
@@ -13,10 +11,9 @@ import net.minecraft.server.level.ServerPlayer
 import net.minecraft.world.entity.EntityType
 import net.minecraft.world.level.Level
 import net.minecraft.world.phys.Vec3
+import ram.talia.hexal.api.nextDouble
 import ram.talia.hexal.api.plus
 import ram.talia.hexal.common.lib.HexalEntities
-import ram.talia.hexal.api.nextDouble
-import java.util.*
 import kotlin.math.abs
 
 class WanderingWisp(entityType: EntityType<out WanderingWisp>, level: Level) : BaseWisp(entityType, level,

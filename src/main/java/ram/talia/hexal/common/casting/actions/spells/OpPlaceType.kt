@@ -24,9 +24,9 @@ import net.minecraft.world.level.block.Block
 import net.minecraft.world.phys.BlockHitResult
 import net.minecraft.world.phys.Vec3
 import ram.talia.hexal.Hexal
+import ram.talia.hexal.api.casting.iota.MoteIota
 import ram.talia.hexal.api.config.HexalConfig
 import ram.talia.hexal.api.getBlockTypeOrBlockItemStackOrBlockMote
-import ram.talia.hexal.api.casting.iota.MoteIota
 import ram.talia.hexal.api.util.Anyone
 
 object OpPlaceType : SpellAction {

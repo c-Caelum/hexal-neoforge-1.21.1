@@ -7,11 +7,11 @@ import at.petrak.hexcasting.api.casting.iota.DoubleIota
 import at.petrak.hexcasting.api.casting.iota.Iota
 import at.petrak.hexcasting.api.casting.mishaps.MishapInvalidIota
 import net.minecraft.nbt.CompoundTag
+import net.minecraft.server.level.ServerPlayer
 import net.minecraft.stats.Stats
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.trading.MerchantOffer
 import net.minecraft.world.item.trading.MerchantOffers
-import net.minecraft.server.level.ServerPlayer
 import ram.talia.hexal.Hexal
 import ram.talia.hexal.api.casting.castables.VarargConstMediaAction
 import ram.talia.hexal.api.casting.iota.MoteIota
@@ -23,7 +23,6 @@ import ram.talia.hexal.api.getMoteOrMoteList
 import ram.talia.hexal.api.getVillager
 import ram.talia.hexal.api.mediafieditems.ItemRecord
 import ram.talia.hexal.api.mediafieditems.MediafiedItemManager
-import ram.talia.hexal.api.toIntCapped
 
 object OpTradeMote : VarargConstMediaAction {
     override val mediaCost: Long

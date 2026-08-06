@@ -2,7 +2,6 @@ package ram.talia.hexal.common.network;
 
 import at.petrak.hexcasting.api.pigment.FrozenPigment;
 import at.petrak.hexcasting.common.particles.ConjureParticleOptions;
-import kotlin.collections.CollectionsKt;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.network.RegistryFriendlyByteBuf;

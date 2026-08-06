@@ -1,25 +1,18 @@
 package ram.talia.hexal.api.gates
 
+import at.petrak.hexcasting.api.utils.getList
 import at.petrak.hexcasting.api.utils.putCompound
 import at.petrak.hexcasting.api.utils.putList
-import at.petrak.hexcasting.api.utils.getList
 import com.mojang.datafixers.util.Either
-import com.mojang.serialization.Codec
-import com.mojang.serialization.DataResult
-import com.mojang.serialization.DynamicOps
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.nbt.Tag
 import net.minecraft.server.MinecraftServer
-import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.entity.Entity
-import net.minecraft.world.entity.animal.Cod
 import net.minecraft.world.phys.Vec3
-import ram.talia.hexal.Hexal
+import ram.talia.hexal.api.casting.iota.GateIota
 import ram.talia.hexal.api.nbt.toNbtList
 import ram.talia.hexal.api.nbt.toUUIDList
-import ram.talia.hexal.api.casting.iota.GateIota
-import ram.talia.hexal.api.config.HexalConfig
-import java.util.UUID
+import java.util.*
 
 /**
  * Stores which gate index references which entities. Data saved by [GateSavedData].

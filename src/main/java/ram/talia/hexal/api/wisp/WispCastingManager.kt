@@ -23,9 +23,7 @@ import net.minecraft.server.level.ServerLevel
 import net.minecraft.server.level.ServerPlayer
 import ram.talia.hexal.Hexal
 import ram.talia.hexal.api.casting.eval.env.WispCastEnv
-import ram.talia.hexal.api.casting.wisp.WispCastingManager.WispCast
 import ram.talia.hexal.common.entities.BaseCastingWisp
-import ram.talia.hexal.common.entities.TickingWisp
 import java.util.*
 
 class WispCastingManager(private val casterUUID: UUID, private var cachedServer: MinecraftServer?) {

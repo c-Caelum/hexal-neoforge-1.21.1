@@ -3,7 +3,6 @@ package ram.talia.hexal.common.entities
 import at.petrak.hexcasting.api.misc.MediaConstants
 import at.petrak.hexcasting.api.pigment.FrozenPigment
 import at.petrak.hexcasting.api.utils.asCompound
-import at.petrak.hexcasting.api.utils.putCompound
 import at.petrak.hexcasting.common.particles.ConjureParticleOptions
 import net.minecraft.client.Minecraft
 import net.minecraft.client.ParticleStatus
@@ -11,7 +10,6 @@ import net.minecraft.client.multiplayer.ClientLevel
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.nbt.NbtOps
 import net.minecraft.network.syncher.EntityDataAccessor
-import net.minecraft.network.syncher.EntityDataSerializer
 import net.minecraft.network.syncher.EntityDataSerializers
 import net.minecraft.network.syncher.SynchedEntityData
 import net.minecraft.world.entity.Entity

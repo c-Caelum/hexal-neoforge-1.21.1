@@ -1,18 +1,13 @@
 package ram.talia.hexal.api.mediafieditems
 
-import com.mojang.serialization.Codec
-import com.mojang.serialization.codecs.RecordCodecBuilder
-import net.minecraft.core.UUIDUtil
-import net.minecraft.core.component.DataComponents
 import net.minecraft.core.component.PatchedDataComponentMap
-import net.minecraft.nbt.CompoundTag
 import net.minecraft.server.level.ServerPlayer
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import ram.talia.hexal.common.blocks.entity.BlockEntityMediafiedStorage
 import ram.talia.hexal.xplat.IXplatAbstractions
 import java.lang.ref.WeakReference
-import java.util.UUID
+import java.util.*
 import kotlin.math.max
 
 object MediafiedItemManager {

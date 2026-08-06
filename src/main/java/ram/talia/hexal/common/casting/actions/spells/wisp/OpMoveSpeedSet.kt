@@ -1,12 +1,14 @@
 package ram.talia.hexal.common.casting.actions.spells.wisp
 
-import at.petrak.hexcasting.api.casting.*
+import at.petrak.hexcasting.api.casting.ParticleSpray
+import at.petrak.hexcasting.api.casting.RenderedSpell
 import at.petrak.hexcasting.api.casting.castables.SpellAction
 import at.petrak.hexcasting.api.casting.eval.CastingEnvironment
+import at.petrak.hexcasting.api.casting.getPositiveDouble
 import at.petrak.hexcasting.api.casting.iota.Iota
 import ram.talia.hexal.api.casting.eval.env.WispCastEnv
-import ram.talia.hexal.api.config.HexalConfig
 import ram.talia.hexal.api.casting.mishaps.MishapNoWisp
+import ram.talia.hexal.api.config.HexalConfig
 import ram.talia.hexal.common.entities.TickingWisp
 import kotlin.math.ln
 import kotlin.math.min

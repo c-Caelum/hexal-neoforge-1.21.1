@@ -1,30 +1,29 @@
 package ram.talia.hexal.common.casting.actions.spells.gates
 
-import at.petrak.hexcasting.api.casting.castables.SpellAction
-import at.petrak.hexcasting.api.casting.eval.CastingEnvironment
-import at.petrak.hexcasting.api.mod.HexTags
 import at.petrak.hexcasting.api.casting.ParticleSpray
 import at.petrak.hexcasting.api.casting.RenderedSpell
+import at.petrak.hexcasting.api.casting.castables.SpellAction
+import at.petrak.hexcasting.api.casting.eval.CastingEnvironment
 import at.petrak.hexcasting.api.casting.eval.env.PlayerBasedCastEnv
 import at.petrak.hexcasting.api.casting.getVec3
 import at.petrak.hexcasting.api.casting.iota.Iota
 import at.petrak.hexcasting.api.casting.mishaps.MishapBadLocation
+import at.petrak.hexcasting.api.mod.HexTags
+import dev.ryanhcode.sable.Sable
 import dev.ryanhcode.sable.companion.SableCompanion
 import net.minecraft.core.Position
 import net.minecraft.core.component.DataComponents
 import net.minecraft.server.level.ServerPlayer
 import net.minecraft.world.entity.Entity
-import net.minecraft.world.item.enchantment.EnchantmentHelper
 import net.minecraft.world.item.enchantment.Enchantments
 import net.minecraft.world.phys.Vec3
 import ram.talia.hexal.Hexal
-import ram.talia.hexal.api.config.HexalConfig
-import ram.talia.hexal.api.getGate
-import ram.talia.hexal.api.minus
 import ram.talia.hexal.api.casting.castables.VarargSpellAction
 import ram.talia.hexal.api.casting.iota.GateIota
 import ram.talia.hexal.api.casting.mishaps.MishapAnchorEntityMissing
-import kotlin.jvm.optionals.getOrNull
+import ram.talia.hexal.api.config.HexalConfig
+import ram.talia.hexal.api.getGate
+import ram.talia.hexal.api.minus
 
 object OpCloseGate : VarargSpellAction {
 
@@ -63,7 +62,8 @@ object OpCloseGate : VarargSpellAction {
             env.assertVecInRange(targetPos)
 
         // subtract 0,1,0 when checking out-of-world to prevent teleporting into bedrock floor and falling through
-        if (!env.isVecInWorld(targetPos.subtract(0.0, 1.0, 0.0)))
+        // patch job n
+        if (!env.isVecInWorld(targetPos.subtract(0.0, 1.0, 0.0)) && !Sable.HELPER.isInPlotGrid(env.world, targetPos))
             throw MishapBadLocation(targetPos, "too_close_to_out")
 
         val gatees = gate.getMarked(env.world)
@@ -71,7 +71,7 @@ object OpCloseGate : VarargSpellAction {
 
         var cost = Hexal.toMediaFromDust(HexalConfig.Server.CLOSE_GATE_COST.get())
         if (gate.isDrifting) {
-            // I swear that I didn't name the variables in here
+            // I swear I didn't name the variables in here
             cost = gatees.fold(cost) { cumCost, gatee -> cumCost + (HexalConfig.Server.CLOSE_GATE_DISTANCE_COST_SCALE_FACTOR.get() * gatee.position().distanceTo(targetPos) * 10000.0).toLong() }
         }
 

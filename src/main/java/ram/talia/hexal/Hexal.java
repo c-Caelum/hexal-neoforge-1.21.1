@@ -6,7 +6,6 @@ import at.petrak.hexcasting.api.misc.MediaConstants;
 import at.petrak.hexcasting.api.pigment.FrozenPigment;
 import at.petrak.hexcasting.common.lib.HexRegistries;
 import at.petrak.hexcasting.xplat.IXplatAbstractions;
-import at.petrak.hexcasting.xplat.IXplatTags;
 import com.mojang.logging.LogUtils;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.Registries;

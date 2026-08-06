@@ -11,9 +11,9 @@ import at.petrak.hexcasting.api.casting.mishaps.MishapOthersName
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.server.level.ServerPlayer
 import ram.talia.hexal.Hexal
+import ram.talia.hexal.api.casting.castables.VarargConstMediaAction
 import ram.talia.hexal.api.config.HexalConfig
 import ram.talia.hexal.api.gates.GateManager
-import ram.talia.hexal.api.casting.castables.VarargConstMediaAction
 
 object OpMakeGate : VarargConstMediaAction {
     override fun argc(stack: List<Iota>): Int {

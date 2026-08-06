@@ -17,7 +17,6 @@ import ram.talia.hexal.Hexal.modLoc
 import ram.talia.hexal.common.blocks.BlockMediafiedStorage
 import ram.talia.hexal.common.blocks.BlockSlipway
 import java.util.function.BiConsumer
-import java.util.function.Consumer
 
 
 class HexalBlocks {

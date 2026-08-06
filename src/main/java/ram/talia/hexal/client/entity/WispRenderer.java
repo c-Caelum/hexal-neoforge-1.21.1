@@ -4,7 +4,6 @@ import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
-import ram.talia.hexal.common.entities.BaseCastingWisp;
 import ram.talia.hexal.common.entities.BaseWisp;
 
 import static ram.talia.hexal.Hexal.modLoc;

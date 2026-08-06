@@ -1,13 +1,9 @@
 package ram.talia.hexal.common.casting.actions.spells.wisp
 
 import at.petrak.hexcasting.api.HexAPI
-import at.petrak.hexcasting.api.casting.ParticleSpray
-import at.petrak.hexcasting.api.casting.RenderedSpell
+import at.petrak.hexcasting.api.casting.*
 import at.petrak.hexcasting.api.casting.castables.SpellAction
 import at.petrak.hexcasting.api.casting.eval.CastingEnvironment
-import at.petrak.hexcasting.api.casting.getList
-import at.petrak.hexcasting.api.casting.getPositiveDouble
-import at.petrak.hexcasting.api.casting.getVec3
 import at.petrak.hexcasting.api.casting.iota.Iota
 import at.petrak.hexcasting.api.casting.iota.ListIota
 import at.petrak.hexcasting.api.casting.iota.NullIota

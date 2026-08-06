@@ -6,6 +6,8 @@ import net.minecraft.nbt.CompoundTag
 import net.minecraft.nbt.Tag
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.server.level.ServerLevel
+import ram.talia.hexal.api.casting.wisp.triggers.WispTriggerRegistry.fromNbt
+import ram.talia.hexal.api.casting.wisp.triggers.WispTriggerRegistry.wrapNbt
 import ram.talia.hexal.common.entities.BaseCastingWisp
 
 object WispTriggerRegistry {

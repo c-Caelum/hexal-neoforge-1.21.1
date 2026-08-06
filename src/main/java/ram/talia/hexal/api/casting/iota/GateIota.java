@@ -1,7 +1,5 @@
 package ram.talia.hexal.api.casting.iota;
 
-import at.petrak.hexcasting.api.casting.arithmetic.predicates.IotaPredicate;
-import at.petrak.hexcasting.api.casting.castables.SpellAction;
 import at.petrak.hexcasting.api.casting.iota.Iota;
 import at.petrak.hexcasting.api.casting.iota.IotaType;
 import at.petrak.hexcasting.xplat.IXplatAbstractions;
@@ -10,13 +8,10 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import dev.ryanhcode.sable.Sable;
-import dev.ryanhcode.sable.companion.SableCompanion;
 import dev.ryanhcode.sable.sublevel.ClientSubLevel;
 import kotlin.Pair;
 import net.minecraft.ChatFormatting;
 import net.minecraft.MethodsReturnNonnullByDefault;
-import net.minecraft.core.BlockPos;
-import net.minecraft.core.Registry;
 import net.minecraft.core.UUIDUtil;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.chat.Component;

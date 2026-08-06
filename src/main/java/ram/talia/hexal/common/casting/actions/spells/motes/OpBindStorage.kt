@@ -19,7 +19,6 @@ import ram.talia.hexal.api.mediafieditems.MediafiedItemManager
 import ram.talia.hexal.common.blocks.BlockMediafiedStorage
 import ram.talia.hexal.common.blocks.entity.BlockEntityMediafiedStorage
 import ram.talia.hexal.xplat.IXplatAbstractions
-import javax.swing.text.html.parser.Entity
 
 class OpBindStorage(private val isTemporaryBinding: Boolean) : SpellAction {
     override val argc = 1

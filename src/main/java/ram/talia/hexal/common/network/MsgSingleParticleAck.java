@@ -2,7 +2,6 @@ package ram.talia.hexal.common.network;
 
 import at.petrak.hexcasting.api.pigment.FrozenPigment;
 import at.petrak.hexcasting.common.particles.ConjureParticleOptions;
-import kotlin.jvm.JvmStatic;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.network.RegistryFriendlyByteBuf;
@@ -10,13 +9,9 @@ import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
-import static ram.talia.hexal.api.FunUtilsKt.nextColour;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.logging.Level;
 
 import static ram.talia.hexal.Hexal.modLoc;
+import static ram.talia.hexal.api.FunUtilsKt.nextColour;
 
 public record MsgSingleParticleAck(Vec3 pos, FrozenPigment colouriser) implements CustomPacketPayload {
 

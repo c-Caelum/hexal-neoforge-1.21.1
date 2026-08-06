@@ -1,16 +1,5 @@
 package ram.talia.hexal.api.casting.mishaps
 
-import at.petrak.hexcasting.api.casting.asActionResult
-import at.petrak.hexcasting.api.casting.eval.CastingEnvironment
-import at.petrak.hexcasting.api.casting.iota.GarbageIota
-import at.petrak.hexcasting.api.casting.iota.Iota
-import at.petrak.hexcasting.api.casting.iota.ListIota
-import at.petrak.hexcasting.api.casting.mishaps.Mishap
-import at.petrak.hexcasting.api.pigment.FrozenPigment
-import at.petrak.hexcasting.api.utils.isOfTag
-import at.petrak.hexcasting.common.lib.hex.HexIotaTypes
-import net.minecraft.network.chat.Component
-import net.minecraft.world.item.DyeColor
 /*
 
 class MishapIllegalInterworldIota(val iota: Iota) : Mishap() {

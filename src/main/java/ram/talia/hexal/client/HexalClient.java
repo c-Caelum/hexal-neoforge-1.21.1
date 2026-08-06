@@ -1,7 +1,6 @@
 package ram.talia.hexal.client;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.ModContainer;
@@ -11,15 +10,11 @@ import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.gui.ConfigurationScreen;
 import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
-import net.neoforged.neoforge.common.NeoForge;
-import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
-import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 import ram.talia.hexal.Hexal;
 import ram.talia.hexal.client.blocks.BlockEntityMediafiedStorageRenderer;
 import ram.talia.hexal.client.entity.WispRenderer;
 import ram.talia.hexal.common.lib.HexalBlockEntities;
 import ram.talia.hexal.common.lib.HexalEntities;
-import vazkii.patchouli.neoforge.client.NeoForgeClientInitializer;
 
 // This class will not load on dedicated servers. Accessing client side code from here is safe.
 @Mod(value = Hexal.MODID, dist = Dist.CLIENT)

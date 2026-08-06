@@ -1,23 +1,15 @@
 package ram.talia.hexal.api.mediafieditems
 
-import at.petrak.hexcasting.api.utils.putCompound
-import com.mojang.serialization.MapCodec
-import net.minecraft.core.component.DataComponentMap
 import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.core.component.DataComponents
 import net.minecraft.core.component.PatchedDataComponentMap
-import net.minecraft.core.registries.BuiltInRegistries
-import net.minecraft.nbt.CompoundTag
 import net.minecraft.network.chat.Component
-import net.minecraft.network.codec.StreamCodec
-import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import ram.talia.hexal.Hexal
-import ram.talia.hexal.api.HexalCodecs
 import ram.talia.hexal.api.addBounded
 import ram.talia.hexal.api.config.HexalConfig
-import java.util.Objects
+import java.util.*
 import kotlin.math.max
 import kotlin.math.min
 
@@ -31,11 +23,13 @@ data class ItemRecord(var item: Item, var components : PatchedDataComponentMap, 
             this(item, PatchedDataComponentMap.fromPatch(item.components(), components), count)
 
     fun typeMatches(other: ItemRecord): Boolean {
-        return item == other.item && Objects.equals(components, other.components);
+        // patch job n+1
+        return item == other.item && Objects.equals(components.asPatch(), other.components.asPatch());
     }
 
     fun typeMatches(other: ItemStack): Boolean {
-        return item == other.item && components.equals(PatchedDataComponentMap.fromPatch(other.components, other.componentsPatch));
+        // a rather concerning and annoying implementation, but oh well!
+        return item == other.item && Objects.equals(other.componentsPatch, this.components.asPatch());
     }
 
     fun addCount(toAdd: Long) {

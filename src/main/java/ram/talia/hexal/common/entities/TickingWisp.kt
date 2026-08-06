@@ -3,31 +3,24 @@ package ram.talia.hexal.common.entities
 import at.petrak.hexcasting.api.casting.eval.env.PlayerBasedCastEnv
 import at.petrak.hexcasting.api.casting.iota.EntityIota
 import at.petrak.hexcasting.api.casting.iota.Iota
-import at.petrak.hexcasting.api.casting.iota.IotaType
 import at.petrak.hexcasting.api.pigment.FrozenPigment
 import at.petrak.hexcasting.api.utils.TreeList
 import at.petrak.hexcasting.api.utils.hasByte
 import at.petrak.hexcasting.api.utils.hasFloat
-import at.petrak.hexcasting.api.utils.validateIota
 import at.petrak.hexcasting.api.utils.validateIotaList
 import at.petrak.hexcasting.common.lib.HexAttributes
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.nbt.ListTag
-import net.minecraft.network.chat.Component
 import net.minecraft.network.syncher.EntityDataAccessor
 import net.minecraft.network.syncher.EntityDataSerializers
 import net.minecraft.network.syncher.SynchedEntityData
 import net.minecraft.server.level.ServerLevel
-import net.minecraft.server.level.ServerPlayer
 import net.minecraft.world.entity.EntityType
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.level.Level
 import net.minecraft.world.phys.Vec3
 import ram.talia.hexal.Hexal
 import ram.talia.hexal.api.casting.wisp.WispCastingManager
-import ram.talia.hexal.api.casting.wisp.triggers.IWispTrigger
-import ram.talia.hexal.api.casting.wisp.triggers.TickTrigger
-import ram.talia.hexal.api.casting.wisp.triggers.WispTriggerTypes
 import ram.talia.hexal.api.config.HexalConfig
 import ram.talia.hexal.api.getReferencedEntities
 import ram.talia.hexal.api.minus
@@ -35,7 +28,6 @@ import ram.talia.hexal.api.plus
 import ram.talia.hexal.api.times
 import ram.talia.hexal.common.lib.HexalEntities
 import java.lang.Double.min
-import java.util.UUID
 
 class TickingWisp : BaseCastingWisp {
 	override val shouldComplainNotEnoughMedia = false

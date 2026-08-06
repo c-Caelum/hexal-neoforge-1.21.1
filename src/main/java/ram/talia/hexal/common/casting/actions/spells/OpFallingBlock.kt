@@ -1,19 +1,17 @@
 package ram.talia.hexal.common.casting.actions.spells
 
-import at.petrak.hexcasting.api.HexAPI
-import at.petrak.hexcasting.api.mod.HexConfig
-import at.petrak.hexcasting.api.casting.*
+import at.petrak.hexcasting.api.casting.ParticleSpray
+import at.petrak.hexcasting.api.casting.RenderedSpell
 import at.petrak.hexcasting.api.casting.castables.SpellAction
 import at.petrak.hexcasting.api.casting.eval.CastingEnvironment
+import at.petrak.hexcasting.api.casting.getVec3
 import at.petrak.hexcasting.api.casting.iota.Iota
+import at.petrak.hexcasting.api.mod.HexConfig
+import at.petrak.hexcasting.api.utils.isCorrectTierForDrops
 import at.petrak.hexcasting.xplat.IXplatAbstractions
 import net.minecraft.core.BlockPos
-import net.minecraft.core.Registry
 import net.minecraft.core.particles.BlockParticleOption
 import net.minecraft.core.particles.ParticleTypes
-import net.minecraft.core.registries.BuiltInRegistries
-import net.minecraft.core.registries.Registries
-import at.petrak.hexcasting.api.utils.isCorrectTierForDrops
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.tags.BlockTags
 import net.minecraft.world.entity.Entity
@@ -22,10 +20,6 @@ import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.Tier
-import net.minecraft.world.item.Tiers
-import net.minecraft.world.item.enchantment.Enchantment
-import net.minecraft.world.item.enchantment.EnchantmentHelper
-import net.minecraft.world.item.enchantment.Enchantments
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.FallingBlock
 import net.minecraft.world.level.block.state.BlockState

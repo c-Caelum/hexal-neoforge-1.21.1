@@ -2,7 +2,6 @@ package ram.talia.hexal.common.blocks.entity
 
 import at.petrak.hexcasting.api.block.HexBlockEntity
 import at.petrak.hexcasting.api.utils.getList
-import at.petrak.hexcasting.api.utils.putCompound
 import at.petrak.hexcasting.api.utils.putList
 import net.minecraft.core.BlockPos
 import net.minecraft.core.HolderLookup
@@ -14,15 +13,13 @@ import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.entity.item.ItemEntity
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
-import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.state.BlockState
 import ram.talia.hexal.api.HexalCodecs
 import ram.talia.hexal.api.config.HexalConfig
 import ram.talia.hexal.api.mediafieditems.ItemRecord
 import ram.talia.hexal.api.mediafieditems.MediafiedItemManager
 import ram.talia.hexal.common.lib.HexalBlockEntities
-import java.util.UUID
-import kotlin.collections.iterator
+import java.util.*
 import kotlin.math.min
 
 class BlockEntityMediafiedStorage(pos: BlockPos, val state: BlockState) : HexBlockEntity(HexalBlockEntities.MEDIAFIED_STORAGE, pos, state) {

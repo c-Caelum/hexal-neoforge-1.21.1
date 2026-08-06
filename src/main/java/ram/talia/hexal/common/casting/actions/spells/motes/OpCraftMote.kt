@@ -13,7 +13,6 @@ import com.mojang.datafixers.util.Either
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.inventory.AbstractContainerMenu
-import net.minecraft.world.inventory.TransientCraftingContainer
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.CraftingInput
 import net.minecraft.world.item.crafting.RecipeType

@@ -3,11 +3,9 @@ package ram.talia.hexal.datagen;
 import at.petrak.hexcasting.api.advancements.HexAdvancementTriggers;
 import at.petrak.hexcasting.api.misc.MediaConstants;
 import at.petrak.hexcasting.common.lib.HexStateIngredients;
-import at.petrak.hexcasting.common.recipe.BrainsweepRecipe;
 import at.petrak.hexcasting.common.recipe.ingredient.brainsweep.VillagerIngredient;
 import at.petrak.hexcasting.datagen.HexAdvancements;
 import at.petrak.hexcasting.datagen.recipe.builders.BrainsweepRecipeBuilder;
-import at.petrak.hexcasting.interop.patchouli.BrainsweepProcessor;
 import net.minecraft.advancements.Criterion;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
@@ -15,13 +13,12 @@ import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.world.entity.npc.VillagerProfession;
 import net.minecraft.world.level.block.Blocks;
-import static ram.talia.hexal.Hexal.modLoc;
-
-import org.jetbrains.annotations.NotNull;
 import ram.talia.hexal.common.lib.HexalBlocks;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.concurrent.CompletableFuture;
+
+import static ram.talia.hexal.Hexal.modLoc;
 
 // yet another rewrite :p
 

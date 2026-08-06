@@ -1,13 +1,14 @@
 package ram.talia.hexal.common.casting.actions.spells.wisp
 
-import at.petrak.hexcasting.api.casting.*
 import at.petrak.hexcasting.api.casting.castables.ConstMediaAction
 import at.petrak.hexcasting.api.casting.eval.CastingEnvironment
+import at.petrak.hexcasting.api.casting.getEntity
 import at.petrak.hexcasting.api.casting.iota.Iota
 import at.petrak.hexcasting.api.casting.mishaps.MishapInvalidIota
 import net.minecraft.world.entity.Entity
 import ram.talia.hexal.api.casting.mishaps.MishapOthersWisp
 import ram.talia.hexal.common.entities.BaseCastingWisp
+
 object OpWispHex : ConstMediaAction {
 	override val argc = 1
 

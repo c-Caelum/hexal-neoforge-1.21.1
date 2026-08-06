@@ -1,7 +1,6 @@
 package ram.talia.hexal.api.casting.castables
 
 import at.petrak.hexcasting.api.casting.castables.Action
-import at.petrak.hexcasting.api.casting.castables.ConstMediaAction
 import at.petrak.hexcasting.api.casting.castables.SpellAction
 import at.petrak.hexcasting.api.casting.eval.CastingEnvironment
 import at.petrak.hexcasting.api.casting.eval.OperationResult

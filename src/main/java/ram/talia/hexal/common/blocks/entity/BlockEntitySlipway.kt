@@ -23,7 +23,7 @@ import ram.talia.hexal.api.nextColour
 import ram.talia.hexal.api.nextGaussian
 import ram.talia.hexal.common.entities.WanderingWisp
 import ram.talia.hexal.common.lib.HexalBlockEntities
-import java.util.Random
+import java.util.*
 
 class BlockEntitySlipway(pos: BlockPos, state: BlockState) : HexBlockEntity(HexalBlockEntities.SLIPWAY, pos, state) {
 	val pos: BlockPos = pos.immutable()

@@ -4,8 +4,8 @@ import at.petrak.hexcasting.api.casting.castables.ConstMediaAction
 import at.petrak.hexcasting.api.casting.eval.CastingEnvironment
 import at.petrak.hexcasting.api.casting.iota.Iota
 import ram.talia.hexal.api.casting.eval.env.WispCastEnv
-import ram.talia.hexal.api.casting.wisp.triggers.WispTriggerRegistry
 import ram.talia.hexal.api.casting.mishaps.MishapNoWisp
+import ram.talia.hexal.api.casting.wisp.triggers.WispTriggerRegistry
 
 /**
  * Accepts a [WispTriggerRegistry.WispTriggerType] for an [ram.talia.hexal.api.casting.wisp.triggers.IWispTrigger], a wisp executing the spell will create a trigger of

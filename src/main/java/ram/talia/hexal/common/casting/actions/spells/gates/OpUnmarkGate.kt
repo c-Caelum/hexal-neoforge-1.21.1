@@ -1,12 +1,14 @@
 package ram.talia.hexal.common.casting.actions.spells.gates
 
-import at.petrak.hexcasting.api.casting.*
+import at.petrak.hexcasting.api.casting.ParticleSpray
+import at.petrak.hexcasting.api.casting.RenderedSpell
 import at.petrak.hexcasting.api.casting.castables.SpellAction
 import at.petrak.hexcasting.api.casting.eval.CastingEnvironment
+import at.petrak.hexcasting.api.casting.getEntity
 import at.petrak.hexcasting.api.casting.iota.Iota
 import net.minecraft.world.entity.Entity
-import ram.talia.hexal.api.getGate
 import ram.talia.hexal.api.casting.iota.GateIota
+import ram.talia.hexal.api.getGate
 
 object OpUnmarkGate : SpellAction {
     override val argc = 2

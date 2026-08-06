@@ -7,8 +7,9 @@ import at.petrak.hexcasting.api.casting.iota.Iota
 import com.mojang.datafixers.util.Either
 import net.minecraft.world.phys.Vec3
 import ram.talia.hexal.Hexal
-import ram.talia.hexal.api.*
+import ram.talia.hexal.api.assertVecListInRange
 import ram.talia.hexal.api.config.HexalConfig
+import ram.talia.hexal.api.getVec3OrListVec3
 import ram.talia.hexal.common.network.MsgParticleLines
 import ram.talia.hexal.common.network.MsgSingleParticleAck
 import ram.talia.hexal.xplat.IXplatAbstractions

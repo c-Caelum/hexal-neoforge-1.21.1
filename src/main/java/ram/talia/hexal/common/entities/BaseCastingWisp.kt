@@ -2,22 +2,13 @@ package ram.talia.hexal.common.entities
 
 import at.petrak.hexcasting.api.casting.iota.EntityIota
 import at.petrak.hexcasting.api.casting.iota.Iota
-import at.petrak.hexcasting.api.casting.iota.IotaType
 import at.petrak.hexcasting.api.casting.iota.ListIota
 import at.petrak.hexcasting.api.casting.iota.NullIota
 import at.petrak.hexcasting.api.pigment.FrozenPigment
-import at.petrak.hexcasting.api.utils.TreeList
-import at.petrak.hexcasting.api.utils.asCompound
-import at.petrak.hexcasting.api.utils.getList
-import at.petrak.hexcasting.api.utils.hasByte
-import at.petrak.hexcasting.api.utils.validateIota
-import at.petrak.hexcasting.api.utils.validateIotaList
+import at.petrak.hexcasting.api.utils.*
 import com.mojang.datafixers.util.Either
 import net.minecraft.client.Minecraft
 import net.minecraft.nbt.CompoundTag
-import net.minecraft.nbt.ListTag
-import net.minecraft.nbt.NbtOps
-import net.minecraft.nbt.Tag
 import net.minecraft.network.protocol.Packet
 import net.minecraft.network.protocol.game.ClientGamePacketListener
 import net.minecraft.network.protocol.game.ClientboundAddEntityPacket
@@ -30,21 +21,19 @@ import net.minecraft.server.level.ServerPlayer
 import net.minecraft.world.entity.EntityType
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.level.Level
-import net.minecraft.world.phys.*
+import net.minecraft.world.phys.Vec3
 import ram.talia.hexal.Hexal
-import ram.talia.hexal.api.config.HexalConfig
 import ram.talia.hexal.api.casting.eval.env.WispCastEnv
 import ram.talia.hexal.api.casting.wisp.WispCastingManager
 import ram.talia.hexal.api.casting.wisp.triggers.IWispTrigger
 import ram.talia.hexal.api.casting.wisp.triggers.WispTriggerRegistry
-import ram.talia.hexal.api.mulBounded
+import ram.talia.hexal.api.config.HexalConfig
 import ram.talia.hexal.client.sounds.WispCastingSoundInstance
 import ram.talia.hexal.common.lib.HexalSounds
 import ram.talia.hexal.common.network.MsgWispCastSoundS2C
 import ram.talia.hexal.xplat.IXplatAbstractions
 import java.util.*
 import kotlin.collections.ArrayDeque
-import kotlin.math.min
 import kotlin.math.pow
 
 

@@ -1,16 +1,14 @@
 package ram.talia.hexal.common.casting.actions.spells.motes
 
+import at.petrak.hexcasting.api.casting.*
 import at.petrak.hexcasting.api.casting.castables.SpellAction
 import at.petrak.hexcasting.api.casting.eval.CastingEnvironment
-import at.petrak.hexcasting.api.misc.MediaConstants
-import at.petrak.hexcasting.api.casting.*
 import at.petrak.hexcasting.api.casting.iota.EntityIota
 import at.petrak.hexcasting.api.casting.iota.Iota
 import at.petrak.hexcasting.api.casting.mishaps.MishapInvalidIota
 import at.petrak.hexcasting.api.utils.asTranslatedComponent
 import at.petrak.hexcasting.ktxt.UseOnContext
 import at.petrak.hexcasting.xplat.IXplatAbstractions.HEXCASTING
-import com.mojang.authlib.GameProfile
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.core.component.PatchedDataComponentMap
@@ -19,12 +17,12 @@ import net.minecraft.world.entity.Entity
 import net.minecraft.world.phys.BlockHitResult
 import net.minecraft.world.phys.Vec3
 import ram.talia.hexal.Hexal
-import ram.talia.hexal.api.config.HexalConfig
-import ram.talia.hexal.api.getMote
-import ram.talia.hexal.api.mediafieditems.MediafiedItemManager
 import ram.talia.hexal.api.casting.castables.VarargSpellAction
 import ram.talia.hexal.api.casting.iota.MoteIota
 import ram.talia.hexal.api.casting.mishaps.MishapNoBoundStorage
+import ram.talia.hexal.api.config.HexalConfig
+import ram.talia.hexal.api.getMote
+import ram.talia.hexal.api.mediafieditems.MediafiedItemManager
 import ram.talia.hexal.xplat.IXplatAbstractions
 
 object OpUseMoteOn : VarargSpellAction {

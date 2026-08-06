@@ -3,15 +3,9 @@ package ram.talia.hexal.api.casting.iota;
 import at.petrak.hexcasting.api.casting.iota.Iota;
 import at.petrak.hexcasting.api.casting.iota.IotaType;
 import at.petrak.hexcasting.api.casting.iota.NullIota;
-import at.petrak.hexcasting.api.utils.HexUtils;
-import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.ChatFormatting;
-import net.minecraft.core.component.DataComponentMap;
-import net.minecraft.core.component.DataComponentPatch;
 import net.minecraft.core.component.PatchedDataComponentMap;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.Tag;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.ComponentSerialization;
@@ -38,7 +32,7 @@ import java.util.UUID;
  */
 public class MoteIota extends Iota {
     MediafiedItemManager.Index index;
-    Component displayMessage = null;
+    Component displayMessage = Component.empty();
     long count = 0;
 
 
@@ -203,7 +197,7 @@ public class MoteIota extends Iota {
 
     @Override
     public Component display() {
-        if (displayMessage == null || count == 0) {
+        if (displayMessage == Component.empty() || count == 0) {
             return Component.translatable("hexcasting.iota.hexcasting:null").withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC);
         }
 

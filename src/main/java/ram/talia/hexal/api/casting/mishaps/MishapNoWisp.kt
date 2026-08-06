@@ -4,7 +4,6 @@ import at.petrak.hexcasting.api.casting.eval.CastingEnvironment
 import at.petrak.hexcasting.api.casting.eval.env.PlayerBasedCastEnv
 import at.petrak.hexcasting.api.casting.iota.Iota
 import at.petrak.hexcasting.api.casting.mishaps.Mishap
-import at.petrak.hexcasting.api.casting.mishaps.circle.MishapNoSpellCircle
 import at.petrak.hexcasting.api.pigment.FrozenPigment
 import at.petrak.hexcasting.api.utils.TreeList
 import net.minecraft.core.component.DataComponents
@@ -12,9 +11,7 @@ import net.minecraft.network.chat.Component
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.DyeColor
 import net.minecraft.world.item.ItemStack
-import net.minecraft.world.item.enchantment.EnchantmentHelper
 import net.minecraft.world.item.enchantment.Enchantments
-import net.neoforged.neoforge.common.Tags
 
 class MishapNoWisp : Mishap() {
 	override fun accentColor(env: CastingEnvironment, errorCtx: Context): FrozenPigment = dyeColor(DyeColor.LIGHT_BLUE)

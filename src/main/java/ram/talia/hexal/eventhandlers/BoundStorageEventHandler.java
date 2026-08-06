@@ -1,7 +1,6 @@
 package ram.talia.hexal.eventhandlers;
 
 import net.minecraft.server.level.ServerPlayer;
-import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import org.jetbrains.annotations.Nullable;
 
@@ -13,6 +12,7 @@ import java.util.UUID;
  * Manages a Map of player UUIDs to UUIDs for MediafiedStorage.
  */
 public class BoundStorageEventHandler {
+
     private static final String TAG_BOUND_STORAGE = "hexal:bound_storage";
 
     // player UUIDs to MediafiedStorage UUIDs.

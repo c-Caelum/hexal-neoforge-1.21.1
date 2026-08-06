@@ -1,7 +1,6 @@
 package ram.talia.hexal.api
 
 import at.petrak.hexcasting.api.casting.asActionResult
-import at.petrak.hexcasting.api.casting.eval.vm.CastingVM
 import at.petrak.hexcasting.api.casting.iota.*
 import at.petrak.hexcasting.api.casting.mishaps.MishapInvalidIota
 import at.petrak.hexcasting.api.casting.mishaps.MishapNotEnoughArgs
@@ -13,24 +12,36 @@ import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.decoration.ItemFrame
 import net.minecraft.world.entity.item.ItemEntity
 import net.minecraft.world.entity.npc.Villager
-import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.BlockItem
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.phys.Vec3
 import ram.talia.hexal.api.casting.iota.GateIota
+import ram.talia.hexal.api.casting.iota.MoteIota
 import ram.talia.hexal.api.mediafieditems.ItemRecord
 import ram.talia.hexal.api.mediafieditems.MediafiedItemManager
-import ram.talia.hexal.api.casting.iota.MoteIota
 import ram.talia.hexal.api.util.Anyone
 import ram.talia.hexal.common.entities.BaseCastingWisp
 import ram.talia.hexal.common.entities.BaseWisp
 import ram.talia.moreiotas.api.casting.iota.ItemStackIota
 import ram.talia.moreiotas.api.casting.iota.ItemTypeIota
 import java.util.UUID
+import kotlin.collections.ArrayDeque
+import kotlin.collections.Iterable
+import kotlin.collections.List
+import kotlin.collections.Map
+import kotlin.collections.MutableList
+import kotlin.collections.addAll
+import kotlin.collections.component1
+import kotlin.collections.component2
+import kotlin.collections.forEach
+import kotlin.collections.getOrElse
+import kotlin.collections.isNotEmpty
+import kotlin.collections.listOf
+import kotlin.collections.map
+import kotlin.collections.mutableListOf
 import kotlin.math.abs
-import kotlin.math.absoluteValue
 import kotlin.math.roundToLong
 
 operator fun Double.times(vec: Vec3): Vec3 = vec.scale(this)

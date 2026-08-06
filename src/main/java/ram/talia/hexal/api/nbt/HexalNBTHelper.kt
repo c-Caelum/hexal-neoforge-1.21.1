@@ -1,21 +1,14 @@
 package ram.talia.hexal.api.nbt
 
 import at.petrak.hexcasting.api.casting.iota.Iota
-import at.petrak.hexcasting.api.casting.iota.IotaType
 import at.petrak.hexcasting.api.utils.asCompound
 import at.petrak.hexcasting.api.utils.asInt
-import net.minecraft.client.multiplayer.ClientLevel
 import net.minecraft.nbt.*
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.util.FastBufferedInputStream
 import net.minecraft.world.entity.Entity
 import ram.talia.hexal.Hexal
-import ram.talia.hexal.common.lib.HexalEntities
-import java.io.ByteArrayInputStream
-import java.io.ByteArrayOutputStream
-import java.io.DataInputStream
-import java.io.IOException
-import java.io.InputStream
+import java.io.*
 import java.util.*
 import java.util.zip.GZIPInputStream
 

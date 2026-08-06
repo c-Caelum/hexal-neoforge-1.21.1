@@ -1,6 +1,5 @@
 package ram.talia.hexal.datagen;
 
-import at.petrak.hexcasting.xplat.IXplatTags;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;

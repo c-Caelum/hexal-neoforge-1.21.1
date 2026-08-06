@@ -16,15 +16,19 @@ import net.minecraft.world.phys.Vec3
 import ram.talia.hexal.Hexal
 import ram.talia.hexal.api.casting.wisp.triggers.WispTriggerTypes
 import ram.talia.hexal.api.plus
-import ram.talia.hexal.common.casting.actions.spells.motes.*
-import ram.talia.hexal.common.casting.actions.spells.wisp.OpSummonWisp
-import java.util.function.BiConsumer
-import ram.talia.hexal.common.casting.actions.spells.wisp.*
 import ram.talia.hexal.common.casting.actions.*
-import ram.talia.hexal.common.casting.actions.spells.*
-import ram.talia.hexal.common.entities.BaseWisp
+import ram.talia.hexal.common.casting.actions.spells.OpFallingBlock
+import ram.talia.hexal.common.casting.actions.spells.OpParticles
+import ram.talia.hexal.common.casting.actions.spells.OpPlaceType
+import ram.talia.hexal.common.casting.actions.spells.OpSmelt
 import ram.talia.hexal.common.casting.actions.spells.gates.*
-import ram.talia.hexal.common.casting.actions.spells.great.*
+import ram.talia.hexal.common.casting.actions.spells.great.OpConsumeWisp
+import ram.talia.hexal.common.casting.actions.spells.great.OpSeonWispSet
+import ram.talia.hexal.common.casting.actions.spells.great.OpTick
+import ram.talia.hexal.common.casting.actions.spells.motes.*
+import ram.talia.hexal.common.casting.actions.spells.wisp.*
+import ram.talia.hexal.common.entities.BaseWisp
+import java.util.function.BiConsumer
 
 object HexalActions {
 
