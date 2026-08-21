@@ -26,7 +26,7 @@ object OpConsumeWisp : SpellAction {
 
 		env.assertEntityInRange(consumed.get())
 
-		val consumer: Either<BaseCastingWisp, ServerPlayer?> = if (env is WispCastEnv) Either.left(env.wisp) else Either.right(env.caster)
+		val consumer: Either<BaseCastingWisp, ServerPlayer?> = if (env is WispCastEnv) Either.left(env.wisp) else Either.right(env.castingEntity as? ServerPlayer)
 
 //		Hexal.LOGGER.debug("consumer: {}, {}", consumer, consumed.fightConsume(consumer))
 

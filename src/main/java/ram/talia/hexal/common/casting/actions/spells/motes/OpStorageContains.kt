@@ -7,6 +7,7 @@ import at.petrak.hexcasting.api.casting.getBlockPos
 import at.petrak.hexcasting.api.casting.iota.Iota
 import at.petrak.hexcasting.api.casting.mishaps.MishapInvalidIota
 import net.minecraft.core.Direction
+import net.minecraft.server.level.ServerPlayer
 import ram.talia.hexal.api.getMoteOrItemType
 import ram.talia.hexal.common.blocks.entity.BlockEntityMediafiedStorage
 import ram.talia.hexal.xplat.IXplatAbstractions
@@ -20,7 +21,7 @@ object OpStorageContains : ConstMediaAction {
 
         env.assertVecInRange(storagePos.center)
 
-        if (!env.canEditBlockAt(storagePos) || !IXplatAbstractions.INSTANCE.isInteractingAllowed(env.world, storagePos, Direction.UP, env.castingHand, env.caster))
+        if (!env.canEditBlockAt(storagePos) || !IXplatAbstractions.INSTANCE.isInteractingAllowed(env.world, storagePos, Direction.UP, env.castingHand, env.castingEntity as? ServerPlayer))
             return false.asActionResult
 
         val storage = env.world.getBlockEntity(storagePos) as? BlockEntityMediafiedStorage ?: throw MishapInvalidIota.ofType(args[1], 0, "mediafied_storage")

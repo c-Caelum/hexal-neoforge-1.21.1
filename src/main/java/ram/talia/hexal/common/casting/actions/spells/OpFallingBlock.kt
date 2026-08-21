@@ -13,6 +13,7 @@ import net.minecraft.core.BlockPos
 import net.minecraft.core.particles.BlockParticleOption
 import net.minecraft.core.particles.ParticleTypes
 import net.minecraft.server.level.ServerLevel
+import net.minecraft.server.level.ServerPlayer
 import net.minecraft.tags.BlockTags
 import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.item.FallingBlockEntity
@@ -48,7 +49,7 @@ object OpFallingBlock : SpellAction {
 			val pos = BlockPos.containing(v)
 
 			val blockstate = env.world.getBlockState(pos)
-			if (!env.canEditBlockAt(pos) || !IXplatAbstractions.INSTANCE.isBreakingAllowed(env.world, pos, blockstate, env.caster))
+			if (!env.canEditBlockAt(pos) || !IXplatAbstractions.INSTANCE.isBreakingAllowed(env.world, pos, blockstate, env.castingEntity as? ServerPlayer))
 				return
 
 			val tier : Tier = HexConfig.server().opBreakHarvestLevel()

@@ -6,6 +6,7 @@ import at.petrak.hexcasting.api.casting.castables.SpellAction
 import at.petrak.hexcasting.api.casting.eval.CastingEnvironment
 import at.petrak.hexcasting.api.casting.iota.Iota
 import net.minecraft.core.BlockPos
+import net.minecraft.server.level.ServerPlayer
 import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.item.ItemEntity
 import net.minecraft.world.item.BlockItem
@@ -54,7 +55,7 @@ object OpSmelt : SpellAction {
             vOrIeOrI.map({ pos -> // runs this code if the player passed a BlockPos
                  if (!env.canEditBlockAt(pos)) return@map
                 val blockState = env.world.getBlockState(pos)
-                 if (!IXplatAbstractions.INSTANCE.isBreakingAllowed(env.world, pos, blockState, env.caster)) return@map
+                 if (!IXplatAbstractions.INSTANCE.isBreakingAllowed(env.world, pos, blockState, env.castingEntity as? ServerPlayer)) return@map
 
                 val itemStack = smeltResult(blockState.block.asItem(), env) ?: return@map
 
@@ -66,7 +67,7 @@ object OpSmelt : SpellAction {
                         env.world.addFreshEntity(ItemEntity(env.world, pos.x.toDouble(), pos.y.toDouble(), pos.z.toDouble(), itemStack.copy()))
                     }
                 } else {
-                    env.world.destroyBlock(pos, false, env.caster)
+                    env.world.destroyBlock(pos, false, env.castingEntity)
                     env.world.addFreshEntity(ItemEntity(env.world, pos.x.toDouble(), pos.y.toDouble(), pos.z.toDouble(), itemStack.copy()))
                     // Send a block update, also copied from Ars Nouveau (this is all copied from Ars Nouveau)
                     if (!env.world.isOutsideBuildHeight(pos))

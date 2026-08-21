@@ -61,8 +61,9 @@ class WispCastEnv(val wisp: BaseCastingWisp, level: ServerLevel) : CastingEnviro
         return vec.distanceToSqr(wisp.position()) <= wisp.maxSqrCastingDistance()
     }
 
-    override fun hasEditPermissionsAtEnvironment(pos: BlockPos): Boolean
-        = caster?.gameMode?.gameModeForPlayer != GameType.ADVENTURE && caster?.let { world.mayInteract(it, pos) } ?: true
+    override fun hasEditPermissionsAtEnvironment(pos: BlockPos): Boolean =
+        (castingEntity as? ServerPlayer)?.let { it.gameMode.gameModeForPlayer != GameType.ADVENTURE && world.mayInteract(it, pos) }
+            ?: true
 
     override fun getCastingHand(): InteractionHand = InteractionHand.MAIN_HAND
 

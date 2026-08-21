@@ -8,6 +8,7 @@ import at.petrak.hexcasting.api.pigment.FrozenPigment
 import at.petrak.hexcasting.api.utils.TreeList
 import net.minecraft.core.component.DataComponents
 import net.minecraft.network.chat.Component
+import net.minecraft.server.level.ServerPlayer
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.DyeColor
 import net.minecraft.world.item.ItemStack
@@ -31,7 +32,7 @@ class MishapNoWisp : Mishap() {
 	override fun execute(env: CastingEnvironment, errorCtx: Context, stack: TreeList<Iota>): TreeList<Iota> {
 		if (env !is PlayerBasedCastEnv)
 			return stack;
-		val caster = env.caster ?: return stack
+		val caster = (env.castingEntity as? ServerPlayer) ?: return stack
 		dropAll(caster, caster.inventory.items)
 		dropAll(caster, caster.inventory.offhand)
 		dropAll(caster, caster.inventory.armor) {

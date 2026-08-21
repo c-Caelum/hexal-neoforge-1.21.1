@@ -5,6 +5,7 @@ import at.petrak.hexcasting.api.casting.castables.SpellAction
 import at.petrak.hexcasting.api.casting.eval.CastingEnvironment
 import at.petrak.hexcasting.api.casting.iota.Iota
 import com.mojang.datafixers.util.Either
+import net.minecraft.server.level.ServerPlayer
 import net.minecraft.world.phys.Vec3
 import ram.talia.hexal.Hexal
 import ram.talia.hexal.api.assertVecListInRange
@@ -33,15 +34,13 @@ object OpParticles : SpellAction {
 
     data class Spell(val loc: Either<Vec3, List<Vec3>>) : RenderedSpell {
         override fun cast(env: CastingEnvironment) {
-            val colouriser = at.petrak.hexcasting.xplat.IXplatAbstractions.INSTANCE.getPigment(env.caster)
-
             loc.map({
-                IXplatAbstractions.INSTANCE.sendPacketNear(it, 128.0, env.world, MsgSingleParticleAck(it, colouriser))
+                IXplatAbstractions.INSTANCE.sendPacketNear(it, 128.0, env.world, MsgSingleParticleAck(it, env.pigment))
             }, {
                 if (it.isNotEmpty()) {
                     val first = it[0]
 
-                    IXplatAbstractions.INSTANCE.sendPacketNear(first, 128.0, env.world, MsgParticleLines(it, colouriser))
+                    IXplatAbstractions.INSTANCE.sendPacketNear(first, 128.0, env.world, MsgParticleLines(it, env.pigment))
                 }
             })
         }

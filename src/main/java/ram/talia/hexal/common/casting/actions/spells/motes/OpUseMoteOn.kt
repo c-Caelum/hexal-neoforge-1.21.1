@@ -12,6 +12,7 @@ import at.petrak.hexcasting.xplat.IXplatAbstractions.HEXCASTING
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.core.component.PatchedDataComponentMap
+import net.minecraft.server.level.ServerPlayer
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.entity.Entity
 import net.minecraft.world.phys.BlockHitResult
@@ -80,7 +81,7 @@ object OpUseMoteOn : VarargSpellAction {
             if (!env.isEntityInRange(entity))
                 return
 
-            val caster = env.caster ?: /*if (env is WispCastEnv)
+            val caster = env.castingEntity as? ServerPlayer ?: /*if (env is WispCastEnv)
                     IXplatAbstractions.INSTANCE.getFakePlayer(env.world, GameProfile(env.wisp.uuid, "[Wisp " + env.wisp.uuid.toString().substring(0, 4) + "]"))
                 else*/
                     IXplatAbstractions.INSTANCE.getFakePlayer(env.world, HEXCASTING)
@@ -111,13 +112,13 @@ object OpUseMoteOn : VarargSpellAction {
 
             val context = UseOnContext(
                 env.world,
-                env.caster,
+                env.castingEntity as? ServerPlayer,
                 InteractionHand.MAIN_HAND,
                 itemStack,
                 BlockHitResult(Vec3.atCenterOf(pos), Direction.getNearest(direction.x, direction.y, direction.z), pos, false)
             )
 
-            val isAllowed = IXplatAbstractions.INSTANCE.isPlacingAllowed(env.world, pos, itemStack, env.caster)
+            val isAllowed = IXplatAbstractions.INSTANCE.isPlacingAllowed(env.world, pos, itemStack, env.castingEntity as? ServerPlayer)
             if (!isAllowed)
                 return
             itemStack.useOn(context).consumesAction()
