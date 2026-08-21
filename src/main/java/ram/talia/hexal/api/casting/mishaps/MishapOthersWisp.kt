@@ -8,6 +8,7 @@ import at.petrak.hexcasting.api.utils.TreeList
 import net.minecraft.network.chat.Component
 import net.minecraft.world.effect.MobEffectInstance
 import net.minecraft.world.effect.MobEffects
+import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.DyeColor
 
@@ -17,7 +18,7 @@ class MishapOthersWisp(val other: Player?) : Mishap() {
 	override fun errorMessage(env: CastingEnvironment, errorCtx: Context): Component = error("others_wisp", other?.name ?: "Unowned")
 
 	override fun execute(env: CastingEnvironment, errorCtx: Context, stack: TreeList<Iota>): TreeList<Iota> {
-		env.caster?.addEffect(MobEffectInstance(MobEffects.BLINDNESS, 20 * 60))
+		env.castingEntity?.addEffect(MobEffectInstance(MobEffects.BLINDNESS, 20 * 60))
 		return stack;
 	}
 }

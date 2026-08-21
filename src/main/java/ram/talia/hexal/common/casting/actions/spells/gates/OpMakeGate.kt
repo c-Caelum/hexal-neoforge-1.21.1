@@ -38,7 +38,7 @@ object OpMakeGate : VarargConstMediaAction {
         if (argc == 2) {
             val entity = args.getEntity(env.world, 1, argc)
 
-            if (entity is ServerPlayer && entity != env.caster)
+            if (entity is ServerPlayer && entity != env.castingEntity)
                 throw MishapOthersName(entity)
             env.assertVecInRange(entity.position())
             if (vec.length() > HexalConfig.Server.MAX_GATE_OFFSET.get())

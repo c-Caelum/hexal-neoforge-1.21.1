@@ -11,6 +11,7 @@ import at.petrak.hexcasting.api.casting.iota.NullIota
 import at.petrak.hexcasting.api.casting.mishaps.MishapInvalidIota
 import com.mojang.datafixers.util.Either
 import net.minecraft.nbt.CompoundTag
+import net.minecraft.server.level.ServerPlayer
 import net.minecraft.world.entity.decoration.ItemFrame
 import net.minecraft.world.entity.item.ItemEntity
 import net.minecraft.world.item.ItemStack
@@ -54,7 +55,7 @@ object OpMakeMote : VarargSpellAction {
             if (userData.contains(MoteIota.TAG_TEMP_STORAGE))
                 userData.getUUID(MoteIota.TAG_TEMP_STORAGE)
             else
-                env.caster?.let { MediafiedItemManager.getBoundStorage(it) }
+                (env.castingEntity as? ServerPlayer)?.let { MediafiedItemManager.getBoundStorage(it) }
                         ?: throw MishapNoBoundStorage()
         } else null
 

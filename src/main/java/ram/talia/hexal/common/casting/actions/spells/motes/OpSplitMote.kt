@@ -4,6 +4,7 @@ import at.petrak.hexcasting.api.casting.eval.CastingEnvironment
 import at.petrak.hexcasting.api.casting.iota.Iota
 import at.petrak.hexcasting.api.casting.iota.NullIota
 import net.minecraft.nbt.CompoundTag
+import net.minecraft.server.level.ServerPlayer
 import ram.talia.hexal.api.casting.castables.UserDataConstMediaAction
 import ram.talia.hexal.api.casting.iota.MoteIota
 import ram.talia.hexal.api.casting.mishaps.MishapNoBoundStorage
@@ -22,7 +23,7 @@ object OpSplitMote : UserDataConstMediaAction {
         val storage = if (userData.contains(MoteIota.TAG_TEMP_STORAGE))
                 userData.getUUID(MoteIota.TAG_TEMP_STORAGE)
             else
-                env.caster?.let { MediafiedItemManager.getBoundStorage(it) }
+                (env.castingEntity as? ServerPlayer)?.let { MediafiedItemManager.getBoundStorage(it) }
             ?: throw MishapNoBoundStorage()
         if (!MediafiedItemManager.isStorageLoaded(storage))
             throw MishapNoBoundStorage("storage_unloaded")

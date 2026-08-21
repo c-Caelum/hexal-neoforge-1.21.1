@@ -13,6 +13,7 @@ import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.core.particles.BlockParticleOption
 import net.minecraft.core.particles.ParticleTypes
+import net.minecraft.server.level.ServerPlayer
 import net.minecraft.sounds.SoundSource
 import net.minecraft.world.InteractionResult
 import net.minecraft.world.item.BlockItem
@@ -41,9 +42,9 @@ object OpPlaceType : SpellAction {
 
         // Mishap if pos already contains a block that can't be replaced
         val blockHit = BlockHitResult(
-                Vec3.atCenterOf(pos), env.caster?.direction ?: Direction.UP, pos, false
+                Vec3.atCenterOf(pos), (env.castingEntity as? ServerPlayer)?.direction ?: Direction.UP, pos, false
         )
-        val itemUseCtx = UseOnContext(env.world, env.caster, env.castingHand, env.caster?.mainHandItem ?: ItemStack(Items.COBBLESTONE), blockHit)
+        val itemUseCtx = UseOnContext(env.world, env.castingEntity as? ServerPlayer, env.castingHand, (env.castingEntity as? ServerPlayer)?.mainHandItem ?: ItemStack(Items.COBBLESTONE), blockHit)
         val placeContext = BlockPlaceContext(itemUseCtx)
 
         val worldState = env.world.getBlockState(pos)
@@ -59,7 +60,7 @@ object OpPlaceType : SpellAction {
 
     private data class Spell(val pos: BlockPos, val blockOrMoteIota: Anyone<Block, ItemStack, MoteIota>) : RenderedSpell {
         override fun cast(env: CastingEnvironment) {
-            val caster = env.caster
+            val caster = env.castingEntity as? ServerPlayer
 
             val blockHit = BlockHitResult(
                     Vec3.atCenterOf(pos), caster?.direction ?: Direction.NORTH, pos, false
@@ -72,7 +73,7 @@ object OpPlaceType : SpellAction {
                     { itemIota -> if (itemIota.item is BlockItem) itemIota.record?.toStack()?.takeUnless { it.isEmpty } else null }
             )  ?: return
 
-            if (!IXplatAbstractions.INSTANCE.isPlacingAllowed(env.world, pos, placeeStack, env.caster))
+            if (!IXplatAbstractions.INSTANCE.isPlacingAllowed(env.world, pos, placeeStack, caster))
                 return
 
             if (placeeStack.isEmpty)
@@ -103,7 +104,7 @@ object OpPlaceType : SpellAction {
                 { it.removeItems(1) } )
 
             env.world.playSound(
-                env.caster,
+                caster,
                 pos.x.toDouble(), pos.y.toDouble(), pos.z.toDouble(),
                 bstate.soundType.placeSound, SoundSource.BLOCKS, 1.0f,
                 1.0f + (Math.random() * 0.5 - 0.25).toFloat()

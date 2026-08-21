@@ -11,6 +11,7 @@ import at.petrak.hexcasting.api.casting.mishaps.MishapInvalidIota
 import at.petrak.hexcasting.api.utils.TreeList
 import com.mojang.datafixers.util.Either
 import net.minecraft.nbt.CompoundTag
+import net.minecraft.server.level.ServerPlayer
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.inventory.AbstractContainerMenu
 import net.minecraft.world.item.ItemStack
@@ -50,7 +51,7 @@ object OpCraftMote : UserDataConstMediaAction {
         val storage = if (userData.contains(TAG_TEMP_STORAGE))
                 userData.getUUID(TAG_TEMP_STORAGE)
             else
-                env.caster?.let { getBoundStorage(it) }
+            (env.castingEntity as? ServerPlayer)?.let { getBoundStorage(it) }
             ?: throw MishapNoBoundStorage()
 
         if (!isStorageLoaded(storage))
