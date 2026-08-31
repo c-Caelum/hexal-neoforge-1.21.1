@@ -1,0 +1,16 @@
+{
+  "type": "hexcasting:brainsweep",
+  "blockIn": {
+    "type": "hexcasting:block",
+    "block": "minecraft:shulker_box"
+  },
+  "cost": 1000000,
+  "entityIn": {
+    "type": "hexcasting:villager",
+    "minLevel": 2,
+    "profession": "minecraft:cartographer"
+  },
+  "result": {
+    "Name": "hexal:mediafied_storage"
+  }
+}
