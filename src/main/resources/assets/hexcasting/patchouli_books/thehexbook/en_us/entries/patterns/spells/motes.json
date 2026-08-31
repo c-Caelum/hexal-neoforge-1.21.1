@@ -20,6 +20,11 @@
       "text": "hexal.page.motes.explanation.2"
     },
     {
+      "type": "hexcasting:brainsweep",
+      "recipe": "hexal:brainsweep/mediafied_storage",
+      "text": "hexal.page.motes.mediafed_storage_recipe"
+    },
+    {
       "type": "hexcasting:pattern",
       "op_id": "hexal:mote/storage/bind",
       "anchor": "hexal:mote/storage/bind",
