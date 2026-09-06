@@ -33,13 +33,11 @@ import org.slf4j.Logger;
 import ram.talia.hexal.api.config.HexalConfig;
 import ram.talia.hexal.api.gates.GateManager;
 import ram.talia.hexal.client.HexalClient;
-import ram.talia.hexal.common.lib.HexalBlockEntities;
-import ram.talia.hexal.common.lib.HexalBlocks;
-import ram.talia.hexal.common.lib.HexalEntities;
-import ram.talia.hexal.common.lib.HexalLootTables;
+import ram.talia.hexal.common.lib.*;
 import ram.talia.hexal.common.lib.hex.HexalActions;
 import ram.talia.hexal.common.lib.hex.HexalArithmetics;
 import ram.talia.hexal.common.lib.hex.HexalIotaTypes;
+import ram.talia.hexal.common.lib.recipe.FreezeRecipe;
 import ram.talia.hexal.datagen.HexalActionTagProvider;
 import ram.talia.hexal.datagen.HexalBlockTags;
 import ram.talia.hexal.datagen.HexalplatRecipes;
@@ -85,6 +83,15 @@ public class Hexal {
         bind(HexRegistries.ACTION, HexalActions::register, modEventBus);
         bind(HexRegistries.ARITHMETIC, HexalArithmetics::register, modEventBus);
         bind(Registries.ENTITY_TYPE, HexalEntities::registerEntities, modEventBus);
+
+        //Made inline not to create a separate class for an entire ONE recipe type.
+        bind(Registries.RECIPE_SERIALIZER, consumer -> {
+            consumer.accept(FreezeRecipe.SERIALIZER, FreezeRecipe.FREEZE_RECIPE_TYPE_LOCATION);
+        }, modEventBus);
+        bind(Registries.RECIPE_TYPE, consumer -> {
+            consumer.accept(FreezeRecipe.TYPE, FreezeRecipe.FREEZE_RECIPE_TYPE_LOCATION);
+        }, modEventBus);
+
         modEventBus.addListener((RegisterEvent event) -> {
             event.register(NeoForgeRegistries.ENTITY_DATA_SERIALIZERS.key(), registryHelper -> {
                 registryHelper.register(modLoc("pigment"), PIGMENT_SERIALIZER);
