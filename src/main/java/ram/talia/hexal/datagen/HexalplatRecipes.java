@@ -14,6 +14,7 @@ import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.world.entity.npc.VillagerProfession;
 import net.minecraft.world.level.block.Blocks;
 import ram.talia.hexal.common.lib.HexalBlocks;
+import ram.talia.hexal.common.lib.recipe.FreezeRecipe;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.concurrent.CompletableFuture;
@@ -28,47 +29,48 @@ public class HexalplatRecipes extends RecipeProvider {
         super(output, registries);
     }
 
-    		/*ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, HexalItems.RELAY)
-			.define('C', HexItems.CHARGED_AMETHYST)
-			.define('S', HexBlocks.SLATE_BLOCK)
-			.define('A', Items.AMETHYST_BLOCK)
-			.pattern(" C ")
-			.pattern("SSS")
-			.pattern("SAS")
-			.unlockedBy("has_item", hasItem(HexTags.Items.STAVES))
-			.save(recipes)*/
-
-		/*FreezeRecipeBuilder(StateIngredientHelper.of(Blocks.ICE), Blocks.PACKED_ICE.defaultBlockState())
-			.unlockedBy("has_item", hasItem(HexTags.Items.STAVES))
-			.save(recipes, modLoc("freeze/packed_ice"))
-		FreezeRecipeBuilder(StateIngredientHelper.of(Blocks.PACKED_ICE), Blocks.BLUE_ICE.defaultBlockState())
-			.unlockedBy("has_item", hasItem(HexTags.Items.STAVES))
-			.save(recipes, modLoc("freeze/blue_ice"))
-		FreezeRecipeBuilder(StateIngredientHelper.of(Blocks.WATER_CAULDRON), Blocks.POWDER_SNOW_CAULDRON.defaultBlockState())
-			.unlockedBy("has_item", hasItem(HexTags.Items.STAVES))
-			.save(recipes, modLoc("freeze/powder_snow_cauldron"))
-
-		val enlightenment = OvercastTrigger.Instance(
-			ContextAwarePredicate.ANY,
-			MinMaxBounds.Ints.ANY,  // add a little bit of slop here
-			MinMaxBounds.Doubles.atLeast(0.8),
-			MinMaxBounds.Doubles.between(0.1, 2.05)
-		)
-
-		BrainsweepRecipeBuilder(StateIngredientHelper.of(BlockTags.SHULKER_BOXES),
-			VillagerIngredient(VillagerProfession.CARTOGRAPHER, null, 2),
-			HexalBlocks.MEDIAFIED_STORAGE.defaultBlockState(),
-			MediaConstants.CRYSTAL_UNIT * 10)
-			.unlockedBy("enlightenment", enlightenment)
-			.save(recipes, modLoc("brainsweep/mediafied_storage"),)*/
+    /*                                UNPORTED                                */
+    /* //Relays                                                               */
+    /* ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, HexalItems.RELAY)  */
+    /*       .define('C', HexItems.CHARGED_AMETHYST)                          */
+    /*       .define('S', HexBlocks.SLATE_BLOCK)                              */
+    /*       .define('A', Items.AMETHYST_BLOCK)                               */
+    /*       .pattern(" C ")                                                  */
+    /*       .pattern("SSS")                                                  */
+    /*       .pattern("SAS")                                                  */
+    /*       .unlockedBy("has_item", hasItem(HexTags.Items.STAVES))           */
+    /*       .save(recipes)                                                   */
+    /*                                                                        */
+    /* //Overcast trigger, seems no longer used                               */
+    /* val enlightenment = OvercastTrigger.Instance(                          */
+    /*       ContextAwarePredicate.ANY,                                       */
+    /*       MinMaxBounds.Ints.ANY,  // add a little bit of slop here         */
+    /*       MinMaxBounds.Doubles.atLeast(0.8),                               */
+    /*       MinMaxBounds.Doubles.between(0.1, 2.05)                          */
+    /* )                                                                      */
 
     @Override
     @ParametersAreNonnullByDefault
     public void buildRecipes(RecipeOutput recipes) {
+
         new BrainsweepRecipeBuilder(HexStateIngredients.of(Blocks.SHULKER_BOX),
                 new VillagerIngredient(VillagerProfession.CARTOGRAPHER, null, 4),
-                HexalBlocks.MEDIAFIED_STORAGE.defaultBlockState(), MediaConstants.CRYSTAL_UNIT*10)
+                HexalBlocks.MEDIAFIED_STORAGE.defaultBlockState(), MediaConstants.CRYSTAL_UNIT * 10)
                 .unlockedBy("enlightenment", new Criterion<>(HexAdvancementTriggers.OVERCAST_TRIGGER.get(), HexAdvancements.ENLIGHTEN))
                 .save(recipes, modLoc("brainsweep/mediafied_storage"));
+
+        new FreezeRecipe(
+                HexStateIngredients.of(Blocks.ICE),
+                HexStateIngredients.of(Blocks.PACKED_ICE.defaultBlockState())
+        ).save(recipes, modLoc("freeze/packed_ice"));
+        new FreezeRecipe(
+                HexStateIngredients.of(Blocks.PACKED_ICE),
+                HexStateIngredients.of(Blocks.BLUE_ICE.defaultBlockState())
+        ).save(recipes, modLoc("freeze/blue_ice"));
+        new FreezeRecipe(
+                HexStateIngredients.of(Blocks.WATER_CAULDRON),
+                HexStateIngredients.of(Blocks.POWDER_SNOW_CAULDRON)
+        ).save(recipes, modLoc("freeze/powder_snow_cauldron"));
+
     }
 }

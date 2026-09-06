@@ -18,6 +18,7 @@ import ram.talia.hexal.api.casting.wisp.triggers.WispTriggerTypes
 import ram.talia.hexal.api.plus
 import ram.talia.hexal.common.casting.actions.*
 import ram.talia.hexal.common.casting.actions.spells.OpFallingBlock
+import ram.talia.hexal.common.casting.actions.spells.OpFreeze
 import ram.talia.hexal.common.casting.actions.spells.OpParticles
 import ram.talia.hexal.common.casting.actions.spells.OpPlaceType
 import ram.talia.hexal.common.casting.actions.spells.OpSmelt
@@ -89,8 +90,8 @@ object HexalActions {
 	// ============================== Misc Spells =====================================
 	@JvmField
 	val SMELT = make("smelt", HexPattern.fromAngles("wqqqwqqadad", HexDir.EAST), OpSmelt)
-	//@JvmField
-	//val FREEZE = make("freeze", HexPattern.fromAngles("weeeweedada", HexDir.WEST), OpFreeze)
+	@JvmField
+	val FREEZE = make("freeze", HexPattern.fromAngles("weeeweedada", HexDir.WEST), OpFreeze)
 	@JvmField
 	val FALLING_BLOCK = make("falling_block", HexPattern.fromAngles("wqwawqwqwqwqwqw", HexDir.EAST), OpFallingBlock)
 	@JvmField
