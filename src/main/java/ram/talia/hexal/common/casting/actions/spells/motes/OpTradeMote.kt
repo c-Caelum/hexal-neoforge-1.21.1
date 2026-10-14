@@ -2,6 +2,7 @@ package ram.talia.hexal.common.casting.actions.spells.motes
 
 import at.petrak.hexcasting.api.casting.asActionResult
 import at.petrak.hexcasting.api.casting.eval.CastingEnvironment
+import at.petrak.hexcasting.api.casting.eval.vm.CastingImage
 import at.petrak.hexcasting.api.casting.getPositiveIntUnder
 import at.petrak.hexcasting.api.casting.iota.DoubleIota
 import at.petrak.hexcasting.api.casting.iota.Iota
@@ -23,6 +24,7 @@ import ram.talia.hexal.api.getMoteOrMoteList
 import ram.talia.hexal.api.getVillager
 import ram.talia.hexal.api.mediafieditems.ItemRecord
 import ram.talia.hexal.api.mediafieditems.MediafiedItemManager
+import ram.talia.hexal.common.lib.hex.HexalImageComponents
 
 object OpTradeMote : VarargConstMediaAction {
     override val mediaCost: Long
@@ -34,7 +36,7 @@ object OpTradeMote : VarargConstMediaAction {
         return if (stack[0] is DoubleIota) 3 else 2
     }
 
-    override fun execute(args: List<Iota>, argc: Int, userData: CompoundTag, env: CastingEnvironment): List<Iota> {
+    override fun execute(args: List<Iota>, argc: Int, image: CastingImage, env: CastingEnvironment): List<Iota> {
         val villager = args.getVillager(0, argc, env.world)
         val toTradeItemIotas = args.getMoteOrMoteList(1, argc)?.map({ listOf(it) }, { it }) ?: return emptyList<Iota>().asActionResult
         val tradeIndex = if (args.size == 3) args.getPositiveIntUnder(2, villager.offers.size, argc) else null
@@ -48,11 +50,9 @@ object OpTradeMote : VarargConstMediaAction {
 
         env.assertEntityInRange(villager)
 
-        val storage = if (userData.contains(MoteIota.TAG_TEMP_STORAGE))
-            userData.getUUID(MoteIota.TAG_TEMP_STORAGE)
-        else
-            (env.castingEntity as? ServerPlayer)?.let { MediafiedItemManager.getBoundStorage(it) }
-                ?: throw MishapNoBoundStorage()
+        val storage = image.getComponent(HexalImageComponents.TEMP_STORAGE)
+            ?: (env.castingEntity as? ServerPlayer)?.let { MediafiedItemManager.getBoundStorage(it) }
+            ?: throw MishapNoBoundStorage()
         if (!MediafiedItemManager.isStorageLoaded(storage))
             throw MishapNoBoundStorage("storage_unloaded")
 

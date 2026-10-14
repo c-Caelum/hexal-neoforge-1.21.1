@@ -1,0 +1,13 @@
+{
+  "type": "hexal:freeze",
+  "ingredient": {
+    "type": "hexcasting:block",
+    "block": "minecraft:packed_ice"
+  },
+  "result": {
+    "type": "hexcasting:state",
+    "state": {
+      "Name": "minecraft:blue_ice"
+    }
+  }
+}

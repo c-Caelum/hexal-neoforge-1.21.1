@@ -16,6 +16,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.phys.Vec3
 import ram.talia.hexal.Hexal
 import ram.talia.hexal.api.config.HexalConfig
+import ram.talia.hexal.common.lib.hex.HexalImageComponents
 
 /**
  * Tick Acceleration!
@@ -30,15 +31,15 @@ object OpTick : SpellAction {
     }
 
     override fun execute(args: List<Iota>, env: CastingEnvironment): SpellAction.Result {
-        throw IllegalStateException("call executeWithUserdata instead.")
+        throw IllegalStateException("call executeWithImage instead.")
     }
 
-    override fun executeWithUserdata(args: List<Iota>, env: CastingEnvironment, userData: CompoundTag): SpellAction.Result {
+    override fun executeWithImage(args: List<Iota>, env: CastingEnvironment, image: CastingImage): SpellAction.Result {
         val pos = args.getBlockPos(0, argc)
 
         env.assertVecInRange(pos.center)
 
-        val timesTicked = userData.getCompound(TAG_TIMES_TICKED).getInt(pos.toShortString())
+        val timesTicked = image.getComponent(HexalImageComponents.TIMES_TICKED_MAP)?.get(pos) ?: 0
 
         val cost = costFromTimesTicked(timesTicked)
 
@@ -55,11 +56,9 @@ object OpTick : SpellAction {
         }
 
         override fun cast(env: CastingEnvironment, image: CastingImage): CastingImage {
-            val userData = image.userData.copy()
-            val timesTickedMap = userData.getCompound(TAG_TIMES_TICKED)
-            timesTickedMap.putInt(pos.toShortString(), timesTickedMap.getInt(pos.toShortString()) + 1)
-            userData.put(TAG_TIMES_TICKED, timesTickedMap)
-            val newImage = image.copy(userData = userData)
+            val timesTickedMap = image.getComponent(HexalImageComponents.TIMES_TICKED_MAP) ?: mapOf()
+            val updatedMap = timesTickedMap + (pos to (timesTickedMap[pos] ?: 0) + 1)
+            val newImage = image.withComponent(HexalImageComponents.TIMES_TICKED_MAP, updatedMap)
 
             // https://github.com/haoict/time-in-a-bottle/blob/1.19/src/main/java/com/haoict/tiab/entities/TimeAcceleratorEntity.java
             val blockState = env.world.getBlockState(pos)

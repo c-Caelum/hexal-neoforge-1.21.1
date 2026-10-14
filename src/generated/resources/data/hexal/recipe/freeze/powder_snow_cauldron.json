@@ -1,0 +1,11 @@
+{
+  "type": "hexal:freeze",
+  "ingredient": {
+    "type": "hexcasting:block",
+    "block": "minecraft:water_cauldron"
+  },
+  "result": {
+    "type": "hexcasting:block",
+    "block": "minecraft:powder_snow_cauldron"
+  }
+}

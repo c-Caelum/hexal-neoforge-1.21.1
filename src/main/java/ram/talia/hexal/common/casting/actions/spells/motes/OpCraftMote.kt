@@ -4,6 +4,7 @@ package ram.talia.hexal.common.casting.actions.spells.motes
 
 import at.petrak.hexcasting.api.casting.asActionResult
 import at.petrak.hexcasting.api.casting.eval.CastingEnvironment
+import at.petrak.hexcasting.api.casting.eval.vm.CastingImage
 import at.petrak.hexcasting.api.casting.iota.Iota
 import at.petrak.hexcasting.api.casting.iota.ListIota
 import at.petrak.hexcasting.api.casting.iota.NullIota
@@ -18,9 +19,8 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.CraftingInput
 import net.minecraft.world.item.crafting.RecipeType
 import ram.talia.hexal.Hexal
-import ram.talia.hexal.api.casting.castables.UserDataConstMediaAction
+import ram.talia.hexal.api.casting.castables.CastingImageConstMediaAction
 import ram.talia.hexal.api.casting.iota.MoteIota
-import ram.talia.hexal.api.casting.iota.MoteIota.TAG_TEMP_STORAGE
 import ram.talia.hexal.api.casting.mishaps.MishapNoBoundStorage
 import ram.talia.hexal.api.config.HexalConfig
 import ram.talia.hexal.api.getMoteOrList
@@ -28,6 +28,7 @@ import ram.talia.hexal.api.mediafieditems.ItemRecord
 import ram.talia.hexal.api.mediafieditems.MediafiedItemManager.getBoundStorage
 import ram.talia.hexal.api.mediafieditems.MediafiedItemManager.isStorageLoaded
 import ram.talia.hexal.api.mulBounded
+import ram.talia.hexal.common.lib.hex.HexalImageComponents
 
 /**
  * Automate crafting with hex casting! Takes a list of item iotas that will be crafted with, returns a list containing the results of the craft.
@@ -40,18 +41,16 @@ import ram.talia.hexal.api.mulBounded
  *   S
  * you'd pass the list \[\[D, D, D\], \[null, S\], \[null, S\]\].
  */
-object OpCraftMote : UserDataConstMediaAction {
+object OpCraftMote : CastingImageConstMediaAction {
     override val argc = 1
     override val mediaCost: Long
         get() = Hexal.toMediaFromDust(HexalConfig.Server.CRAFT_ITEM_COST.get())
 
-    override fun execute(args: List<Iota>, userData: CompoundTag, env: CastingEnvironment): List<Iota> {
+    override fun execute(args: List<Iota>, image: CastingImage, env: CastingEnvironment): List<Iota> {
         val input = args.getMoteOrList(0, argc) ?: return listOf<Iota>().asActionResult
 
-        val storage = if (userData.contains(TAG_TEMP_STORAGE))
-                userData.getUUID(TAG_TEMP_STORAGE)
-            else
-            (env.castingEntity as? ServerPlayer)?.let { getBoundStorage(it) }
+        val storage = image.getComponent(HexalImageComponents.TEMP_STORAGE)
+            ?: (env.castingEntity as? ServerPlayer)?.let { getBoundStorage(it) }
             ?: throw MishapNoBoundStorage()
 
         if (!isStorageLoaded(storage))

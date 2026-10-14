@@ -4,10 +4,12 @@ import at.petrak.hexcasting.api.HexAPI
 import at.petrak.hexcasting.api.casting.*
 import at.petrak.hexcasting.api.casting.castables.SpellAction
 import at.petrak.hexcasting.api.casting.eval.CastingEnvironment
+import at.petrak.hexcasting.api.casting.eval.vm.CastingImage
 import at.petrak.hexcasting.api.casting.iota.Iota
 import at.petrak.hexcasting.api.casting.iota.ListIota
 import at.petrak.hexcasting.api.casting.iota.NullIota
 import at.petrak.hexcasting.api.misc.MediaConstants
+import at.petrak.hexcasting.common.lib.hex.HexImageComponents
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.server.level.ServerPlayer
@@ -26,10 +28,10 @@ class OpSummonWisp(val ticking: Boolean) : SpellAction {
     override val argc = if (ticking) 3 else 4
 
     override fun execute(args: List<Iota>, env: CastingEnvironment): SpellAction.Result {
-        throw IllegalStateException("OpSummonWisp implements executeWithUserdata, execute shouldn't be called.")
+        throw IllegalStateException("OpSummonWisp implements executeWithImage, execute shouldn't be called.")
     }
 
-    override fun executeWithUserdata(args: List<Iota>, env: CastingEnvironment, userData: CompoundTag): SpellAction.Result {
+    override fun executeWithImage(args: List<Iota>, env: CastingEnvironment, image: CastingImage): SpellAction.Result {
         args.getList(0, argc)
         val hex = args[0] as ListIota;
         val pos = args.getVec3(1, argc)
@@ -41,11 +43,7 @@ class OpSummonWisp(val ticking: Boolean) : SpellAction {
         if (env is WispCastEnv && env.wisp.summonedChildThisCast)
             throw MishapExcessiveReproduction(env.wisp) // wisps can only summon one child per cast.
 
-        val ravenmind = if (userData.contains(HexAPI.RAVENMIND_USERDATA)) {
-            Hexal.deserializeIota(userData.getCompound(HexAPI.RAVENMIND_USERDATA))
-        } else {
-            NullIota()
-        }
+        val ravenmind = image.getComponent(HexImageComponents.RAVENMIND.get()) ?: NullIota()
 
         val spell = when (ticking) {
             true -> {

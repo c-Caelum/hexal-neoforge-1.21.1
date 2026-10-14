@@ -36,6 +36,7 @@ import ram.talia.hexal.client.HexalClient;
 import ram.talia.hexal.common.lib.*;
 import ram.talia.hexal.common.lib.hex.HexalActions;
 import ram.talia.hexal.common.lib.hex.HexalArithmetics;
+import ram.talia.hexal.common.lib.hex.HexalImageComponents;
 import ram.talia.hexal.common.lib.hex.HexalIotaTypes;
 import ram.talia.hexal.common.lib.recipe.FreezeRecipe;
 import ram.talia.hexal.datagen.HexalActionTagProvider;
@@ -81,6 +82,7 @@ public class Hexal {
         bind(Registries.BLOCK_ENTITY_TYPE, HexalBlockEntities::registerBlockEntities, modEventBus);
         bind(HexRegistries.IOTA_TYPE, HexalIotaTypes::registerTypes, modEventBus);
         bind(HexRegistries.ACTION, HexalActions::register, modEventBus);
+        bind(HexRegistries.IMAGE_COMPONENT, HexalImageComponents::register, modEventBus);
         bind(HexRegistries.ARITHMETIC, HexalArithmetics::register, modEventBus);
         bind(Registries.ENTITY_TYPE, HexalEntities::registerEntities, modEventBus);
 

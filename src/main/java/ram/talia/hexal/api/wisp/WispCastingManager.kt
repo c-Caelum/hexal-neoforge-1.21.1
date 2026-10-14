@@ -12,6 +12,7 @@ import at.petrak.hexcasting.api.casting.iota.NullIota
 import at.petrak.hexcasting.api.utils.TreeList
 import at.petrak.hexcasting.api.utils.asCompound
 import at.petrak.hexcasting.api.utils.putCompound
+import at.petrak.hexcasting.common.lib.hex.HexImageComponents
 import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import net.minecraft.core.UUIDUtil
@@ -131,12 +132,9 @@ class WispCastingManager(private val casterUUID: UUID, private var cachedServer:
 			wisp.level() as ServerLevel
 		)
 
-		val userData = CompoundTag()
-        cast.initialRavenmind.let { userData.putCompound(HexAPI.RAVENMIND_USERDATA, Hexal.serializeIota(it).asCompound) }
 		val image = CastingImage().copy(
 			stack = cast.initialStack,
-			userData = userData
-		)
+		).withComponent(HexImageComponents.RAVENMIND.get(), cast.initialRavenmind)
 
 		val hex = cast.hex;
 
@@ -238,7 +236,7 @@ class WispCastingManager(private val casterUUID: UUID, private var cachedServer:
 			// TODO: Make this a mishap
 			// Clear stack if it gets too large
 			endStack = if (isTooLargeToSerialize(image.stack)) TreeList.empty() else image.stack,
-			endRavenmind = Hexal.deserializeIota(image.userData.getCompound(HexAPI.RAVENMIND_USERDATA)),
+			endRavenmind = image.getComponent(HexImageComponents.RAVENMIND.get()) ?: NullIota(),
 			cancelled = cancelled,
 		)
 

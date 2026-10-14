@@ -14,17 +14,17 @@ import at.petrak.hexcasting.common.lib.hex.HexEvalSounds
 import net.minecraft.nbt.CompoundTag
 
 /**
- * A SimpleOperator that always costs the same amount of media. Provides access to userData.
+ * A SimpleOperator that always costs the same amount of media. Provides access to the CastingImage.
  */
-interface UserDataConstMediaAction : Action {
+interface CastingImageConstMediaAction : Action {
     val argc: Int
     val mediaCost: Long
         get() = 0
 
-    fun execute(args: List<Iota>, userData: CompoundTag, env: CastingEnvironment): List<Iota>
+    fun execute(args: List<Iota>, image: CastingImage, env: CastingEnvironment): List<Iota>
 
-    fun executeWithOpCount(args: List<Iota>, userData: CompoundTag, env: CastingEnvironment): ConstMediaAction.CostMediaActionResult {
-        val stack = this.execute(args, userData, env)
+    fun executeWithOpCount(args: List<Iota>, image: CastingImage, env: CastingEnvironment): ConstMediaAction.CostMediaActionResult {
+        val stack = this.execute(args, image, env)
         return ConstMediaAction.CostMediaActionResult(stack)
     }
 
@@ -38,12 +38,11 @@ interface UserDataConstMediaAction : Action {
             throw MishapNotEnoughArgs(this.argc, stack.size)
         val args = stack.takeRight(argc)
         stack = stack.dropRight(argc);
-        val userData = image.userData.copy()
-        val result = executeWithOpCount(args, userData, env)
+        val result = executeWithOpCount(args, image, env)
 
         val sideEffects = mutableListOf<OperatorSideEffect>(OperatorSideEffect.ConsumeMedia(this.mediaCost))
 
-        val image2 = image.copy(stack = stack.appendedAll(result.resultStack), opsConsumed = image.opsConsumed + result.opCount, userData = userData)
+        val image2 = image.copy(stack = stack.appendedAll(result.resultStack), opsConsumed = image.opsConsumed + result.opCount)
         return OperationResult(image2, sideEffects, continuation, HexEvalSounds.NORMAL_EXECUTE.get())
     }
 }

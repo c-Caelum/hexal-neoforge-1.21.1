@@ -25,6 +25,7 @@ import ram.talia.hexal.api.config.HexalConfig
 import ram.talia.hexal.api.getItemEntityOrItemFrame
 import ram.talia.hexal.api.getMote
 import ram.talia.hexal.api.mediafieditems.MediafiedItemManager
+import ram.talia.hexal.common.lib.hex.HexalImageComponents
 import java.util.*
 
 
@@ -39,10 +40,10 @@ object OpMakeMote : VarargSpellAction {
     }
 
     override fun execute(args: List<Iota>, argc: Int, env: CastingEnvironment): SpellAction.Result {
-        throw IllegalStateException("call executeWithUserdata instead.")
+        throw IllegalStateException("call executeWithImage instead.")
     }
 
-    override fun executeWithUserdata(args: List<Iota>, argc: Int, env: CastingEnvironment, userData: CompoundTag): SpellAction.Result {
+    override fun executeWithImage(args: List<Iota>, argc: Int, env: CastingEnvironment, image: CastingImage): SpellAction.Result {
         val iEtityEither = args.getItemEntityOrItemFrame(0, argc, env.world)
         val iEntity = iEtityEither.map({ it }, { it })
 
@@ -52,11 +53,9 @@ object OpMakeMote : VarargSpellAction {
         val mote = if (argc == 2) args.getMote(1, argc) else null
 
         val storage = if (mote == null) {
-            if (userData.contains(MoteIota.TAG_TEMP_STORAGE))
-                userData.getUUID(MoteIota.TAG_TEMP_STORAGE)
-            else
-                (env.castingEntity as? ServerPlayer)?.let { MediafiedItemManager.getBoundStorage(it) }
-                        ?: throw MishapNoBoundStorage()
+            image.getComponent(HexalImageComponents.TEMP_STORAGE)
+                ?: (env.castingEntity as? ServerPlayer)?.let { MediafiedItemManager.getBoundStorage(it) }
+                ?: throw MishapNoBoundStorage()
         } else null
 
         if (!itemStack.isEmpty) {

@@ -44,23 +44,23 @@ object HexalActions {
 
 	// ========================== Misc Info Gathering =================================
 	@JvmField
-	val CURRENT_TICK = make("current_tick", HexPattern.fromAngles("ddwaa", HexDir.NORTH_WEST), OpCurrentTick)
+	val CURRENT_TICK = make("current_tick", HexPattern.fromAngleString("ddwaa", HexDir.NORTH_WEST), OpCurrentTick)
 	@JvmField
-	val BREATH = make("breath", HexPattern.fromAngles("aqawdwaqawd", HexDir.NORTH_WEST), OpGetBreath)
+	val BREATH = make("breath", HexPattern.fromAngleString("aqawdwaqawd", HexDir.NORTH_WEST), OpGetBreath)
 	@JvmField
-	val HEALTH = make("health", HexPattern.fromAngles("aqwawqa", HexDir.NORTH_WEST), OpGetHealth)
+	val HEALTH = make("health", HexPattern.fromAngleString("aqwawqa", HexDir.NORTH_WEST), OpGetHealth)
 	@JvmField
-	val ARMOUR = make("armour", HexPattern.fromAngles("wqqqqw", HexDir.NORTH_WEST), OpGetArmour)
+	val ARMOUR = make("armour", HexPattern.fromAngleString("wqqqqw", HexDir.NORTH_WEST), OpGetArmour)
 	@JvmField
-	val TOUGHNESS = make("toughness", HexPattern.fromAngles("aeqqqqea", HexDir.EAST), OpGetToughness)
+	val TOUGHNESS = make("toughness", HexPattern.fromAngleString("aeqqqqea", HexDir.EAST), OpGetToughness)
 	@JvmField
-	val LIGHT_LEVEL = make("light_level", HexPattern.fromAngles("qedqde", HexDir.NORTH_EAST), OpGetLightLevel)
+	val LIGHT_LEVEL = make("light_level", HexPattern.fromAngleString("qedqde", HexDir.NORTH_EAST), OpGetLightLevel)
 
 	// =============================== Misc Maths =====================================
 	@JvmField
-	val FACTORIAL = make("factorial", HexPattern.fromAngles("wawdedwaw", HexDir.SOUTH_EAST), OpFactorial)
+	val FACTORIAL = make("factorial", HexPattern.fromAngleString("wawdedwaw", HexDir.SOUTH_EAST), OpFactorial)
 	@JvmField
-	val RUNNING_SUM = make("running/sum", HexPattern.fromAngles("aea", HexDir.WEST), OpRunningOp ({ if (it is Vec3Iota) Vec3Iota(
+	val RUNNING_SUM = make("running/sum", HexPattern.fromAngleString("aea", HexDir.WEST), OpRunningOp ({ if (it is Vec3Iota) Vec3Iota(
 		Vec3.ZERO) else DoubleIota(0.0) })
 	{ running, iota ->
 		when (running) {
@@ -70,7 +70,7 @@ object HexalActions {
 		}
 	})
 	@JvmField
-	val RUNNING_MUL = make("running/mul", HexPattern.fromAngles("qaawaaq", HexDir.NORTH_EAST), OpRunningOp ({ DoubleIota(1.0) })
+	val RUNNING_MUL = make("running/mul", HexPattern.fromAngleString("qaawaaq", HexDir.NORTH_EAST), OpRunningOp ({ DoubleIota(1.0) })
 	{ running, iota ->
 		if (running !is DoubleIota)
 			throw OpRunningOp.InvalidIotaException("list.double")
@@ -79,197 +79,197 @@ object HexalActions {
 	/*
 	// ================================ Everbook ======================================
 	@JvmField
-	val EVERBOOK_READ = make("everbook/read", HexPattern.fromAngles("eweeewedqdeddw", HexDir.NORTH_EAST), OpEverbookRead)
+	val EVERBOOK_READ = make("everbook/read", HexPattern.fromAngleString("eweeewedqdeddw", HexDir.NORTH_EAST), OpEverbookRead)
 	@JvmField
-	val EVERBOOK_WRITE = make("everbook/write", HexPattern.fromAngles("qwqqqwqaeaqaaw", HexDir.SOUTH_EAST), OpEverbookWrite)
+	val EVERBOOK_WRITE = make("everbook/write", HexPattern.fromAngleString("qwqqqwqaeaqaaw", HexDir.SOUTH_EAST), OpEverbookWrite)
 	@JvmField
-	val EVERBOOK_DELETE = make("everbook/delete", HexPattern.fromAngles("qwqqqwqaww", HexDir.SOUTH_EAST), OpEverbookDelete)
+	val EVERBOOK_DELETE = make("everbook/delete", HexPattern.fromAngleString("qwqqqwqaww", HexDir.SOUTH_EAST), OpEverbookDelete)
 	@JvmField
-	val EVERBOOK_TOGGLE_MACRO = make("everbook/toggle_macro", HexPattern.fromAngles("eweeewedww", HexDir.SOUTH_WEST), OpToggleMacro)
+	val EVERBOOK_TOGGLE_MACRO = make("everbook/toggle_macro", HexPattern.fromAngleString("eweeewedww", HexDir.SOUTH_WEST), OpToggleMacro)
 	*/
 	// ============================== Misc Spells =====================================
 	@JvmField
-	val SMELT = make("smelt", HexPattern.fromAngles("wqqqwqqadad", HexDir.EAST), OpSmelt)
+	val SMELT = make("smelt", HexPattern.fromAngleString("wqqqwqqadad", HexDir.EAST), OpSmelt)
 	@JvmField
-	val FREEZE = make("freeze", HexPattern.fromAngles("weeeweedada", HexDir.WEST), OpFreeze)
+	val FREEZE = make("freeze", HexPattern.fromAngleString("weeeweedada", HexDir.WEST), OpFreeze)
 	@JvmField
-	val FALLING_BLOCK = make("falling_block", HexPattern.fromAngles("wqwawqwqwqwqwqw", HexDir.EAST), OpFallingBlock)
+	val FALLING_BLOCK = make("falling_block", HexPattern.fromAngleString("wqwawqwqwqwqwqw", HexDir.EAST), OpFallingBlock)
 	@JvmField
-	val PLACE_TYPE = make("place_type", HexPattern.fromAngles("eeeeedeeeee", HexDir.WEST), OpPlaceType)
+	val PLACE_TYPE = make("place_type", HexPattern.fromAngleString("eeeeedeeeee", HexDir.WEST), OpPlaceType)
 	@JvmField
-	val PARTICLES = make("particles", HexPattern.fromAngles("eqqqqa", HexDir.NORTH_EAST), OpParticles)
+	val PARTICLES = make("particles", HexPattern.fromAngleString("eqqqqa", HexDir.NORTH_EAST), OpParticles)
 
 	// =============================== Wisp Stuff =====================================
 	@JvmField
-	val WISP_SUMMON_PROJECTILE = make("wisp/summon/projectile", HexPattern.fromAngles("aqaeqeeeee", HexDir.NORTH_WEST), OpSummonWisp(false))
+	val WISP_SUMMON_PROJECTILE = make("wisp/summon/projectile", HexPattern.fromAngleString("aqaeqeeeee", HexDir.NORTH_WEST), OpSummonWisp(false))
 	@JvmField
-	val WISP_SUMMON_TICKING = make("wisp/summon/ticking", HexPattern.fromAngles("aqaweewaqawee", HexDir.NORTH_WEST),
+	val WISP_SUMMON_TICKING = make("wisp/summon/ticking", HexPattern.fromAngleString("aqaweewaqawee", HexDir.NORTH_WEST),
         OpSummonWisp(true)
     )
 
 	@JvmField
-	val WISP_SELF = make("wisp/self", HexPattern.fromAngles("dedwqqwdedwqqaw", HexDir.NORTH_EAST), OpWispSelf)
+	val WISP_SELF = make("wisp/self", HexPattern.fromAngleString("dedwqqwdedwqqaw", HexDir.NORTH_EAST), OpWispSelf)
 	@JvmField
-	val WISP_MEDIA = make("wisp/media", HexPattern.fromAngles("aqaweewaqaweedw", HexDir.NORTH_WEST), OpWispMedia)
+	val WISP_MEDIA = make("wisp/media", HexPattern.fromAngleString("aqaweewaqaweedw", HexDir.NORTH_WEST), OpWispMedia)
 	@JvmField
-	val WISP_HEX = make("wisp/hex", HexPattern.fromAngles("aweewaqaweewaawww", HexDir.SOUTH_EAST), OpWispHex)
+	val WISP_HEX = make("wisp/hex", HexPattern.fromAngleString("aweewaqaweewaawww", HexDir.SOUTH_EAST), OpWispHex)
 	@JvmField
-	val WISP_OWNER = make("wisp/owner", HexPattern.fromAngles("dwqqwdedwqqwddwww", HexDir.SOUTH_WEST), OpWispOwner)
+	val WISP_OWNER = make("wisp/owner", HexPattern.fromAngleString("dwqqwdedwqqwddwww", HexDir.SOUTH_WEST), OpWispOwner)
 
 	// Set and Get Move Target
 	@JvmField
-	val WISP_MOVE_TARGET_SET = make("wisp/move/target/set", HexPattern.fromAngles("awqwawqaw", HexDir.WEST), OpMoveTargetSet)
+	val WISP_MOVE_TARGET_SET = make("wisp/move/target/set", HexPattern.fromAngleString("awqwawqaw", HexDir.WEST), OpMoveTargetSet)
 	@JvmField
-	val WISP_MOVE_TARGET_GET = make("wisp/move/target/get", HexPattern.fromAngles("ewdwewdew", HexDir.EAST), OpMoveTargetGet)
+	val WISP_MOVE_TARGET_GET = make("wisp/move/target/get", HexPattern.fromAngleString("ewdwewdew", HexDir.EAST), OpMoveTargetGet)
 	@JvmField
-	val WISP_MOVE_SPEED_SET = make("wisp/move/speed/set", HexPattern.fromAngles("aeawqqqae", HexDir.WEST), OpMoveSpeedSet)
+	val WISP_MOVE_SPEED_SET = make("wisp/move/speed/set", HexPattern.fromAngleString("aeawqqqae", HexDir.WEST), OpMoveSpeedSet)
 	@JvmField
-	val WISP_MOVE_SPEED_GET = make("wisp/move/speed/get", HexPattern.fromAngles("eeewdqdee", HexDir.EAST), OpMoveSpeedGet)
+	val WISP_MOVE_SPEED_GET = make("wisp/move/speed/get", HexPattern.fromAngleString("eeewdqdee", HexDir.EAST), OpMoveSpeedGet)
 
 	// Allow and Disallow Media Transfer
 	/*
 	@JvmField
-	val WISP_TRANSFER_ALLOW = make("wisp/transfer/allow", HexPattern.fromAngles("qqqqqewwqeeeee", HexDir.NORTH_WEST), OpTransferAllowed(true))
+	val WISP_TRANSFER_ALLOW = make("wisp/transfer/allow", HexPattern.fromAngleString("qqqqqewwqeeeee", HexDir.NORTH_WEST), OpTransferAllowed(true))
 	@JvmField
-	val WISP_TRANSFER_DISALLOW = make("wisp/transfer/disallow", HexPattern.fromAngles("qqqqqeqdeddweqqqqq", HexDir.NORTH_WEST), OpTransferAllowed(false))
+	val WISP_TRANSFER_DISALLOW = make("wisp/transfer/disallow", HexPattern.fromAngleString("qqqqqeqdeddweqqqqq", HexDir.NORTH_WEST), OpTransferAllowed(false))
 	@JvmField
 	val WISP_TRANSFER_OTHERS_ALLOW = make(
 			"wisp/transfer/others/allow",
-			HexPattern.fromAngles("eeeeeqwweqqqqq", HexDir.SOUTH_WEST),
+			HexPattern.fromAngleString("eeeeeqwweqqqqq", HexDir.SOUTH_WEST),
 			OpTransferAllowedOthers(true))
 	@JvmField
 	val WISP_TRANSFER_OTHERS_DISALLOW = make(
 			"wisp/transfer/others/disallow",
-			HexPattern.fromAngles("eeeeeqeaqaawqeeeee", HexDir.SOUTH_WEST),
+			HexPattern.fromAngleString("eeeeeqeaqaawqeeeee", HexDir.SOUTH_WEST),
 			OpTransferAllowedOthers(false))
 			*/
 
 	// Entity purification and Zone distillations
 	@JvmField
 	val GET_ENTITY_WISP = make("get_entity/wisp",
-			HexPattern.fromAngles("qqwdedwqqdaqaaww", HexDir.SOUTH_EAST),
+			HexPattern.fromAngleString("qqwdedwqqdaqaaww", HexDir.SOUTH_EAST),
 		OpGetEntityAt{ entity -> entity is BaseWisp })
 	@JvmField
 	val ZONE_ENTITY_WISP = make("zone_entity/wisp",
-			HexPattern.fromAngles("qqwdedwqqwdeddww", HexDir.SOUTH_EAST),
+			HexPattern.fromAngleString("qqwdedwqqwdeddww", HexDir.SOUTH_EAST),
 		OpGetEntitiesBy({ entity -> entity is BaseWisp }, false))
 	@JvmField
 	val ZONE_ENTITY_NOT_WISP = make("zone_entity/not_wisp",
-			HexPattern.fromAngles("eewaqaweewaqaaww", HexDir.NORTH_EAST),
+			HexPattern.fromAngleString("eewaqaweewaqaaww", HexDir.NORTH_EAST),
 			OpGetEntitiesBy({ entity -> entity is BaseWisp }, true))
 
 	// Triggers
 	@JvmField
 	val WISP_TRIGGER_TICK = make("wisp/trigger/tick",
-			HexPattern.fromAngles("aqawded", HexDir.NORTH_WEST),
+			HexPattern.fromAngleString("aqawded", HexDir.NORTH_WEST),
 		    OpWispSetTrigger(WispTriggerTypes.TICK_TRIGGER_TYPE))
 	@JvmField
 	val WISP_TRIGGER_MOVE = make("wisp/trigger/move",
-			HexPattern.fromAngles("eqwawqwaqww", HexDir.EAST),
+			HexPattern.fromAngleString("eqwawqwaqww", HexDir.EAST),
 		    OpWispSetTrigger(WispTriggerTypes.MOVE_TRIGGER_TYPE))
 
 	val WISP_SEON_GET = make("wisp/seon/get",
-			HexPattern.fromAngles("daqweewqaeaqweewqaqwwww", HexDir.EAST),
+			HexPattern.fromAngleString("daqweewqaeaqweewqaqwwww", HexDir.EAST),
 			OpSeonWispGet)
 	/*
 
 	// =============================== Link Stuff =====================================
 	@JvmField
-	val LINK = make("link", HexPattern.fromAngles("eaqaaeqqqqqaweaqaaw", HexDir.EAST), OpLink)
+	val LINK = make("link", HexPattern.fromAngleString("eaqaaeqqqqqaweaqaaw", HexDir.EAST), OpLink)
 	@JvmField
-	val LINK_OTHERS = make("link/others", HexPattern.fromAngles("eqqqqqawqeeeeedww", HexDir.EAST), OpLinkOthers)
+	val LINK_OTHERS = make("link/others", HexPattern.fromAngleString("eqqqqqawqeeeeedww", HexDir.EAST), OpLinkOthers)
 	@JvmField
-	val UNLINK = make("link/unlink", HexPattern.fromAngles("qdeddqeeeeedwqdeddw", HexDir.WEST), OpUnlink)
+	val UNLINK = make("link/unlink", HexPattern.fromAngleString("qdeddqeeeeedwqdeddw", HexDir.WEST), OpUnlink)
 	@JvmField
-	val UNLINK_OTHERS = make("link/unlink/others", HexPattern.fromAngles("qeeeeedweqqqqqaww", HexDir.WEST), OpUnlinkOthers)
+	val UNLINK_OTHERS = make("link/unlink/others", HexPattern.fromAngleString("qeeeeedweqqqqqaww", HexDir.WEST), OpUnlinkOthers)
 	@JvmField
-	val LINK_GET = make("link/get", HexPattern.fromAngles("eqqqqqaww", HexDir.EAST), OpGetLinked)
+	val LINK_GET = make("link/get", HexPattern.fromAngleString("eqqqqqaww", HexDir.EAST), OpGetLinked)
 	@JvmField
-	val LINK_GET_INDEX = make("link/get_index", HexPattern.fromAngles("aeqqqqqawwd", HexDir.SOUTH_WEST), OpGetLinkedIndex)
+	val LINK_GET_INDEX = make("link/get_index", HexPattern.fromAngleString("aeqqqqqawwd", HexDir.SOUTH_WEST), OpGetLinkedIndex)
 	@JvmField
-	val LINK_NUM = make("link/num", HexPattern.fromAngles("qeeeeedww", HexDir.WEST), OpNumLinked)
+	val LINK_NUM = make("link/num", HexPattern.fromAngleString("qeeeeedww", HexDir.WEST), OpNumLinked)
 	@JvmField
-	val LINK_COMM_SEND = make("link/comm/send", HexPattern.fromAngles("qqqqqwdeddw", HexDir.NORTH_WEST), OpSendIota)
+	val LINK_COMM_SEND = make("link/comm/send", HexPattern.fromAngleString("qqqqqwdeddw", HexDir.NORTH_WEST), OpSendIota)
 	@JvmField
-	val LINK_COMM_READ = make("link/comm/read", HexPattern.fromAngles("weeeeew", HexDir.NORTH_EAST), OpReadReceivedIota)
+	val LINK_COMM_READ = make("link/comm/read", HexPattern.fromAngleString("weeeeew", HexDir.NORTH_EAST), OpReadReceivedIota)
 	@JvmField
-	val LINK_COMM_NUM = make("link/comm/num", HexPattern.fromAngles("aweeeeewaa", HexDir.SOUTH_EAST), OpNumReceivedIota)
+	val LINK_COMM_NUM = make("link/comm/num", HexPattern.fromAngleString("aweeeeewaa", HexDir.SOUTH_EAST), OpNumReceivedIota)
 	@JvmField
-	val LINK_COMM_CLEAR = make("link/comm/clear", HexPattern.fromAngles("aweeeeewa", HexDir.SOUTH_EAST), OpClearReceivedIotas)
+	val LINK_COMM_CLEAR = make("link/comm/clear", HexPattern.fromAngleString("aweeeeewa", HexDir.SOUTH_EAST), OpClearReceivedIotas)
 	@JvmField
-	val LINK_COMM_OPEN_TRANSMIT = make("link/comm/open_transmit", HexPattern.fromAngles("qwdedwq", HexDir.WEST), OpOpenTransmit)
+	val LINK_COMM_OPEN_TRANSMIT = make("link/comm/open_transmit", HexPattern.fromAngleString("qwdedwq", HexDir.WEST), OpOpenTransmit)
 	@JvmField
-	val LINK_COMM_CLOSE_TRANSMIT = make("link/comm/close_transmit", HexPattern.fromAngles("ewaqawe", HexDir.EAST), OpCloseTransmit)
+	val LINK_COMM_CLOSE_TRANSMIT = make("link/comm/close_transmit", HexPattern.fromAngleString("ewaqawe", HexDir.EAST), OpCloseTransmit)
 	*/
 	// =============================== Gate Stuff =====================================
 	@JvmField
-	val GATE_MARK = make("gate/mark", HexPattern.fromAngles("qaqeede", HexDir.WEST), OpMarkGate)
+	val GATE_MARK = make("gate/mark", HexPattern.fromAngleString("qaqeede", HexDir.WEST), OpMarkGate)
 	@JvmField
-	val GATE_UNMARK = make("gate/unmark", HexPattern.fromAngles("edeqqaq", HexDir.EAST), OpUnmarkGate)
+	val GATE_UNMARK = make("gate/unmark", HexPattern.fromAngleString("edeqqaq", HexDir.EAST), OpUnmarkGate)
 	@JvmField
-	val GATE_MARK_GET = make("gate/mark/get", HexPattern.fromAngles("edwwdeeede", HexDir.EAST), OpGetMarkedGate)
+	val GATE_MARK_GET = make("gate/mark/get", HexPattern.fromAngleString("edwwdeeede", HexDir.EAST), OpGetMarkedGate)
 //	@JvmField
-//	val GATE_MARK_NUM_GET = make("gate/mark/num/get", HexPattern.fromAngles("qawwaqqqaq", HexDir.WEST), OpGetNumMarkedGate)
+//	val GATE_MARK_NUM_GET = make("gate/mark/num/get", HexPattern.fromAngleString("qawwaqqqaq", HexDir.WEST), OpGetNumMarkedGate)
 	@JvmField
-	val GATE_CLOSE = make("gate/close", HexPattern.fromAngles("qqqwwqqqwqqawdedw", HexDir.WEST), OpCloseGate)
+	val GATE_CLOSE = make("gate/close", HexPattern.fromAngleString("qqqwwqqqwqqawdedw", HexDir.WEST), OpCloseGate)
 	@JvmField
-	val GATE_CLOSEABLE = make("gate/closeable", HexPattern.fromAngles("qqqwwqqqwqaqdde", HexDir.WEST), OpCloseable)
+	val GATE_CLOSEABLE = make("gate/closeable", HexPattern.fromAngleString("qqqwwqqqwqaqdde", HexDir.WEST), OpCloseable)
 
 	// =============================== Gate Stuff =====================================*/
 	@JvmField
-	val BIND_STORAGE = make("mote/storage/bind", HexPattern.fromAngles("qaqwqaqwqaq", HexDir.NORTH_WEST), OpBindStorage(false))
+	val BIND_STORAGE = make("mote/storage/bind", HexPattern.fromAngleString("qaqwqaqwqaq", HexDir.NORTH_WEST), OpBindStorage(false))
 	@JvmField
-	val BIND_STORAGE_TEMP = make("mote/storage/bind/temp", HexPattern.fromAngles("edewedewede", HexDir.NORTH_EAST), OpBindStorage(true))
+	val BIND_STORAGE_TEMP = make("mote/storage/bind/temp", HexPattern.fromAngleString("edewedewede", HexDir.NORTH_EAST), OpBindStorage(true))
 	@JvmField
-	val MOTE_CONTAINED_TYPE_GET = make("mote/contained_type/get", HexPattern.fromAngles("dwqqqqqwddww", HexDir.NORTH_EAST), OpGetContainedItemTypes)
+	val MOTE_CONTAINED_TYPE_GET = make("mote/contained_type/get", HexPattern.fromAngleString("dwqqqqqwddww", HexDir.NORTH_EAST), OpGetContainedItemTypes)
 	@JvmField
-	val MOTE_CONTAINED_GET = make("mote/contained/get", HexPattern.fromAngles("aweeeeewaaww", HexDir.SOUTH_EAST), OpGetContainedMotes)
+	val MOTE_CONTAINED_GET = make("mote/contained/get", HexPattern.fromAngleString("aweeeeewaaww", HexDir.SOUTH_EAST), OpGetContainedMotes)
 	@JvmField
-	val MOTE_STORAGE_REMAINING_CAPACITY_GET = make("mote/storage/remaining_capacity/get", HexPattern.fromAngles("awedqdewa", HexDir.SOUTH_EAST), OpGetStorageRemainingCapacity)
+	val MOTE_STORAGE_REMAINING_CAPACITY_GET = make("mote/storage/remaining_capacity/get", HexPattern.fromAngleString("awedqdewa", HexDir.SOUTH_EAST), OpGetStorageRemainingCapacity)
 	@JvmField
-	val MOTE_STORAGE_CONTAINS = make("mote/storage/contains", HexPattern.fromAngles("dwqaeaqwd", HexDir.NORTH_EAST), OpStorageContains)
+	val MOTE_STORAGE_CONTAINS = make("mote/storage/contains", HexPattern.fromAngleString("dwqaeaqwd", HexDir.NORTH_EAST), OpStorageContains)
 	@JvmField
-	val MOTE_MAKE = make("mote/make", HexPattern.fromAngles("eaqa", HexDir.WEST), OpMakeMote)
+	val MOTE_MAKE = make("mote/make", HexPattern.fromAngleString("eaqa", HexDir.WEST), OpMakeMote)
 	@JvmField
-	val MOTE_RETURN = make("mote/return", HexPattern.fromAngles("qded", HexDir.EAST), OpReturnMote)
+	val MOTE_RETURN = make("mote/return", HexPattern.fromAngleString("qded", HexDir.EAST), OpReturnMote)
 //	@JvmField
-//	val MOTE_COUNT_GET = make("mote/count/get", HexPattern.fromAngles("qqqqwqqqqqaa", HexDir.NORTH_WEST), OpGetCountMote)
+//	val MOTE_COUNT_GET = make("mote/count/get", HexPattern.fromAngleString("qqqqwqqqqqaa", HexDir.NORTH_WEST), OpGetCountMote)
 //	@JvmField
-//	val MOTE_COMBINE = make("mote/combine", HexPattern.fromAngles("aqaeqded", HexDir.NORTH_WEST), OpCombineMotes)
+//	val MOTE_COMBINE = make("mote/combine", HexPattern.fromAngleString("aqaeqded", HexDir.NORTH_WEST), OpCombineMotes)
 	@JvmField
-	val MOTE_COMBINABLE = make("mote/combinable", HexPattern.fromAngles("dedqeaqa", HexDir.SOUTH_WEST), OpMotesCombinable)
+	val MOTE_COMBINABLE = make("mote/combinable", HexPattern.fromAngleString("dedqeaqa", HexDir.SOUTH_WEST), OpMotesCombinable)
 	@JvmField
-	val MOTE_SPLIT = make("mote/split", HexPattern.fromAngles("eaqaaw", HexDir.EAST), OpSplitMote)
+	val MOTE_SPLIT = make("mote/split", HexPattern.fromAngleString("eaqaaw", HexDir.EAST), OpSplitMote)
 	@JvmField
-	val MOTE_STORAGE_GET = make("mote/storage/get", HexPattern.fromAngles("qqqqqaw", HexDir.SOUTH_WEST), OpGetMoteStorage)
+	val MOTE_STORAGE_GET = make("mote/storage/get", HexPattern.fromAngleString("qqqqqaw", HexDir.SOUTH_WEST), OpGetMoteStorage)
 	@JvmField
-	val MOTE_STORAGE_SET = make("mote/storage/set", HexPattern.fromAngles("eeeeedw", HexDir.SOUTH_EAST), OpSetMoteStorage)
+	val MOTE_STORAGE_SET = make("mote/storage/set", HexPattern.fromAngleString("eeeeedw", HexDir.SOUTH_EAST), OpSetMoteStorage)
 	@JvmField
-	val MOTE_CRAFT = make("mote/craft", HexPattern.fromAngles("wwawdedwawdewwdwaqawdwwedwawdedwaww", HexDir.SOUTH_EAST), OpCraftMote)
+	val MOTE_CRAFT = make("mote/craft", HexPattern.fromAngleString("wwawdedwawdewwdwaqawdwwedwawdedwaww", HexDir.SOUTH_EAST), OpCraftMote)
 	@JvmField
-	val MOTE_CRAFT_PREVIEW = make("mote/craft/preview", HexPattern.fromAngles("wwdwaqawdwaqwwawdedwawwqawdwaqawdww", HexDir.NORTH_EAST), OpCraftMotePreview)
+	val MOTE_CRAFT_PREVIEW = make("mote/craft/preview", HexPattern.fromAngleString("wwdwaqawdwaqwwawdedwawwqawdwaqawdww", HexDir.NORTH_EAST), OpCraftMotePreview)
 	@JvmField
-	val MOTE_VILLAGER_LEVEL_GET = make("mote/villager/level/get", HexPattern.fromAngles("qqwdedwqqaww", HexDir.NORTH_WEST), OpGetVillagerLevel)
+	val MOTE_VILLAGER_LEVEL_GET = make("mote/villager/level/get", HexPattern.fromAngleString("qqwdedwqqaww", HexDir.NORTH_WEST), OpGetVillagerLevel)
 	@JvmField
-	val MOTE_TRADE_GET = make("mote/trade/get", HexPattern.fromAngles("awdedwaawwqded", HexDir.SOUTH_EAST), OpGetItemTrades)
+	val MOTE_TRADE_GET = make("mote/trade/get", HexPattern.fromAngleString("awdedwaawwqded", HexDir.SOUTH_EAST), OpGetItemTrades)
 	@JvmField
-	val MOTE_TRADE = make("mote/trade", HexPattern.fromAngles("awdedwaeqded", HexDir.NORTH_WEST), OpTradeMote)
+	val MOTE_TRADE = make("mote/trade", HexPattern.fromAngleString("awdedwaeqded", HexDir.NORTH_WEST), OpTradeMote)
 	@JvmField
-	val MOTE_USE_ON = make("mote/use_on", HexPattern.fromAngles("qqqwqqqqaa", HexDir.EAST), OpUseMoteOn)
+	val MOTE_USE_ON = make("mote/use_on", HexPattern.fromAngleString("qqqwqqqqaa", HexDir.EAST), OpUseMoteOn)
 
 	// ============================== Great Stuff =====================================
 	@JvmField
 	val CONSUME_WISP = make("wisp/consume",
-			HexPattern.fromAngles("wawqwawwwewwwewwwawqwawwwewwwewdeaweewaqaweewaawwww", HexDir.NORTH_WEST),
+			HexPattern.fromAngleString("wawqwawwwewwwewwwawqwawwwewwwewdeaweewaqaweewaawwww", HexDir.NORTH_WEST),
 			OpConsumeWisp)
 	@JvmField
 	val WISP_SEON_SET = make("wisp/seon/set",
-			HexPattern.fromAngles("aqweewqaeaqweewqaqwww", HexDir.SOUTH_WEST),
+			HexPattern.fromAngleString("aqweewqaeaqweewqaqwww", HexDir.SOUTH_WEST),
 			OpSeonWispSet)
 	@JvmField
-	val TICK = make("tick", HexPattern.fromAngles("wwwdwdwwwawqqeqwqqwqeqwqq", HexDir.SOUTH_EAST), OpTick)
+	val TICK = make("tick", HexPattern.fromAngleString("wwwdwdwwwawqqeqwqqwqeqwqq", HexDir.SOUTH_EAST), OpTick)
 	@JvmField
-	val GATE_MAKE = make("gate/make", HexPattern.fromAngles("qwqwqwqwqwqqeaeaeaeaeae", HexDir.WEST), OpMakeGate)
+	val GATE_MAKE = make("gate/make", HexPattern.fromAngleString("qwqwqwqwqwqqeaeaeaeaeae", HexDir.WEST), OpMakeGate)
 
 
 

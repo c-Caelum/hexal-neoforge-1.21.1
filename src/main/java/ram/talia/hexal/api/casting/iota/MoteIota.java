@@ -1,5 +1,6 @@
 package ram.talia.hexal.api.casting.iota;
 
+import at.petrak.hexcasting.api.casting.eval.CastingEnvironment;
 import at.petrak.hexcasting.api.casting.iota.Iota;
 import at.petrak.hexcasting.api.casting.iota.IotaType;
 import at.petrak.hexcasting.api.casting.iota.NullIota;
@@ -34,12 +35,6 @@ public class MoteIota extends Iota {
     MediafiedItemManager.Index index;
     Component displayMessage = Component.empty();
     long count = 0;
-
-
-    /**
-     * Used to get the UUID of the temporarily bound storage from userData, if one exists.
-     */
-    public static final String TAG_TEMP_STORAGE = "hexal:temp_storage";
 
     public MoteIota(MediafiedItemManager.Index index) {
         super(() -> HexalIotaTypes.MOTE);
@@ -210,7 +205,7 @@ public class MoteIota extends Iota {
     }
 
     @Override
-    public boolean isTruthy() {
+    public boolean isTruthy(CastingEnvironment env) {
         return !this.isEmpty();
     }
 

@@ -28,10 +28,10 @@ interface VarargConstMediaAction : Action {
      */
     fun argc(stack: List<Iota>): Int
 
-    fun execute(args: List<Iota>, argc: Int, userData: CompoundTag, env: CastingEnvironment): List<Iota>
+    fun execute(args: List<Iota>, argc: Int, image: CastingImage, env: CastingEnvironment): List<Iota>
 
-    fun executeWithOpCount(args: List<Iota>, argc: Int, userData: CompoundTag, env: CastingEnvironment): ConstMediaAction.CostMediaActionResult {
-        val stack = this.execute(args, argc, userData, env)
+    fun executeWithOpCount(args: List<Iota>, argc: Int, image: CastingImage, env: CastingEnvironment): ConstMediaAction.CostMediaActionResult {
+        val stack = this.execute(args, argc, image, env)
         return ConstMediaAction.CostMediaActionResult(stack)
     }
 
@@ -48,15 +48,14 @@ interface VarargConstMediaAction : Action {
 
         val args = stack.takeRight(argc);
         stack = stack.dropRight(argc);
-        val userData = image.userData.copy()
-        val newData = this.executeWithOpCount(args, argc, userData, env)
+        val newData = this.executeWithOpCount(args, argc, image, env)
 
 
         val sideEffects = mutableListOf<OperatorSideEffect>(
             OperatorSideEffect.ConsumeMedia(this.mediaCost)
         )
 
-        val image2 = image.copy(stack = stack.appendedAll(newData.resultStack), opsConsumed = image.opsConsumed + newData.opCount, userData = userData)
+        val image2 = image.copy(stack = stack.appendedAll(newData.resultStack), opsConsumed = image.opsConsumed + newData.opCount)
         return OperationResult(image2, sideEffects, continuation, HexEvalSounds.NORMAL_EXECUTE.get())
     }
 }

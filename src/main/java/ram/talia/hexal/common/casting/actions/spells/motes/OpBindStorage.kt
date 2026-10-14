@@ -18,6 +18,7 @@ import ram.talia.hexal.api.config.HexalConfig
 import ram.talia.hexal.api.mediafieditems.MediafiedItemManager
 import ram.talia.hexal.common.blocks.BlockMediafiedStorage
 import ram.talia.hexal.common.blocks.entity.BlockEntityMediafiedStorage
+import ram.talia.hexal.common.lib.hex.HexalImageComponents
 import ram.talia.hexal.xplat.IXplatAbstractions
 
 class OpBindStorage(private val isTemporaryBinding: Boolean) : SpellAction {
@@ -53,16 +54,12 @@ class OpBindStorage(private val isTemporaryBinding: Boolean) : SpellAction {
                     MediafiedItemManager.setBoundStorage(castingPlayer, null)
                     return null
                 } else {
-                    val userData = image.userData.copy()
-                    userData.remove(MoteIota.TAG_TEMP_STORAGE)
-                    return image.copy(userData = userData)
+                    return image.withoutComponent(HexalImageComponents.TEMP_STORAGE)
                 }
             }
 
             if (isTemporaryBinding) {
-                val userData = image.userData.copy()
-                userData.putUUID(MoteIota.TAG_TEMP_STORAGE, storage.uuid)
-                return image.copy(userData = userData)
+                return image.withComponent(HexalImageComponents.TEMP_STORAGE, storage.uuid)
             }
 
             if (!env.canEditBlockAt(pos) || !IXplatAbstractions.INSTANCE.isInteractingAllowed(env.world, pos, Direction.UP, env.castingHand, castingPlayer ?: return null))
