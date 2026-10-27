@@ -12,6 +12,7 @@ import at.petrak.hexcasting.xplat.IXplatAbstractions
 import net.minecraft.core.BlockPos
 import net.minecraft.core.particles.BlockParticleOption
 import net.minecraft.core.particles.ParticleTypes
+import net.minecraft.core.registries.Registries
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.server.level.ServerPlayer
 import net.minecraft.tags.BlockTags
@@ -21,6 +22,7 @@ import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.Tier
+import net.minecraft.world.item.enchantment.Enchantments
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.FallingBlock
 import net.minecraft.world.level.block.state.BlockState
@@ -90,6 +92,11 @@ object OpFallingBlock : SpellAction {
 			}
 			// I'm not sure how to fix this, so this is temporarily broken.
 			//harvestToolStack.enchant(Enchantments.SILK_TOUCH,1)
+			val silkTouch = level.registryAccess()
+				.lookupOrThrow(Registries.ENCHANTMENT)
+				.getOrThrow(Enchantments.SILK_TOUCH)
+			harvestToolStack.enchant(silkTouch, 1)
+
 			val drops: List<ItemStack> = Block.getDrops(state, level, pos, null, owner, harvestToolStack)
 			val blockItem: Item = state.block.asItem()
 			return drops.any { s -> s.item === blockItem }
